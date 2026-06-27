@@ -1,9 +1,9 @@
 const CACHE_NAME = "racket-life-v1";
-const APP_SHELL = ["/", "/manifest.webmanifest", "/icon.svg"];
+const APP_SHELL = ["./", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)),
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL.map((path) => new URL(path, self.registration.scope)))),
   );
   self.skipWaiting();
 });

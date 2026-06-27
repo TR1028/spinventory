@@ -71,6 +71,49 @@ Build for production:
 pnpm run build
 ```
 
+## Deployment
+
+This repo includes a GitHub Pages workflow at `.github/workflows/deploy.yml`.
+
+To deploy:
+
+1. Push to the `main` branch.
+2. In GitHub, open repository settings.
+3. Go to Pages.
+4. Set the source to GitHub Actions.
+5. The workflow will build `dist` and publish the app.
+
+For this repository, the GitHub Pages URL should be:
+
+```text
+https://tr1028.github.io/spinventory/
+```
+
+The app is still local-first after deployment. Static hosting serves the app code; user data remains in each browser's IndexedDB.
+
+## Data And Sync
+
+In v1, data does not sync automatically between devices.
+
+Examples:
+
+- Data added on your phone stays on that phone's browser.
+- Data added on your laptop stays on that laptop's browser.
+- GitHub Pages, Vercel, Netlify, or Cloudflare Pages only host the static app files.
+
+Recommended path:
+
+1. Keep v1 fully local-first.
+2. Add JSON import/export for manual backup and transfer.
+3. Add optional cloud sync later only if multi-device sync becomes important.
+
+Possible future sync options:
+
+- file-based backup with JSON
+- WebDAV / cloud-drive style sync
+- Supabase or Firebase with login
+- self-hosted backend
+
 ## Roadmap
 
 - Racket detail page
