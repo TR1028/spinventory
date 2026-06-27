@@ -4,6 +4,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "../db/database";
 import { todayISO } from "../utils/date";
 import { createId } from "../utils/id";
+import { sortRackets } from "../utils/rackets";
 
 type AddSessionProps = {
   initialRacketId?: string;
@@ -15,12 +16,7 @@ const quickDurations = [60, 90, 120, 150];
 
 export function AddSession({ initialRacketId, onBack, onSaved }: AddSessionProps) {
   const rackets = useLiveQuery(
-    async () =>
-      (await db.rackets.toArray()).sort((left, right) => {
-        const leftOrder = left.sortOrder ?? Number.MAX_SAFE_INTEGER;
-        const rightOrder = right.sortOrder ?? Number.MAX_SAFE_INTEGER;
-        return leftOrder - rightOrder || left.name.localeCompare(right.name);
-      }),
+    async () => sortRackets(await db.rackets.toArray()),
     [],
   );
   const [racketId, setRacketId] = useState(initialRacketId ?? "");

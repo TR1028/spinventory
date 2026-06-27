@@ -1,4 +1,5 @@
 import { CalendarDays, Clock3, Plus, Waves } from "lucide-react";
+import type { KeyboardEvent, MouseEvent } from "react";
 import type { BoostingLog, PlaySession, Racket, Rubber } from "../db/schema";
 import { rubberSideLabel } from "../db/schema";
 import { formatDate, isWithinLastDays } from "../utils/date";
@@ -12,6 +13,7 @@ type RacketCardProps = {
   sessions: PlaySession[];
   boostingLogs: BoostingLog[];
   onAddSession: (racketId: string) => void;
+  onOpenRacket: (racketId: string) => void;
 };
 
 function RubberRow({
@@ -62,6 +64,7 @@ export function RacketCard({
   sessions,
   boostingLogs,
   onAddSession,
+  onOpenRacket,
 }: RacketCardProps) {
   const racketSessions = sessions
     .filter((session) => session.racketId === racket.id)
@@ -72,8 +75,28 @@ export function RacketCard({
     .reduce((total, session) => total + session.durationMinutes, 0);
   const latestSession = racketSessions[0];
 
+  function handleOpenKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onOpenRacket(racket.id);
+    }
+  }
+
+  function handleAddSession(event: MouseEvent<HTMLButtonElement>) {
+    event.stopPropagation();
+    onAddSession(racket.id);
+  }
+
   return (
-    <article className="rounded-lg border border-ink/10 bg-white p-4 shadow-soft">
+    <article
+      className="cursor-pointer rounded-lg border border-ink/10 bg-white p-4 shadow-soft transition active:scale-[0.99]"
+      role="button"
+      tabIndex={0}
+      onClick={() => onOpenRacket(racket.id)}
+      onKeyDown={handleOpenKeyDown}
+      aria-label={`管理 ${racket.name}`}
+      data-testid={`racket-card-${racket.id}`}
+    >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <h2 className="truncate text-lg font-bold text-ink">{racket.name}</h2>
@@ -81,7 +104,7 @@ export function RacketCard({
         </div>
         <button
           type="button"
-          onClick={() => onAddSession(racket.id)}
+          onClick={handleAddSession}
           className="tap-target inline-flex shrink-0 items-center justify-center rounded-full bg-ink text-white shadow-sm transition active:scale-95"
           aria-label={`${racket.name} 记录打球`}
           title="记录打球"

@@ -11,6 +11,7 @@ Racket Life is organized around rackets. Each racket has current forehand and ba
 - duration in minutes
 
 There is no backend in v1. Data lives locally in IndexedDB through Dexie.
+The repository contains application code and optional demo seed data only; a user's real racket, rubber, session, and boosting data stays in their own browser storage.
 
 ## Tech Stack
 

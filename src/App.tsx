@@ -1,10 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
 import { Dashboard } from "./pages/Dashboard";
 import { AddSession } from "./pages/AddSession";
+import { AddRacket } from "./pages/AddRacket";
+import { RacketDetail } from "./pages/RacketDetail";
 import { ensureSeedData } from "./db/seed";
 
 type Route =
   | { name: "dashboard" }
+  | { name: "add-racket" }
+  | {
+      name: "racket-detail";
+      racketId: string;
+    }
   | {
       name: "add-session";
       racketId?: string;
@@ -22,12 +29,33 @@ function readRoute(): Route {
     };
   }
 
+  if (path === "/rackets/new") {
+    return { name: "add-racket" };
+  }
+
+  if (path.startsWith("/rackets/")) {
+    const racketId = decodeURIComponent(path.replace("/rackets/", ""));
+    if (racketId) {
+      return { name: "racket-detail", racketId };
+    }
+  }
+
   return { name: "dashboard" };
 }
 
 function navigateTo(route: Route) {
   if (route.name === "dashboard") {
     window.location.hash = "/";
+    return;
+  }
+
+  if (route.name === "add-racket") {
+    window.location.hash = "/rackets/new";
+    return;
+  }
+
+  if (route.name === "racket-detail") {
+    window.location.hash = `/rackets/${encodeURIComponent(route.racketId)}`;
     return;
   }
 
@@ -60,7 +88,33 @@ export default function App() {
       );
     }
 
-    return <Dashboard onAddSession={(racketId) => navigateTo({ name: "add-session", racketId })} />;
+    if (route.name === "add-racket") {
+      return (
+        <AddRacket
+          onBack={() => navigateTo({ name: "dashboard" })}
+          onCreated={(racketId) => navigateTo({ name: "racket-detail", racketId })}
+        />
+      );
+    }
+
+    if (route.name === "racket-detail") {
+      return (
+        <RacketDetail
+          racketId={route.racketId}
+          onBack={() => navigateTo({ name: "dashboard" })}
+          onAddSession={(racketId) => navigateTo({ name: "add-session", racketId })}
+          onDeleted={() => navigateTo({ name: "dashboard" })}
+        />
+      );
+    }
+
+    return (
+      <Dashboard
+        onAddSession={(racketId) => navigateTo({ name: "add-session", racketId })}
+        onAddRacket={() => navigateTo({ name: "add-racket" })}
+        onOpenRacket={(racketId) => navigateTo({ name: "racket-detail", racketId })}
+      />
+    );
   }, [route]);
 
   return <main className="app-shell bg-paper">{screen}</main>;

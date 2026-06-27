@@ -1,12 +1,15 @@
-import { Plus, ShieldCheck } from "lucide-react";
+import { Plus, ShieldCheck, SquarePen } from "lucide-react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { RacketCard } from "../components/RacketCard";
 import { db } from "../db/database";
 import type { BoostingLog, PlaySession, Racket, Rubber } from "../db/schema";
 import { isWithinLastDays } from "../utils/date";
+import { sortRackets } from "../utils/rackets";
 
 type DashboardProps = {
   onAddSession: (racketId?: string) => void;
+  onAddRacket: () => void;
+  onOpenRacket: (racketId: string) => void;
 };
 
 type DashboardData = {
@@ -16,7 +19,7 @@ type DashboardData = {
   boostingLogs: BoostingLog[];
 };
 
-export function Dashboard({ onAddSession }: DashboardProps) {
+export function Dashboard({ onAddSession, onAddRacket, onOpenRacket }: DashboardProps) {
   const data = useLiveQuery<DashboardData>(async () => {
     const [rackets, rubbers, sessions, boostingLogs] = await Promise.all([
       db.rackets.toArray(),
@@ -26,11 +29,7 @@ export function Dashboard({ onAddSession }: DashboardProps) {
     ]);
 
     return {
-      rackets: rackets.sort((left, right) => {
-        const leftOrder = left.sortOrder ?? Number.MAX_SAFE_INTEGER;
-        const rightOrder = right.sortOrder ?? Number.MAX_SAFE_INTEGER;
-        return leftOrder - rightOrder || left.name.localeCompare(right.name);
-      }),
+      rackets: sortRackets(rackets),
       rubbers,
       sessions,
       boostingLogs,
@@ -79,14 +78,25 @@ export function Dashboard({ onAddSession }: DashboardProps) {
 
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-base font-bold text-ink">当前球拍</h2>
-        <button
-          type="button"
-          onClick={() => onAddSession()}
-          className="tap-target inline-flex items-center gap-2 rounded-full bg-court px-4 text-sm font-bold text-white shadow-sm transition active:scale-95"
-        >
-          <Plus size={18} aria-hidden="true" />
-          记录打球
-        </button>
+        <div className="flex shrink-0 items-center gap-2">
+          <button
+            type="button"
+            onClick={onAddRacket}
+            className="tap-target inline-flex items-center justify-center rounded-full bg-white px-3 text-sm font-bold text-ink shadow-sm ring-1 ring-ink/10 transition active:scale-95"
+            aria-label="新增球拍"
+            title="新增球拍"
+          >
+            <SquarePen size={18} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={() => onAddSession()}
+            className="tap-target inline-flex items-center gap-2 rounded-full bg-court px-4 text-sm font-bold text-white shadow-sm transition active:scale-95"
+          >
+            <Plus size={18} aria-hidden="true" />
+            记录打球
+          </button>
+        </div>
       </div>
 
       <div className="grid gap-4">
@@ -99,6 +109,7 @@ export function Dashboard({ onAddSession }: DashboardProps) {
             sessions={data.sessions}
             boostingLogs={data.boostingLogs}
             onAddSession={onAddSession}
+            onOpenRacket={onOpenRacket}
           />
         ))}
       </div>
