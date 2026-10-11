@@ -145,7 +145,7 @@ function RacketInfoForm({ racket }: { racket: Racket }) {
   return (
     <section className={cardClass}>
       <h2 className="text-base font-black text-ink">球拍信息</h2>
-      <form onSubmit={handleSubmit} className="mt-4 grid gap-4">
+      <form onSubmit={handleSubmit} className="mt-4 grid gap-4 md:grid-cols-3 md:items-start">
         <TextField label="球拍名" value={form.name} onChange={(name) => change({ name })} testId="racket-name-input" />
         <TextField label="底板" value={form.blade} onChange={(blade) => change({ blade })} testId="racket-blade-input" />
         <div className="grid gap-2">
@@ -161,12 +161,18 @@ function RacketInfoForm({ racket }: { racket: Racket }) {
             }))}
           />
         </div>
-        <TextAreaField label="备注" hint="选填" value={form.notes} onChange={(notes) => change({ notes })} testId="racket-notes-input" />
-        <ErrorBanner message={action.error} />
-        <button type="submit" disabled={action.pending} className={buttonClass.primary} data-testid="save-racket-button">
-          <Check size={18} aria-hidden="true" />
-          {saved ? "已保存" : "保存球拍"}
-        </button>
+        <div className="md:col-span-3">
+          <TextAreaField label="备注" hint="选填" value={form.notes} onChange={(notes) => change({ notes })} testId="racket-notes-input" />
+        </div>
+        <div className="md:col-span-3">
+          <ErrorBanner message={action.error} />
+        </div>
+        <div className="md:col-span-3 md:flex md:justify-end">
+          <button type="submit" disabled={action.pending} className={`${buttonClass.primary} w-full md:w-auto md:px-6`} data-testid="save-racket-button">
+            <Check size={18} aria-hidden="true" />
+            {saved ? "已保存" : "保存球拍"}
+          </button>
+        </div>
       </form>
     </section>
   );
@@ -844,7 +850,7 @@ export function RacketDetail({ racketId, onBack, onAddSession, onDeleted, onOpen
   const closeDialog = () => setDialog(null);
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-4 sm:px-6">
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-4 sm:px-6 lg:gap-6 lg:px-8 lg:py-8">
       <div className="flex items-center justify-between gap-3">
         <BackButton onClick={() => (status === "active" ? onBack() : onOpenInventory("blades"))} />
         <button
@@ -857,16 +863,18 @@ export function RacketDetail({ racketId, onBack, onAddSession, onDeleted, onOpen
         </button>
       </div>
 
-      <header className="rounded-lg bg-ink px-4 py-5 text-white shadow-soft">
-        <div className="flex items-center justify-between gap-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-limeglass/70">Racket</p>
-          <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-black ${statusChipClass[status]}`} data-testid="racket-status-chip">
-            {racketStatusLabel[status]}
-          </span>
+      <header className="rounded-lg bg-ink px-4 py-5 text-white shadow-soft sm:px-6 lg:flex lg:items-center lg:justify-between lg:gap-8 lg:py-6">
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center justify-between gap-3 lg:justify-start lg:gap-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-limeglass/70">Racket</p>
+            <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-black ${statusChipClass[status]}`} data-testid="racket-status-chip">
+              {racketStatusLabel[status]}
+            </span>
+          </div>
+          <h1 className="mt-2 break-words text-3xl font-black leading-tight">{racket.name}</h1>
+          <p className="mt-2 text-sm font-medium text-white/65">{racket.blade}</p>
         </div>
-        <h1 className="mt-2 break-words text-3xl font-black leading-tight">{racket.name}</h1>
-        <p className="mt-2 text-sm font-medium text-white/65">{racket.blade}</p>
-        <div className="mt-5 grid grid-cols-3 gap-2">
+        <div className="mt-5 grid grid-cols-3 gap-2 lg:mt-0 lg:w-[400px] lg:shrink-0 lg:gap-3">
           <HeaderStat icon={<Clock3 size={14} aria-hidden="true" />} label="累计" value={`${Math.round(totalMinutes / 60)} h`} />
           <HeaderStat icon={<CalendarDays size={14} aria-hidden="true" />} label="场次" value={String(sessions.length)} />
           <HeaderStat icon={<History size={14} aria-hidden="true" />} label="历任胶皮" value={String(retiredRubbers.length)} />
@@ -875,25 +883,30 @@ export function RacketDetail({ racketId, onBack, onAddSession, onDeleted, onOpen
 
       <RacketInfoForm racket={racket} />
 
-      {RUBBER_SIDES.map((side) => {
-        const rubber = getMountedRubber(data, racket, side);
-        return rubber ? (
-          <MountedRubberCard
-            key={`${side}:${rubber.id}`}
-            side={side}
-            rubber={rubber}
-            sessions={sessions}
-            logs={getRubberBoostingLogs(data, rubber.id)}
-            onReplace={() => setDialog({ type: "replace", side })}
-            onRetire={() => setDialog({ type: "retire", side })}
-          />
-        ) : (
-          <EmptySlotCard key={`${side}:empty`} side={side} onMount={() => setDialog({ type: "replace", side })} />
-        );
-      })}
+      <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
+        {RUBBER_SIDES.map((side) => {
+          const rubber = getMountedRubber(data, racket, side);
+          return rubber ? (
+            <MountedRubberCard
+              key={`${side}:${rubber.id}`}
+              side={side}
+              rubber={rubber}
+              sessions={sessions}
+              logs={getRubberBoostingLogs(data, rubber.id)}
+              onReplace={() => setDialog({ type: "replace", side })}
+              onRetire={() => setDialog({ type: "retire", side })}
+            />
+          ) : (
+            <EmptySlotCard key={`${side}:empty`} side={side} onMount={() => setDialog({ type: "replace", side })} />
+          );
+        })}
+      </div>
 
-      <SessionsSection sessions={sessions} />
-      <RetiredArchive racket={racket} rubbers={retiredRubbers} sessions={sessions} boostingLogs={data.boostingLogs} />
+      <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
+        <SessionsSection sessions={sessions} />
+        <RetiredArchive racket={racket} rubbers={retiredRubbers} sessions={sessions} boostingLogs={data.boostingLogs} />
+      </div>
+
       <DeleteRacketSection racket={racket} onDeleted={onDeleted} />
 
       {dialog?.type === "replace" ? <ReplaceRubberModal racket={racket} side={dialog.side} onClose={closeDialog} /> : null}

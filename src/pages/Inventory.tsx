@@ -174,26 +174,29 @@ export function Inventory({ initialTab = "rubbers", onBack, onTabChange, onOpenR
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-4 sm:px-6">
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-4 sm:px-6 lg:gap-6 lg:px-8 lg:py-8">
       <div className="flex items-center justify-between gap-3">
         <BackButton onClick={onBack} />
         <div className="rounded-full bg-limeglass px-3 py-1 text-xs font-bold text-court">囤货</div>
       </div>
 
-      <header>
-        <h1 className="text-3xl font-black tracking-normal text-ink">囤货管理</h1>
-        <p className="mt-2 text-sm font-medium text-ink/55">登记还没贴拍的胶皮和备用底板，换胶、配拍时直接选用。</p>
+      <header className="lg:flex lg:items-end lg:justify-between lg:gap-6">
+        <div>
+          <h1 className="text-3xl font-black tracking-normal text-ink">囤货管理</h1>
+          <p className="mt-2 text-sm font-medium text-ink/55">登记还没贴拍的胶皮和备用底板，换胶、配拍时直接选用。</p>
+        </div>
+        <div className="mt-4 lg:mt-0 lg:w-96">
+          <SegmentedControl
+            ariaLabel="囤货类型"
+            value={tab}
+            onChange={selectTab}
+            options={[
+              { value: "rubbers", label: `闲置胶皮库 · ${rubbers.length}`, testId: "inventory-tab-rubbers" },
+              { value: "blades", label: `闲置底板库 · ${spareBlades.length}`, testId: "inventory-tab-blades" },
+            ]}
+          />
+        </div>
       </header>
-
-      <SegmentedControl
-        ariaLabel="囤货类型"
-        value={tab}
-        onChange={selectTab}
-        options={[
-          { value: "rubbers", label: `闲置胶皮库 · ${rubbers.length}`, testId: "inventory-tab-rubbers" },
-          { value: "blades", label: `闲置底板库 · ${spareBlades.length}`, testId: "inventory-tab-blades" },
-        ]}
-      />
 
       <ErrorBanner message={action.error} onDismiss={() => action.setError(null)} />
 
@@ -214,15 +217,17 @@ export function Inventory({ initialTab = "rubbers", onBack, onTabChange, onOpenR
             </button>
           </div>
           {rubbers.length ? (
-            rubbers.map((rubber) => (
-              <InventoryRubberCard
-                key={rubber.id}
-                rubber={rubber}
-                onMount={() => setDialog({ type: "mount", rubberId: rubber.id })}
-                onEdit={() => setDialog({ type: "rubber-form", rubberId: rubber.id })}
-                onDelete={() => void action.run(() => deleteRubber(rubber.id))}
-              />
-            ))
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {rubbers.map((rubber) => (
+                <InventoryRubberCard
+                  key={rubber.id}
+                  rubber={rubber}
+                  onMount={() => setDialog({ type: "mount", rubberId: rubber.id })}
+                  onEdit={() => setDialog({ type: "rubber-form", rubberId: rubber.id })}
+                  onDelete={() => void action.run(() => deleteRubber(rubber.id))}
+                />
+              ))}
+            </div>
           ) : (
             <EmptyState
               icon={<Package size={20} aria-hidden="true" />}
@@ -247,20 +252,22 @@ export function Inventory({ initialTab = "rubbers", onBack, onTabChange, onOpenR
               </button>
             </div>
             {spareBlades.length ? (
-              spareBlades.map((racket) => (
-                <SpareBladeCard
-                  key={racket.id}
-                  racket={racket}
-                  mounted={{
-                    forehand: getMountedRubber(data, racket, "forehand"),
-                    backhand: getMountedRubber(data, racket, "backhand"),
-                  }}
-                  onOpen={() => onOpenRacket(racket.id)}
-                  onActivate={() => setDialog({ type: "activate", racketId: racket.id })}
-                  onEdit={() => setDialog({ type: "blade-form", racketId: racket.id })}
-                  onDelete={() => void action.run(() => deleteRacket(racket.id))}
-                />
-              ))
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {spareBlades.map((racket) => (
+                  <SpareBladeCard
+                    key={racket.id}
+                    racket={racket}
+                    mounted={{
+                      forehand: getMountedRubber(data, racket, "forehand"),
+                      backhand: getMountedRubber(data, racket, "backhand"),
+                    }}
+                    onOpen={() => onOpenRacket(racket.id)}
+                    onActivate={() => setDialog({ type: "activate", racketId: racket.id })}
+                    onEdit={() => setDialog({ type: "blade-form", racketId: racket.id })}
+                    onDelete={() => void action.run(() => deleteRacket(racket.id))}
+                  />
+                ))}
+              </div>
             ) : (
               <EmptyState
                 icon={<Package size={20} aria-hidden="true" />}
@@ -273,42 +280,44 @@ export function Inventory({ initialTab = "rubbers", onBack, onTabChange, onOpenR
           {retiredRackets.length ? (
             <section className="grid gap-3" data-testid="retired-rackets">
               <h2 className="text-base font-bold text-ink">已退役球拍</h2>
-              {retiredRackets.map((racket) => (
-                <article
-                  key={racket.id}
-                  className="flex items-center justify-between gap-3 rounded-lg border border-ink/10 bg-white px-4 py-3"
-                  data-testid={`retired-racket-${racket.id}`}
-                >
-                  <button
-                    type="button"
-                    onClick={() => onOpenRacket(racket.id)}
-                    className="min-w-0 text-left"
-                    aria-label={`查看 ${racket.name} 详情`}
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                {retiredRackets.map((racket) => (
+                  <article
+                    key={racket.id}
+                    className="flex items-center justify-between gap-3 rounded-lg border border-ink/10 bg-white px-4 py-3"
+                    data-testid={`retired-racket-${racket.id}`}
                   >
-                    <div className="truncate text-sm font-bold text-ink">{racket.name}</div>
-                    <div className="truncate text-xs text-ink/50">{racket.blade}</div>
-                  </button>
-                  <div className="flex shrink-0 items-center gap-1">
                     <button
                       type="button"
-                      onClick={() => void action.run(() => updateRacket(racket.id, { status: "inventory" }))}
-                      className={buttonClass.ghost}
-                      data-testid={`restore-racket-${racket.id}`}
+                      onClick={() => onOpenRacket(racket.id)}
+                      className="min-w-0 text-left"
+                      aria-label={`查看 ${racket.name} 详情`}
                     >
-                      <RotateCcw size={16} aria-hidden="true" />
-                      恢复为闲置
+                      <div className="truncate text-sm font-bold text-ink">{racket.name}</div>
+                      <div className="truncate text-xs text-ink/50">{racket.blade}</div>
                     </button>
-                    <ConfirmButton
-                      onConfirm={() => void action.run(() => deleteRacket(racket.id))}
-                      ariaLabel={`删除 ${racket.name}`}
-                      confirmLabel="删除"
-                      className={buttonClass.icon}
-                      armedClassName={buttonClass.armedPill}
-                      testId={`delete-retired-racket-${racket.id}`}
-                    />
-                  </div>
-                </article>
-              ))}
+                    <div className="flex shrink-0 items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={() => void action.run(() => updateRacket(racket.id, { status: "inventory" }))}
+                        className={buttonClass.ghost}
+                        data-testid={`restore-racket-${racket.id}`}
+                      >
+                        <RotateCcw size={16} aria-hidden="true" />
+                        恢复为闲置
+                      </button>
+                      <ConfirmButton
+                        onConfirm={() => void action.run(() => deleteRacket(racket.id))}
+                        ariaLabel={`删除 ${racket.name}`}
+                        confirmLabel="删除"
+                        className={buttonClass.icon}
+                        armedClassName={buttonClass.armedPill}
+                        testId={`delete-retired-racket-${racket.id}`}
+                      />
+                    </div>
+                  </article>
+                ))}
+              </div>
             </section>
           ) : null}
         </>

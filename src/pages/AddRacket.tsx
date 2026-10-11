@@ -57,7 +57,7 @@ export function AddRacket({ onBack, onCreated }: AddRacketProps) {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-4 sm:px-6">
+    <div className="mx-auto flex w-full max-w-5xl flex-col gap-5 px-4 py-4 sm:px-6 lg:gap-6 lg:px-8 lg:py-8">
       <div className="flex items-center justify-between">
         <button
           type="button"
@@ -79,7 +79,7 @@ export function AddRacket({ onBack, onCreated }: AddRacketProps) {
       <form onSubmit={handleSubmit} className="grid gap-5">
         <section className="rounded-lg border border-ink/10 bg-white p-4 shadow-soft">
           <h2 className="text-base font-black text-ink">球拍信息</h2>
-          <div className="mt-4 grid gap-4">
+          <div className="mt-4 grid gap-4 md:grid-cols-3">
             <label className="grid gap-2">
               <span className="text-sm font-bold text-ink">球拍名</span>
               <input
@@ -108,26 +108,30 @@ export function AddRacket({ onBack, onCreated }: AddRacketProps) {
                 className={inputClass}
               />
             </label>
-            <TextAreaField label="备注" hint="选填" value={notes} onChange={setNotes} testId="new-racket-notes" />
+            <div className="md:col-span-3">
+              <TextAreaField label="备注" hint="选填" value={notes} onChange={setNotes} testId="new-racket-notes" />
+            </div>
           </div>
         </section>
 
-        {RUBBER_SIDES.map((side) => (
-          <section key={side} className="rounded-lg border border-ink/10 bg-white p-4 shadow-soft">
-            <h2 className="text-base font-black text-ink">{rubberSideName[side]}胶皮</h2>
-            <div className="mt-4">
-              <RubberSourcePicker
-                value={sources[side]}
-                onChange={(next) => setSources((current) => ({ ...current, [side]: next }))}
-                choices={["new", "inventory", "keep"]}
-                keepLabel="暂不贴"
-                inventory={inventoryFor(side)}
-                testIdPrefix={testIdPrefixes[side]}
-                ariaLabel={`${rubberSideName[side]}胶皮来源`}
-              />
-            </div>
-          </section>
-        ))}
+        <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
+          {RUBBER_SIDES.map((side) => (
+            <section key={side} className="rounded-lg border border-ink/10 bg-white p-4 shadow-soft">
+              <h2 className="text-base font-black text-ink">{rubberSideName[side]}胶皮</h2>
+              <div className="mt-4">
+                <RubberSourcePicker
+                  value={sources[side]}
+                  onChange={(next) => setSources((current) => ({ ...current, [side]: next }))}
+                  choices={["new", "inventory", "keep"]}
+                  keepLabel="暂不贴"
+                  inventory={inventoryFor(side)}
+                  testIdPrefix={testIdPrefixes[side]}
+                  ariaLabel={`${rubberSideName[side]}胶皮来源`}
+                />
+              </div>
+            </section>
+          ))}
+        </div>
 
         {bareBlade ? <Notice tone="muted">两面都不贴时，这块球拍会作为闲置底板放进囤货，之后可以随时配胶启用。</Notice> : null}
 

@@ -91,15 +91,17 @@ export function Dashboard({ onAddSession, onAddRacket, onOpenRacket, onOpenInven
       {isLoading ? (
         <div className="px-4 py-10 text-sm text-ink/60">加载中...</div>
       ) : (
-        <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-4 sm:px-6">
-          <section className="rounded-lg bg-ink px-4 py-5 text-white shadow-soft">
-            <div className="flex items-center justify-between gap-3">
-              <p className="shrink-0 text-xs font-semibold uppercase tracking-[0.18em] text-limeglass/70">Racket Life</p>
-              <CloudChip onClick={() => setSyncOpen(true)} />
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-5 px-4 py-4 sm:px-6 lg:gap-6 lg:px-8 lg:py-8">
+          <section className="rounded-lg bg-ink px-4 py-5 text-white shadow-soft sm:px-6 lg:flex lg:items-center lg:justify-between lg:gap-8 lg:py-6">
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center justify-between gap-3 lg:justify-start lg:gap-4">
+                <p className="shrink-0 text-xs font-semibold uppercase tracking-[0.18em] text-limeglass/70">Racket Life</p>
+                <CloudChip onClick={() => setSyncOpen(true)} />
+              </div>
+              <h1 className="mt-2 text-2xl font-black leading-tight sm:text-3xl">球拍与胶皮寿命</h1>
             </div>
-            <h1 className="mt-2 text-2xl font-black leading-tight">球拍与胶皮寿命</h1>
 
-            <div className="mt-5 grid grid-cols-3 gap-2 text-center">
+            <div className="mt-5 grid grid-cols-3 gap-2 text-center lg:mt-0 lg:w-[420px] lg:shrink-0 lg:gap-3">
               <div className="rounded-md bg-white/10 px-2 py-3">
                 <div className="text-xl font-black">{activeRackets.length}</div>
                 <div className="mt-1 text-[11px] font-medium text-white/60">在用球拍</div>
@@ -146,7 +148,7 @@ export function Dashboard({ onAddSession, onAddRacket, onOpenRacket, onOpenInven
                 <Droplets size={16} aria-hidden="true" />
                 {reboostAlerts.length} 张胶皮建议复灌
               </div>
-              <ul className="mt-2 grid grid-cols-1 gap-1">
+              <ul className="mt-2 grid grid-cols-1 gap-1 md:grid-cols-2 xl:grid-cols-3">
                 {reboostAlerts.map(({ racket, side, rubber, summary }) => (
                   <li key={rubber.id} className="min-w-0">
                     <button
@@ -188,11 +190,12 @@ export function Dashboard({ onAddSession, onAddRacket, onOpenRacket, onOpenInven
               <button
                 type="button"
                 onClick={onAddRacket}
-                className="tap-target inline-flex items-center justify-center rounded-full bg-white px-3 text-sm font-bold text-ink shadow-sm ring-1 ring-ink/10 transition active:scale-95"
+                className="tap-target inline-flex items-center justify-center gap-1.5 rounded-full bg-white px-3 text-sm font-bold text-ink shadow-sm ring-1 ring-ink/10 transition active:scale-95"
                 aria-label="新增球拍"
                 title="新增球拍"
               >
                 <SquarePen size={18} aria-hidden="true" />
+                <span className="hidden md:inline">新增球拍</span>
               </button>
               <button
                 type="button"
@@ -206,7 +209,7 @@ export function Dashboard({ onAddSession, onAddRacket, onOpenRacket, onOpenInven
           </div>
 
           {activeRackets.length ? (
-            <div className="grid gap-4">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {activeRackets.map((racket) => (
                 <RacketCard
                   key={racket.id}
