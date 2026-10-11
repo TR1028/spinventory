@@ -3,6 +3,7 @@
 Local-first PWA + Cloudflare (Workers + D1) cloud-synced app for tracking table tennis racket setups, spare equipment inventory, rubber calendar & play-time life, boosting logs, and re-boost reminders.
 
 - **线上网址 (GitHub Pages)**: <https://tr1028.github.io/spinventory/>
+- **云端后端服务 (Cloudflare Worker + D1)**: <https://spinventory-api.taoran2001.workers.dev>（已默认绑定，打开网页直接注册/登录即可同步）
 
 ## 快速使用指南 (How to Use)
 

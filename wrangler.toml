@@ -28,4 +28,4 @@ binding = "DB"
 database_name = "spinventory-db"
 # Replace with the id printed by `pnpm exec wrangler d1 create spinventory-db` before deploying.
 # The placeholder is fine for local development (`wrangler dev` / `--local`).
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "43764a00-9f21-44af-96e0-ff9ece49064d"
