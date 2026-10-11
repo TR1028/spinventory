@@ -60,17 +60,19 @@ CREATE TABLE IF NOT EXISTS rubbers (
   user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   racket_id TEXT, -- NULL while in inventory; kept after retirement for the racket's history
   side TEXT, -- 'forehand' | 'backhand'; NULL while in inventory
-  name TEXT NOT NULL,
+  name TEXT NOT NULL, -- model
+  label TEXT, -- optional custom name telling sheets of the same model apart (v4 migration)
+  quantity INTEGER, -- inventory stock: identical brand-new sheets in this record; NULL = 1 (v4 migration)
   hardness TEXT,
   thickness_mm REAL,
   weight_grams REAL, -- sheet weight (v2 migration)
-  installed_at TEXT, -- NULL while in inventory; calendar life starts here
+  installed_at TEXT, -- first glued on; calendar life starts here. NULL for brand-new inventory sheets
   mounted_at TEXT, -- used sheets moved onto their racket after installed_at; sessions count from here
   removed_at TEXT, -- set when retired; life stops accumulating
-  boosted INTEGER NOT NULL DEFAULT 0,
+  boosted INTEGER NOT NULL DEFAULT 0, -- 1 = boosting rubber (灌油胶皮): boosting logs and re-boost reminders
   custom_calendar_days INTEGER, -- NULL = 120 days
   custom_play_minutes INTEGER, -- NULL = 5400 minutes (90 h)
-  initial_play_minutes INTEGER, -- play time before the sheet was recorded; counts toward play life
+  initial_play_minutes INTEGER, -- play not covered by the current racket's sessions (before recording, earlier rackets)
   boost_cycle_days INTEGER, -- NULL = 21 days
   notes TEXT,
   created_at TEXT NOT NULL,

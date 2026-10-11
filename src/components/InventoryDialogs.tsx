@@ -4,7 +4,9 @@ import { useMemo, useState, type FormEvent } from "react";
 import { getInventoryRubbers, getMountedRubber } from "../db/domain";
 import {
   getRacketStatus,
+  getRubberDisplayName,
   getRubberMountedDate,
+  getRubberQuantity,
   RUBBER_SIDES,
   rubberSideName,
   type AppSnapshot,
@@ -12,20 +14,22 @@ import {
   type Rubber,
   type RubberSide,
 } from "../db/schema";
-import { useAppData } from "../db/store";
-import { todayISO } from "../utils/date";
+import { useAppData, type OutgoingRubberAction } from "../db/store";
+import { formatFullDate, todayISO } from "../utils/date";
 import { sortRackets } from "../utils/rackets";
 import { CatalogPicker } from "./CatalogPicker";
+import { OutgoingRubberField } from "./OutgoingRubberField";
 import { RacketSpecFields, createRacketSpecForm, specFormToInput, specFormToUpdate } from "./RacketSpecs";
+import { createRubberForm, describeRubberSpecs, formToStockInput, formToStockUpdate, rubberToForm, RubberFormFields } from "./RubberForm";
 import {
-  createRubberForm,
-  describeRubberSpecs,
-  formToRubberFields,
-  formToRubberUpdate,
-  rubberToForm,
-  RubberFormFields,
-} from "./RubberForm";
-import { RubberSourcePicker, createSourceState, resolveRubberSource, type RubberSourceState } from "./RubberSourcePicker";
+  MountBoostField,
+  RubberSourcePicker,
+  createSourceState,
+  describeInventoryState,
+  inventoryExcluding,
+  resolveRubberSource,
+  type RubberSourceState,
+} from "./RubberSourcePicker";
 import {
   CheckboxField,
   EmptyState,
@@ -45,34 +49,38 @@ import {
 // Spare rubbers
 // ---------------------------------------------------------------------------
 
-/** Adds a rubber to the inventory, or edits one (`rubber`). */
+/** Adds rubbers to the inventory (several brand-new sheets, or one used sheet), or edits one (`rubber`). */
 export function RubberFormModal({ rubber, onClose }: { rubber?: Rubber; onClose: () => void }) {
   const { createRubber, updateRubber } = useAppData();
   const [form, setForm] = useState(() => (rubber ? rubberToForm(rubber) : createRubberForm()));
   const action = useAsyncAction();
+  const used = rubber ? Boolean(rubber.installedAt) : form.condition === "used";
+  const count = Math.max(1, Math.round(Number(form.quantity) || 1));
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     void action.run(async () => {
-      if (rubber) await updateRubber(rubber.id, formToRubberUpdate(form));
-      else await createRubber(formToRubberFields(form));
+      if (rubber) await updateRubber(rubber.id, formToStockUpdate(form, rubber));
+      else await createRubber(formToStockInput(form));
       onClose();
     });
   }
 
+  let description = "新买的胶皮不计算寿命，贴到球拍后才开始计时；拆下来还要用的胶皮选「用过的」。";
+  if (rubber) {
+    description = used
+      ? "拆下待用的胶皮：首次贴拍日期和已打时长决定剩余寿命，再贴上球拍后接着累计。"
+      : "全新未拆的囤货胶皮，贴到球拍后才开始计时。";
+  }
+
   return (
-    <Modal
-      title={rubber ? "编辑囤货胶皮" : "添加囤货胶皮"}
-      description="还没贴拍的胶皮不计算寿命，贴到球拍后才开始计时。"
-      onClose={onClose}
-      testId="rubber-form-modal"
-    >
+    <Modal title={rubber ? "编辑囤货胶皮" : "添加囤货胶皮"} description={description} onClose={onClose} testId="rubber-form-modal">
       <form onSubmit={handleSubmit} className="grid gap-4">
-        <RubberFormFields value={form} onChange={setForm} testIdPrefix="inventory" />
+        <RubberFormFields value={form} onChange={setForm} testIdPrefix="inventory" variant={rubber ? "stock-edit" : "stock"} />
         <ErrorBanner message={action.error} />
         <button type="submit" disabled={action.pending} className={buttonClass.primary} data-testid="inventory-rubber-submit">
           {rubber ? <Check size={18} aria-hidden="true" /> : <PackagePlus size={18} aria-hidden="true" />}
-          {action.pending ? "保存中…" : rubber ? "保存修改" : "加入囤货"}
+          {action.pending ? "保存中…" : rubber ? "保存修改" : !used && count > 1 ? `加入囤货（${count} 张）` : "加入囤货"}
         </button>
       </form>
     </Modal>
@@ -83,7 +91,15 @@ function preferredSide(data: AppSnapshot, racket: Racket): RubberSide {
   return RUBBER_SIDES.find((side) => !getMountedRubber(data, racket, side)) ?? "forehand";
 }
 
-/** 「贴到球拍」: mounts an inventory rubber, retiring whatever is on the chosen side. */
+function parseOptionalLayers(value: string) {
+  const text = value.trim();
+  if (!text) return undefined;
+  const layers = Number(text);
+  if (!Number.isFinite(layers) || layers <= 0) throw new Error("贴拍灌油层数需为大于 0 的整数");
+  return Math.max(1, Math.round(layers));
+}
+
+/** 「贴到球拍」: mounts an inventory rubber; whatever is on the chosen side is retired or put back. */
 export function MountRubberModal({ rubber, onClose }: { rubber: Rubber; onClose: () => void }) {
   const { data, replaceRubber, updateRacket } = useAppData();
   const rackets = useMemo(
@@ -96,11 +112,15 @@ export function MountRubberModal({ rubber, onClose }: { rubber: Rubber; onClose:
   const [side, setSide] = useState<RubberSide>(() => (rackets[0] ? preferredSide(data, rackets[0]) : "forehand"));
   const [date, setDate] = useState(todayISO);
   const [activate, setActivate] = useState(true);
+  const [outgoing, setOutgoing] = useState<OutgoingRubberAction>("retire");
+  const [boostLayers, setBoostLayers] = useState("");
   const action = useAsyncAction();
 
   const racket = rackets.find((item) => item.id === racketId);
   const occupant = racket ? getMountedRubber(data, racket, side) : undefined;
   const isSpare = racket ? getRacketStatus(racket) === "inventory" : false;
+  const count = getRubberQuantity(rubber);
+  const earliest = [occupant ? getRubberMountedDate(occupant) : undefined, rubber.installedAt].filter(Boolean).sort().pop();
 
   function selectRacket(nextId: string) {
     setRacketId(nextId);
@@ -112,16 +132,35 @@ export function MountRubberModal({ rubber, onClose }: { rubber: Rubber; onClose:
     event.preventDefault();
     void action.run(async () => {
       if (!racket) throw new Error("请选择要贴的球拍");
-      await replaceRubber(racket.id, { side, date, source: { type: "inventory", rubberId: rubber.id } });
+      const layers = rubber.boosted ? parseOptionalLayers(boostLayers) : undefined;
+      await replaceRubber(racket.id, {
+        side,
+        date,
+        source: layers ? { type: "inventory", rubberId: rubber.id, boostLayers: layers } : { type: "inventory", rubberId: rubber.id },
+        outgoing: occupant ? outgoing : undefined,
+      });
       if (isSpare && activate) await updateRacket(racket.id, { status: "active" });
       onClose();
     });
   }
 
   return (
-    <Modal title="贴到球拍" description={`${rubber.name} · ${describeRubberSpecs(rubber)}`} onClose={onClose} testId="mount-rubber-modal">
+    <Modal
+      title="贴到球拍"
+      description={`${getRubberDisplayName(rubber)} · ${describeRubberSpecs(rubber)}`}
+      onClose={onClose}
+      testId="mount-rubber-modal"
+    >
       {rackets.length ? (
         <form onSubmit={handleSubmit} className="grid gap-4">
+          {rubber.installedAt ? (
+            <Notice tone="info" testId="mount-used-notice">
+              这张胶皮用过（{describeInventoryState(rubber)}），贴上后寿命接着之前的累计。
+            </Notice>
+          ) : count > 1 ? (
+            <Notice tone="muted">囤货里有 {count} 张，贴上其中 1 张，剩下 {count - 1} 张继续囤着。</Notice>
+          ) : null}
+
           <label className="grid gap-2">
             <FieldLabel>球拍</FieldLabel>
             <select
@@ -166,22 +205,23 @@ export function MountRubberModal({ rubber, onClose }: { rubber: Rubber; onClose:
           </div>
 
           {occupant ? (
-            <Notice tone="warn" testId="mount-occupant-notice">
-              该位置当前是「{occupant.name}」，贴上后它会自动退役，移入历任退役胶皮档案。
-            </Notice>
+            <OutgoingRubberField rubber={occupant} value={outgoing} onChange={setOutgoing} date={date} testIdPrefix="mount" />
           ) : (
             <Notice tone="info">该位置目前空着，贴上后开始计算寿命。</Notice>
           )}
 
           <TextField
             label="贴拍日期"
+            hint={rubber.installedAt ? `首次贴拍 ${formatFullDate(rubber.installedAt)}` : undefined}
             type="date"
             value={date}
             onChange={setDate}
-            min={occupant ? getRubberMountedDate(occupant) : undefined}
+            min={earliest}
             required
             testId="mount-date"
           />
+
+          {rubber.boosted ? <MountBoostField value={boostLayers} onChange={setBoostLayers} testId="mount-boost-layers" /> : null}
 
           {isSpare ? (
             <CheckboxField
@@ -294,13 +334,11 @@ export function ActivateBladeModal({ racket, onClose }: { racket: Racket; onClos
     forehand: createSourceState(mounted.forehand ? "keep" : "new"),
     backhand: createSourceState(mounted.backhand ? "keep" : "new"),
   }));
+  const [outgoing, setOutgoing] = useState<Record<RubberSide, OutgoingRubberAction>>({ forehand: "retire", backhand: "retire" });
   const action = useAsyncAction();
 
-  /** Inventory offered to one side, without the rubber the other side already picked. */
-  const inventoryFor = (side: RubberSide) => {
-    const other = sources[side === "forehand" ? "backhand" : "forehand"];
-    return other.choice === "inventory" ? inventory.filter((rubber) => rubber.id !== other.inventoryId) : inventory;
-  };
+  /** Inventory offered to one side, without the record the other side already picked (unless it has more sheets). */
+  const inventoryFor = (side: RubberSide) => inventoryExcluding(inventory, sources[side === "forehand" ? "backhand" : "forehand"]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -313,7 +351,7 @@ export function ActivateBladeModal({ racket, onClose }: { racket: Racket; onClos
 
       for (const { side, source } of plan) {
         if (!source) continue;
-        await replaceRubber(racket.id, { side, date, source });
+        await replaceRubber(racket.id, { side, date, source, outgoing: mounted[side] ? outgoing[side] : undefined });
         // This side is done: a retry after a later failure must not mount it again.
         setSources((current) => ({ ...current, [side]: createSourceState("keep") }));
       }
@@ -336,7 +374,7 @@ export function ActivateBladeModal({ racket, onClose }: { racket: Racket; onClos
               <div className="flex items-baseline justify-between gap-3">
                 <h3 className="shrink-0 text-sm font-black text-ink">{rubberSideName[side]}胶皮</h3>
                 <span className="min-w-0 truncate text-xs font-medium text-ink/55">
-                  {current ? `当前：${current.name}` : "当前空位"}
+                  {current ? `当前：${getRubberDisplayName(current)}` : "当前空位"}
                 </span>
               </div>
               <RubberSourcePicker
@@ -350,7 +388,13 @@ export function ActivateBladeModal({ racket, onClose }: { racket: Racket; onClos
                 ariaLabel={`${rubberSideName[side]}胶皮来源`}
               />
               {current && source.choice !== "keep" ? (
-                <Notice tone="warn">「{current.name}」会自动退役，移入历任退役胶皮档案。</Notice>
+                <OutgoingRubberField
+                  rubber={current}
+                  value={outgoing[side]}
+                  onChange={(next) => setOutgoing((all) => ({ ...all, [side]: next }))}
+                  date={date}
+                  testIdPrefix={`activate-${side}`}
+                />
               ) : null}
             </section>
           );

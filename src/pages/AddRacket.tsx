@@ -2,8 +2,13 @@ import { ArrowLeft, Check, Plus } from "lucide-react";
 import { FormEvent, useMemo, useState } from "react";
 import { CatalogPicker } from "../components/CatalogPicker";
 import { RacketSpecFields, createRacketSpecForm, specFormToInput } from "../components/RacketSpecs";
-import { createRubberForm } from "../components/RubberForm";
-import { RubberSourcePicker, createSourceState, resolveRubberSource, type RubberSourceState } from "../components/RubberSourcePicker";
+import {
+  RubberSourcePicker,
+  createSourceState,
+  inventoryExcluding,
+  resolveRubberSource,
+  type RubberSourceState,
+} from "../components/RubberSourcePicker";
 import { ErrorBanner, Notice, TextAreaField, TextField, useAsyncAction } from "../components/ui";
 import { getInventoryRubbers } from "../db/domain";
 import { RUBBER_SIDES, rubberSideName, type RubberSide } from "../db/schema";
@@ -29,17 +34,14 @@ export function AddRacket({ onBack, onCreated }: AddRacketProps) {
   const [notes, setNotes] = useState("");
   const [specs, setSpecs] = useState(() => createRacketSpecForm());
   const [sources, setSources] = useState<Record<RubberSide, RubberSourceState>>(() => ({
-    forehand: createSourceState("new", createRubberForm({ boosted: true })),
+    forehand: createSourceState("new"),
     backhand: createSourceState("new"),
   }));
   const action = useAsyncAction();
   const bareBlade = sources.forehand.choice === "keep" && sources.backhand.choice === "keep";
 
-  /** Inventory offered to one side, without the rubber the other side already picked. */
-  const inventoryFor = (side: RubberSide) => {
-    const other = sources[side === "forehand" ? "backhand" : "forehand"];
-    return other.choice === "inventory" ? inventory.filter((rubber) => rubber.id !== other.inventoryId) : inventory;
-  };
+  /** Inventory offered to one side, without the record the other side already picked (unless it has more sheets). */
+  const inventoryFor = (side: RubberSide) => inventoryExcluding(inventory, sources[side === "forehand" ? "backhand" : "forehand"]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

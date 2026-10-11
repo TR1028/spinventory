@@ -31,8 +31,13 @@ export type RubberLife = {
   /** Effective limits: the rubber's custom values or the defaults. */
   calendarLimitDays: number;
   playLimitMinutes: number;
-  /** `inventory` rubbers have not started aging; `retired` rubbers are frozen at `removedAt`. */
+  /**
+   * `inventory` rubbers: brand-new ones have not started aging, used ones keep aging from their first
+   * installation; `retired` rubbers are frozen at `removedAt`.
+   */
   state: RubberState;
+  /** Glued on before (or has recorded play time), as opposed to a brand-new sheet. */
+  used: boolean;
   status: "good" | "watch" | "replace";
 };
 
@@ -42,7 +47,7 @@ export type BoostingSummary = {
   daysSinceLastBoost?: number;
   /** Re-boost reminder cycle in days (custom or default 21). */
   cycleDays: number;
-  /** Boosted, still in use, and the last boost is at least `cycleDays` old. */
+  /** A boosting rubber on a racket whose last boost is at least `cycleDays` old. */
   needsReboost: boolean;
   /** Days until the reminder is due (negative when overdue). */
   daysUntilReboost?: number;
@@ -80,11 +85,12 @@ export function calculateRubberLife(rubber: Rubber, sessions: PlaySession[], asO
   const limits = getRubberLifeLimits(rubber);
   const state = getRubberState(rubber);
   const installedAt = rubber.installedAt;
-  /** Play time before the rubber was recorded in the app (used sheets). */
+  /** Play time not covered by the current racket's sessions (before recording, earlier rackets). */
   const initialPlayMinutes = Math.round(positiveOr(rubber.initialPlayMinutes, 0));
+  const used = Boolean(installedAt) || initialPlayMinutes > 0;
 
   if (!installedAt) {
-    // Still in the inventory: the calendar has not started; only pre-recorded play time counts.
+    // Brand-new sheet in the inventory: the calendar has not started; only pre-recorded play time counts.
     const playPercent = clampPercent((initialPlayMinutes / limits.playMinutes) * 100);
     return {
       calendarDays: 0,
@@ -97,19 +103,23 @@ export function calculateRubberLife(rubber: Rubber, sessions: PlaySession[], asO
       calendarLimitDays: limits.calendarDays,
       playLimitMinutes: limits.playMinutes,
       state,
+      used,
       status: lifeStatus(playPercent),
     };
   }
 
   // Sessions count from the day the rubber went onto its current racket (`mountedAt` for a used
-  // sheet moved onto it); its earlier play is already in `initialPlayMinutes`.
+  // sheet moved onto it); its earlier play is already in `initialPlayMinutes`. A used sheet waiting
+  // in the inventory is on no racket, so only that frozen play time counts while it keeps aging.
   const sessionsFrom = getRubberMountedDate(rubber) ?? installedAt;
-  const relevantSessions = sessions.filter((session) => {
-    const sameRacket = !rubber.racketId || session.racketId === rubber.racketId;
-    const afterInstall = session.date >= sessionsFrom;
-    const beforeRemoval = !rubber.removedAt || session.date <= rubber.removedAt;
-    return sameRacket && afterInstall && beforeRemoval;
-  });
+  const relevantSessions = rubber.racketId
+    ? sessions.filter((session) => {
+        const sameRacket = session.racketId === rubber.racketId;
+        const afterInstall = session.date >= sessionsFrom;
+        const beforeRemoval = !rubber.removedAt || session.date <= rubber.removedAt;
+        return sameRacket && afterInstall && beforeRemoval;
+      })
+    : [];
 
   const playMinutes = relevantSessions.reduce((total, session) => total + session.durationMinutes, initialPlayMinutes);
   const calendarDays = daysBetween(installedAt, getRubberLifeEndDate(rubber, asOf));
@@ -128,6 +138,7 @@ export function calculateRubberLife(rubber: Rubber, sessions: PlaySession[], asO
     calendarLimitDays: limits.calendarDays,
     playLimitMinutes: limits.playMinutes,
     state,
+    used,
     status: lifeStatus(usedPercent),
   };
 }
@@ -147,7 +158,7 @@ export function getBoostingSummary(rubber: Rubber, logs: BoostingLog[], asOf = t
     daysSinceLastBoost,
     cycleDays,
     needsReboost: Boolean(
-      rubber.boosted && !rubber.removedAt && daysSinceLastBoost !== undefined && daysSinceLastBoost >= cycleDays,
+      rubber.boosted && getRubberState(rubber) === "mounted" && daysSinceLastBoost !== undefined && daysSinceLastBoost >= cycleDays,
     ),
     daysUntilReboost: daysSinceLastBoost === undefined ? undefined : cycleDays - daysSinceLastBoost,
   };

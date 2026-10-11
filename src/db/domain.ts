@@ -9,6 +9,7 @@
 import {
   getRacketRubberId,
   getRubberMountedDate,
+  getRubberQuantity,
   getRubberState,
   isGripType,
   RACKET_STATUSES,
@@ -51,11 +52,15 @@ export type CreateResult = { delta: AppDataDelta; id: string };
 // ---------------------------------------------------------------------------
 
 export type RubberFields = {
+  /** Model. */
   name: string;
+  /** Optional custom name, e.g. `1号` / `比赛备用`. */
+  label?: string;
   hardness?: string;
   thicknessMm?: number;
   /** Sheet weight in grams. */
   weightGrams?: number;
+  /** A boosting rubber (灌油胶皮); most rubbers are not. */
   boosted?: boolean;
   customCalendarDays?: number;
   customPlayMinutes?: number;
@@ -65,7 +70,10 @@ export type RubberFields = {
   notes?: string;
 };
 
-/** History of a sheet that was already in use when it was recorded ("已在用老胶皮"). */
+/**
+ * History of a sheet that was already in use when it was recorded ("已在用老胶皮" being mounted, or a
+ * used sheet added to the inventory).
+ */
 export type UsedRubberHistory = {
   /** `YYYY-MM-DD` the sheet was first glued on; its calendar life starts here. */
   installedAt: string;
@@ -87,7 +95,16 @@ export type RubberSource =
       /** Set when the sheet was already in use before it was recorded; omitted for a brand-new sheet. */
       used?: UsedRubberHistory;
     }
-  | { type: "inventory"; rubberId: string };
+  | {
+      type: "inventory";
+      /** An inventory record; when it stands for several sheets (`quantity`), one is split off. */
+      rubberId: string;
+      /** Boosting rubbers: also log a boost with this many layers on the mount date (boosted before gluing). */
+      boostLayers?: number;
+    };
+
+/** What happens to the rubber a replacement takes off: archived as retired, or kept in the inventory. */
+export type OutgoingRubberAction = "retire" | "stash";
 
 /** Optional blade details: grip, weights and service history. */
 export type RacketSpecs = {
@@ -127,11 +144,18 @@ export type UpdateRacketInput = {
   initialPlayMinutes?: number | null;
 };
 
-/** Creates an unmounted rubber in the inventory. */
-export type CreateRubberInput = RubberFields;
+/**
+ * Adds an unmounted rubber to the inventory: `quantity` identical brand-new sheets (default 1), or
+ * one used sheet (`used`, e.g. taken off a racket earlier) whose history is backfilled.
+ */
+export type CreateRubberInput = RubberFields & {
+  quantity?: number;
+  used?: UsedRubberHistory;
+};
 
 export type UpdateRubberInput = {
   name?: string;
+  label?: string | null;
   hardness?: string | null;
   thicknessMm?: number | null;
   weightGrams?: number | null;
@@ -141,8 +165,13 @@ export type UpdateRubberInput = {
   initialPlayMinutes?: number | null;
   boostCycleDays?: number | null;
   notes?: string | null;
-  /** Only for mounted or retired rubbers. */
-  installedAt?: string;
+  /** Brand-new inventory rubbers only: number of identical sheets (`null` = 1). */
+  quantity?: number | null;
+  /**
+   * Mounted or retired rubbers: their installation date. Inventory rubbers: a date marks a used
+   * sheet (first glued on that day), `null` makes it brand-new again.
+   */
+  installedAt?: string | null;
   /** A date retires a mounted rubber (its racket slot is freed); `null` restores a retired one. */
   removedAt?: string | null;
 };
@@ -155,6 +184,13 @@ export type ReplaceRubberInput = {
    */
   date?: string;
   source: RubberSource;
+  /** What happens to the rubber taken off (default `retire`). */
+  outgoing?: OutgoingRubberAction;
+};
+
+/** 「放回囤货」: `date` the mounted rubber is taken off (default today; ignored for retired rubbers). */
+export type StashRubberInput = {
+  date?: string;
 };
 
 export type CreatePlaySessionInput = {
@@ -186,6 +222,8 @@ export type UpdateBoostingLogInput = {
 
 export const LIMITS = {
   textLength: 120,
+  /** Custom rubber name. */
+  labelLength: 40,
   hardnessLength: 20,
   notesLength: 1000,
   maxThicknessMm: 10,
@@ -198,10 +236,14 @@ export const LIMITS = {
   /** Pre-recorded play time (10 000 h). */
   maxInitialPlayMinutes: 600_000,
   maxPriorBoosts: 100,
+  /** Identical sheets in one inventory record. */
+  maxQuantity: 99,
 } as const;
 
 /** `notes` of the boosting log created together with a new boosted rubber. */
 export const INITIAL_BOOST_NOTE = "Initial boost";
+/** `notes` of the boost logged when a used boosting rubber is mounted again from the inventory. */
+export const MOUNT_BOOST_NOTE = "Boost on mounting";
 /** `notes` of the latest boost backfilled for a used sheet (its real date). */
 export const BACKFILLED_BOOST_NOTE = "Backfilled boost";
 /** `notes` of earlier backfilled boosts, spread evenly between `installedAt` and the latest one. */
@@ -455,11 +497,21 @@ export function getMountedRubber(snapshot: Pick<AppSnapshot, "rubbers">, racket:
   return rubberId ? snapshot.rubbers.find((rubber) => rubber.id === rubberId) : undefined;
 }
 
-/** Unmounted rubbers in the inventory, newest first. */
+/**
+ * Unmounted rubbers in the inventory: brand-new stock first (newest first), then used sheets taken
+ * off a racket to be mounted again (most recently put back first).
+ */
 export function getInventoryRubbers(snapshot: Pick<AppSnapshot, "rubbers">) {
+  const usedRank = (rubber: Rubber) => (rubber.installedAt ? 1 : 0);
+  const sortKey = (rubber: Rubber) => (rubber.installedAt ? (rubber.updatedAt ?? rubber.createdAt) : rubber.createdAt);
   return snapshot.rubbers
     .filter((rubber) => getRubberState(rubber) === "inventory")
-    .sort((left, right) => compareText(right.createdAt, left.createdAt));
+    .sort((left, right) => usedRank(left) - usedRank(right) || compareText(sortKey(right), sortKey(left)));
+}
+
+/** Sheets in the inventory, counting the `quantity` of brand-new stock records. */
+export function countInventorySheets(snapshot: Pick<AppSnapshot, "rubbers">) {
+  return snapshot.rubbers.reduce((total, rubber) => (getRubberState(rubber) === "inventory" ? total + getRubberQuantity(rubber) : total), 0);
 }
 
 /** Rubbers previously used on a racket, most recently retired first. */
@@ -536,7 +588,8 @@ function logsOfRubber(snapshot: AppSnapshot, rubberId: string) {
 function normalizeRubberFields(input: unknown) {
   const fields = asObject(input, "胶皮信息");
   return compact({
-    name: requireText(fields.name, "胶皮名称"),
+    name: requireText(fields.name, "胶皮型号"),
+    label: optionalText(fields.label, "自定义名称", LIMITS.labelLength),
     hardness: optionalText(fields.hardness, "硬度", LIMITS.hardnessLength),
     thicknessMm: optionalPositiveNumber(fields.thicknessMm, "厚度", LIMITS.maxThicknessMm),
     weightGrams: optionalPositiveNumber(fields.weightGrams, "胶皮重量", LIMITS.maxWeightGrams),
@@ -594,6 +647,27 @@ function normalizeUsedHistory(input: unknown, boosted: boolean, fallbackLayers: 
  */
 type MountTarget = { racketId: string; side: RubberSide; date: string; trackMount?: boolean };
 
+/** Stages the backfilled boosts of a used sheet as its boosting logs #1..n. */
+function stageBackfilledBoosts(builder: DeltaBuilder, rubberId: string, boosts: UsedRubberPlan["boosts"], ctx: DomainContext) {
+  boosts.forEach((boost, index) => {
+    builder.put("boostingLogs", {
+      id: ctx.createId("boost"),
+      rubberId,
+      date: boost.date,
+      boostNumber: index + 1,
+      layers: boost.layers,
+      notes: boost.notes,
+      createdAt: offsetTimestamp(ctx.now, index),
+    });
+  });
+}
+
+/** Stages a boost logged when a rubber is mounted, renumbering the rubber's earlier logs. */
+function stageMountBoost(snapshot: AppSnapshot, builder: DeltaBuilder, rubberId: string, date: string, layers: number, notes: string, ctx: DomainContext) {
+  const log: BoostingLog = { id: ctx.createId("boost"), rubberId, date, boostNumber: 0, layers, notes, createdAt: ctx.now };
+  stageRenumberedLogs(builder, [...logsOfRubber(snapshot, rubberId), log]);
+}
+
 /** Stages the rubber described by `sourceInput` as mounted on `target`; returns its id. */
 function stageMount(snapshot: AppSnapshot, builder: DeltaBuilder, target: MountTarget, sourceInput: unknown, ctx: DomainContext) {
   const source = asObject(sourceInput, "胶皮来源");
@@ -618,17 +692,7 @@ function stageMount(snapshot: AppSnapshot, builder: DeltaBuilder, target: MountT
 
     if (used) {
       // A used sheet's past boosts replace the "initial boost" of a brand-new one.
-      used.boosts.forEach((boost, index) => {
-        builder.put("boostingLogs", {
-          id: ctx.createId("boost"),
-          rubberId: rubber.id,
-          date: boost.date,
-          boostNumber: index + 1,
-          layers: boost.layers,
-          notes: boost.notes,
-          createdAt: offsetTimestamp(ctx.now, index),
-        });
-      });
+      stageBackfilledBoosts(builder, rubber.id, used.boosts, ctx);
       return rubber.id;
     }
 
@@ -648,13 +712,82 @@ function stageMount(snapshot: AppSnapshot, builder: DeltaBuilder, target: MountT
   }
 
   if (source.type === "inventory") {
-    const rubber = builder.current("rubbers", findRubber(snapshot, source.rubberId));
-    if (getRubberState(rubber) !== "inventory") throw new DomainError("这张胶皮已经贴在球拍上或已退役", 409);
-    builder.put("rubbers", { ...rubber, racketId: target.racketId, side: target.side, installedAt: target.date, updatedAt: ctx.now });
-    return rubber.id;
+    const stock = builder.current("rubbers", findRubber(snapshot, source.rubberId));
+    if (getRubberState(stock) !== "inventory") throw new DomainError("这张胶皮已经贴在球拍上或已退役", 409);
+    const layers = optionalPositiveInt(source.boostLayers, "贴拍灌油层数", LIMITS.maxLayers);
+    // A used sheet keeps its first installation date (it kept aging in the inventory) and its play so
+    // far (`initialPlayMinutes`); sessions of the new racket count from the mount date.
+    const firstInstalled = stock.installedAt;
+    if (firstInstalled && target.date < firstInstalled) throw new DomainError("贴拍日期不能早于这张胶皮首次贴拍的日期");
+    const placement = {
+      racketId: target.racketId,
+      side: target.side,
+      installedAt: firstInstalled ?? target.date,
+      mountedAt: firstInstalled && firstInstalled < target.date ? target.date : undefined,
+      boosted: stock.boosted || Boolean(layers),
+      quantity: undefined,
+      updatedAt: ctx.now,
+    };
+
+    const count = getRubberQuantity(stock);
+    let rubberId = stock.id;
+    if (count > 1) {
+      // Split one sheet off the stock record; the rest stays in the inventory.
+      rubberId = ctx.createId("rubber");
+      builder.put("rubbers", compact({ ...stock, ...placement, id: rubberId, createdAt: ctx.now }));
+      builder.put("rubbers", compact({ ...stock, quantity: count - 1 > 1 ? count - 1 : undefined, updatedAt: ctx.now }));
+    } else {
+      builder.put("rubbers", compact({ ...stock, ...placement }));
+    }
+    if (layers) {
+      const notes = firstInstalled ? MOUNT_BOOST_NOTE : INITIAL_BOOST_NOTE;
+      stageMountBoost(snapshot, builder, rubberId, target.date, layers, notes, ctx);
+    }
+    return rubberId;
   }
 
   throw new DomainError("胶皮来源无效");
+}
+
+/** Minutes of the rubber's racket sessions from the day it went on that racket through `endDate`. */
+function racketSessionMinutes(snapshot: AppSnapshot, rubber: Rubber, endDate: string) {
+  const from = getRubberMountedDate(rubber);
+  if (!rubber.racketId || !from) return 0;
+  return snapshot.playSessions.reduce(
+    (total, session) =>
+      session.racketId === rubber.racketId && session.date >= from && session.date <= endDate ? total + session.durationMinutes : total,
+    0,
+  );
+}
+
+/**
+ * Stages a mounted (or retired) rubber back in the inventory as a used sheet taken off on `endDate`:
+ * its play on the racket is folded into `initialPlayMinutes`, while `installedAt` and its boosting
+ * logs stay, so its life continues where it stopped once it is mounted again. Racket slots are
+ * left to the caller.
+ */
+function stageStash(snapshot: AppSnapshot, builder: DeltaBuilder, rubber: Rubber, endDate: string, ctx: DomainContext) {
+  const minutes = Math.round(Math.max(0, rubber.initialPlayMinutes ?? 0)) + racketSessionMinutes(snapshot, rubber, endDate);
+  builder.put(
+    "rubbers",
+    compact({
+      ...rubber,
+      racketId: undefined,
+      side: undefined,
+      mountedAt: undefined,
+      removedAt: undefined,
+      quantity: undefined,
+      installedAt: rubber.installedAt ?? endDate,
+      initialPlayMinutes: minutes > 0 ? Math.min(minutes, LIMITS.maxInitialPlayMinutes) : undefined,
+      updatedAt: ctx.now,
+    }),
+  );
+}
+
+function parseOutgoingAction(value: unknown): OutgoingRubberAction {
+  if (isBlank(value) || value === "retire") return "retire";
+  if (value === "stash") return "stash";
+  throw new DomainError("旧胶皮的去向无效");
 }
 
 function nextSortOrder(rackets: Racket[]) {
@@ -745,17 +878,37 @@ export function planDeleteRacket(snapshot: AppSnapshot, id: string): DomainResul
 // Planners: rubbers
 // ---------------------------------------------------------------------------
 
-/** Adds an unmounted rubber to the inventory. */
+/**
+ * Adds an unmounted rubber to the inventory: `quantity` identical brand-new sheets in one record, or
+ * a single used sheet (`used`) whose installation date and past boosts are backfilled.
+ */
 export function planCreateRubber(_snapshot: AppSnapshot, input: CreateRubberInput, ctx: DomainContext): CreateResult {
   const builder = new DeltaBuilder();
-  const rubber: Rubber = { ...normalizeRubberFields(input), id: ctx.createId("rubber"), createdAt: ctx.now, updatedAt: ctx.now };
+  const raw = asObject(input, "胶皮信息");
+  const { initialPlayMinutes, ...fields } = normalizeRubberFields(raw);
+  const used = normalizeUsedHistory(raw.used, fields.boosted, undefined);
+  const quantity = optionalPositiveInt(raw.quantity, "数量", LIMITS.maxQuantity) ?? 1;
+  if (used && quantity > 1) throw new DomainError("用过的胶皮请逐张登记，数量只能为 1");
+
+  const rubber: Rubber = compact({
+    ...fields,
+    id: ctx.createId("rubber"),
+    quantity: quantity > 1 ? quantity : undefined,
+    installedAt: used?.installedAt,
+    // Only a used sheet has play time already.
+    initialPlayMinutes: used ? initialPlayMinutes : undefined,
+    createdAt: ctx.now,
+    updatedAt: ctx.now,
+  });
   builder.put("rubbers", rubber);
+  if (used) stageBackfilledBoosts(builder, rubber.id, used.boosts, ctx);
   return { delta: builder.build(), id: rubber.id };
 }
 
 /**
  * Edits a rubber. Setting `removedAt` on a mounted rubber retires it and frees its racket slot;
- * clearing `removedAt` puts a retired rubber back on its slot when that slot is empty.
+ * clearing `removedAt` puts a retired rubber back on its slot when that slot is empty. Inventory
+ * rubbers may change their stock `quantity` (brand-new only) and first installation date (used).
  * Needs: the rubber, rackets pointing at it and its own racket.
  */
 export function planUpdateRubber(snapshot: AppSnapshot, id: string, input: UpdateRubberInput, ctx: DomainContext): DomainResult {
@@ -765,8 +918,17 @@ export function planUpdateRubber(snapshot: AppSnapshot, id: string, input: Updat
 
   let installedAt = rubber.installedAt;
   if (input.installedAt !== undefined) {
-    if (state === "inventory") throw new DomainError("囤货中的胶皮还没有贴拍，不能设置安装日期");
-    installedAt = requireDate(input.installedAt, "安装日期");
+    installedAt =
+      state === "inventory" && input.installedAt === null ? undefined : requireDate(input.installedAt, state === "inventory" ? "首次贴拍日期" : "安装日期");
+  }
+
+  let quantity = rubber.quantity;
+  if (input.quantity !== undefined) {
+    const parsed = input.quantity === null ? 1 : requirePositiveInt(input.quantity, "数量", LIMITS.maxQuantity);
+    quantity = parsed > 1 ? parsed : undefined;
+  }
+  if ((quantity ?? 1) > 1 && (state !== "inventory" || installedAt)) {
+    throw new DomainError("只有全新未拆的囤货胶皮可以登记多张");
   }
 
   let removedAt = rubber.removedAt;
@@ -783,7 +945,8 @@ export function planUpdateRubber(snapshot: AppSnapshot, id: string, input: Updat
 
   const next: Rubber = compact({
     ...rubber,
-    name: input.name === undefined ? rubber.name : requireText(input.name, "胶皮名称"),
+    name: input.name === undefined ? rubber.name : requireText(input.name, "胶皮型号"),
+    label: patch(rubber.label, input.label, (value) => optionalText(value, "自定义名称", LIMITS.labelLength)),
     hardness: patch(rubber.hardness, input.hardness, (value) => optionalText(value, "硬度", LIMITS.hardnessLength)),
     thicknessMm: patch(rubber.thicknessMm, input.thicknessMm, (value) =>
       optionalPositiveNumber(value, "厚度", LIMITS.maxThicknessMm),
@@ -805,6 +968,7 @@ export function planUpdateRubber(snapshot: AppSnapshot, id: string, input: Updat
       optionalPositiveInt(value, "复灌周期", LIMITS.maxBoostCycleDays),
     ),
     notes: patch(rubber.notes, input.notes, (value) => optionalText(value, "备注")),
+    quantity,
     installedAt,
     mountedAt,
     removedAt,
@@ -825,6 +989,30 @@ export function planUpdateRubber(snapshot: AppSnapshot, id: string, input: Updat
   return { delta: builder.build() };
 }
 
+/**
+ * 「放回囤货」: takes a mounted rubber off on `input.date` (default today), or brings a retired one
+ * back, and keeps it in the inventory as a used sheet that will be mounted again. Its play so far is
+ * folded into `initialPlayMinutes`; its installation date and boosting logs stay, so its life goes
+ * on where it stopped. Needs: the rubber, rackets pointing at it and its racket's sessions.
+ */
+export function planStashRubber(snapshot: AppSnapshot, id: string, input: StashRubberInput | undefined, ctx: DomainContext): DomainResult {
+  const rubber = findRubber(snapshot, id);
+  const state = getRubberState(rubber);
+  if (state === "inventory") throw new DomainError("这张胶皮已经在囤货里了", 409);
+
+  let endDate = rubber.removedAt ?? ctx.today;
+  if (state === "mounted") {
+    endDate = optionalDate(input?.date, "撕下日期") ?? ctx.today;
+    const mountedDate = getRubberMountedDate(rubber);
+    if (mountedDate && endDate < mountedDate) throw new DomainError("撕下日期不能早于贴上这块球拍的日期");
+  }
+
+  const builder = new DeltaBuilder();
+  stageStash(snapshot, builder, rubber, endDate, ctx);
+  stageFreedSlots(snapshot, builder, rubber.id, ctx);
+  return { delta: builder.build() };
+}
+
 /** Deletes a rubber and its boosting logs, freeing any racket slot that points at it. */
 export function planDeleteRubber(snapshot: AppSnapshot, id: string, ctx: DomainContext): DomainResult {
   const rubber = findRubber(snapshot, id);
@@ -837,13 +1025,16 @@ export function planDeleteRubber(snapshot: AppSnapshot, id: string, ctx: DomainC
 
 /**
  * Mounts a rubber (new, or taken from the inventory) on one side of a racket. Whatever was mounted
- * there is retired on the same date, freezing its life, play time and boosting history.
- * Works for empty slots too. Needs: the racket, its rubbers and the inventory rubber (if any).
+ * there comes off on the same date: retired (default), freezing its life, play time and boosting
+ * history, or with `outgoing: "stash"` kept in the inventory to be mounted again later.
+ * Works for empty slots too. Needs: the racket, its rubbers, the inventory rubber and its boosting
+ * logs (if any), and the racket's sessions when the outgoing rubber is stashed.
  */
 export function planReplaceRubber(snapshot: AppSnapshot, racketId: string, input: ReplaceRubberInput, ctx: DomainContext): CreateResult {
   const racket = findRacket(snapshot, racketId);
   const side = requireSide(input.side);
   const date = optionalDate(input.date, "更换日期") ?? ctx.today;
+  const outgoingAction = parseOutgoingAction(input.outgoing);
   const builder = new DeltaBuilder();
   const currentId = getRacketRubberId(racket, side);
 
@@ -853,17 +1044,13 @@ export function planReplaceRubber(snapshot: AppSnapshot, racketId: string, input
   for (const rubber of outgoing) {
     const mountedDate = getRubberMountedDate(rubber);
     if (mountedDate && date < mountedDate) throw new DomainError("更换日期不能早于旧胶皮的安装日期");
-    builder.put("rubbers", {
-      ...rubber,
-      racketId: rubber.racketId ?? racket.id,
-      side: rubber.side ?? side,
-      removedAt: date,
-      updatedAt: ctx.now,
-    });
+    const placed = { ...rubber, racketId: rubber.racketId ?? racket.id, side: rubber.side ?? side };
+    if (outgoingAction === "stash") stageStash(snapshot, builder, placed, date, ctx);
+    else builder.put("rubbers", { ...placed, removedAt: date, updatedAt: ctx.now });
   }
 
   const rubberId = stageMount(snapshot, builder, { racketId: racket.id, side, date, trackMount: true }, input.source, ctx);
-  builder.put("rackets", { ...withSlot(racket, side, rubberId), updatedAt: ctx.now });
+  builder.put("rackets", { ...withSlot(builder.current("rackets", racket), side, rubberId), updatedAt: ctx.now });
   return { delta: builder.build(), id: rubberId };
 }
 
@@ -953,17 +1140,17 @@ export function planUpdateBoostingLog(snapshot: AppSnapshot, id: string, input: 
   return { delta: builder.build() };
 }
 
-/** Needs: the log, its siblings and its rubber. `boosted` follows whether any log remains. */
-export function planDeleteBoostingLog(snapshot: AppSnapshot, id: string, ctx: DomainContext): DomainResult {
+/**
+ * Needs: the log and its siblings. The rubber stays a boosting rubber (`boosted` is the user's
+ * 需要灌油 setting, switched off in the rubber editor), even when its last log is deleted.
+ */
+export function planDeleteBoostingLog(snapshot: AppSnapshot, id: string, _ctx?: DomainContext): DomainResult {
   const log = findBoostingLog(snapshot, id);
   const builder = new DeltaBuilder();
   builder.remove("boostingLogs", log.id);
-
-  const remaining = logsOfRubber(snapshot, log.rubberId).filter((item) => item.id !== log.id);
-  stageRenumberedLogs(builder, remaining);
-
-  const rubber = snapshot.rubbers.find((item) => item.id === log.rubberId);
-  const boosted = remaining.length > 0;
-  if (rubber && rubber.boosted !== boosted) builder.put("rubbers", { ...rubber, boosted, updatedAt: ctx.now });
+  stageRenumberedLogs(
+    builder,
+    logsOfRubber(snapshot, log.rubberId).filter((item) => item.id !== log.id),
+  );
   return { delta: builder.build() };
 }

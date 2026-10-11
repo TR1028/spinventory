@@ -11,6 +11,7 @@ import type {
   CreateRacketInput,
   CreateRubberInput,
   ReplaceRubberInput,
+  StashRubberInput,
   UpdateBoostingLogInput,
   UpdatePlaySessionInput,
   UpdateRacketInput,
@@ -213,6 +214,7 @@ export function createCloudApi(token: string) {
     createRubber: (input: CreateRubberInput) => mutation("POST", "/api/rubbers", input),
     updateRubber: (id: string, input: UpdateRubberInput) => mutation("PUT", item("rubbers", id), input),
     deleteRubber: (id: string) => mutation("DELETE", item("rubbers", id)),
+    stashRubber: (id: string, input: StashRubberInput) => mutation("POST", item("rubbers", id, "/stash"), input),
 
     createPlaySession: (input: CreatePlaySessionInput) => mutation("POST", "/api/sessions", input),
     updatePlaySession: (id: string, input: UpdatePlaySessionInput) => mutation("PUT", item("sessions", id), input),

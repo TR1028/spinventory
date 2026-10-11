@@ -1,12 +1,13 @@
-/** 「更换胶皮」: retires whatever is on one side of a racket and mounts a new or inventory rubber. */
-import { Archive, ArrowRightLeft } from "lucide-react";
+/** 「更换胶皮」: takes the rubber on one side of a racket off (retired or back to the inventory) and mounts a new or inventory rubber. */
+import { ArrowRightLeft } from "lucide-react";
 import { useMemo, useState, type FormEvent } from "react";
 import { getInventoryRubbers, getMountedRubber } from "../db/domain";
 import { getRubberMountedDate, rubberSideName, type Racket, type RubberSide } from "../db/schema";
-import { useAppData } from "../db/store";
-import { formatFullDate, todayISO } from "../utils/date";
+import { useAppData, type OutgoingRubberAction } from "../db/store";
+import { todayISO } from "../utils/date";
+import { OutgoingRubberField } from "./OutgoingRubberField";
 import { RubberSourcePicker, createSourceState, resolveRubberSource, type RubberSourceState } from "./RubberSourcePicker";
-import { ErrorBanner, Modal, Notice, TextField, buttonClass, useAsyncAction } from "./ui";
+import { ErrorBanner, Modal, TextField, buttonClass, useAsyncAction } from "./ui";
 
 type ReplaceRubberModalProps = {
   racket: Racket;
@@ -20,6 +21,7 @@ export function ReplaceRubberModal({ racket, side, onClose }: ReplaceRubberModal
   const inventory = useMemo(() => getInventoryRubbers(data), [data]);
   const [date, setDate] = useState(todayISO);
   const [source, setSource] = useState<RubberSourceState>(() => createSourceState("new"));
+  const [outgoing, setOutgoing] = useState<OutgoingRubberAction>("retire");
   const action = useAsyncAction();
   const sideName = rubberSideName[side];
 
@@ -28,7 +30,7 @@ export function ReplaceRubberModal({ racket, side, onClose }: ReplaceRubberModal
     void action.run(async () => {
       const resolved = resolveRubberSource(source, inventory, "新胶皮");
       if (!resolved) return;
-      await replaceRubber(racket.id, { side, date, source: resolved });
+      await replaceRubber(racket.id, { side, date, source: resolved, outgoing: current ? outgoing : undefined });
       onClose();
     });
   }
@@ -51,11 +53,7 @@ export function ReplaceRubberModal({ racket, side, onClose }: ReplaceRubberModal
           testId="replace-date"
         />
 
-        {current ? (
-          <Notice tone="warn" icon={<Archive size={16} aria-hidden="true" />} testId="replace-retire-notice">
-            当前的「{current.name}」将在 {date ? formatFullDate(date) : "更换当天"} 退役，移入历任退役胶皮档案；它的寿命、打球时长和灌油记录会冻结保存。
-          </Notice>
-        ) : null}
+        {current ? <OutgoingRubberField rubber={current} value={outgoing} onChange={setOutgoing} date={date} testIdPrefix="replace" /> : null}
 
         <RubberSourcePicker
           value={source}

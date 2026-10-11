@@ -11,14 +11,20 @@ Local-first PWA + Cloudflare (Workers + D1) cloud-synced app for tracking table 
    - 直接访问 <https://tr1028.github.io/spinventory/>，无需登录即可使用浏览器本地数据库（IndexedDB），首次打开自带 3 块球拍示例数据。
 2. **核心功能操作**：
    - **记录打球**：点击首页右上角或球拍卡片上的 `+` 按钮，选择球拍、日期与时长（分钟）。
-   - **球拍详情 & 换胶皮退役归档**：点击任意球拍卡片进入详情页：
-     - 可直接编辑当前正/反手胶皮参数（含自定义寿命天数、小时数、灌油复灌提醒周期，默认 `120 天 / 90 小时 / 21 天复灌`）。
-     - 点击 **「更换胶皮」** 可直接录入新胶皮或 **从囤货库存中选用闲置胶皮**，原胶皮会自动标记撕下日期并归档至底部的 **「历任退役胶皮档案」**（不再覆盖历史灌油记录）。
+   - **球拍详情 & 换胶皮/撕胶皮**：点击任意球拍卡片进入详情页：
+     - 可直接编辑当前正/反手胶皮参数（含自定义名称、自定义寿命天数、小时数；需要灌油的胶皮还有复灌提醒周期，默认 `120 天 / 90 小时 / 21 天复灌`）。
+     - 点击 **「更换胶皮」** 可直接录入新胶皮或 **从囤货中选用**；换下来的旧胶皮可以选 **「退役归档」**（进入底部的 **「历任退役胶皮档案」**）或 **「放回囤货」**（之后还要用）。
+     - 点击 **「撕下」**：撕下来不一定是退役——选 **「放回囤货」** 就是暂时撕下，已用天数、打球时长和灌油记录都会保留，之后贴到任意球拍接着算寿命；选 **「退役归档」** 则冻结归档。已经退役归档的胶皮也可以在档案里点 📦 图标 **放回囤货**。
      - **打球记录与灌油记录**均支持展开、行内编辑修改与删除（灌油记录增删改后会自动按日期重排 `第 N 次` 序号）。
-   - **囤货库存（`#/inventory`）**：点击首页的 **「囤货库存」** 按钮，管理手头未贴拍的 **闲置胶皮** 与 **闲置底板**，支持一键「贴到球拍」或「配胶启用」。
+   - **灌油是可选的**：大多数胶皮不用灌油，所以胶皮默认 **不灌油**，详情页只显示一行「开启灌油记录」；勾选 **「需要灌油」**（或从目录选择狂飚省狂/国狂等常灌油的胶皮时自动勾选）后才显示灌油记录、首次灌油层数和复灌提醒。
+   - **囤货库存（`#/inventory`）**：点击首页的 **「囤货」** 按钮，管理手头没贴拍的胶皮与 **闲置底板**：
+     - **全新未拆**：同款新胶皮可以 **一次登记多张**（数量 ±），卡片上显示 `×3`；「贴 1 张到球拍」时自动拆出 1 张，其余继续囤着。
+     - **拆下待用**：暂时撕下或「用过的」胶皮，显示剩余寿命、首次贴拍日期、已打时长和灌油次数；放在囤货里日历寿命会继续计算，重新贴上后打球时长接着累计。
+     - 每张胶皮都可以填 **自定义名称**（如 `1号`、`比赛用`），用来区分同款胶皮。
+     - 「添加胶皮」时选 **「用过的」** 可以直接补录一张之前用过、现在拆下来的胶皮（首次贴拍日期、已打时长、灌油历史）。
    - **器材目录 & 规格速选**：底板和胶皮名称都是可搜索的下拉框，内置蝴蝶、红双喜、斯帝卡、挺拔、骄猛、尼塔库、亚萨卡、维克塔斯、银河等品牌的常见型号，支持中英文和缩写搜索（如 `vis`、`w968`、`hl5`、`fzd`、`zjk`、`省狂`、`T05`、`D09c`），也可以按品牌筛选；目录里没有的型号直接输入名称即可保存。选中或输入能识别的胶皮后，会按该型号实际在售的规格显示 **厚度 / 硬度速选按钮**（如 `2.15 mm`、`41°`），点一下即可填入。
    - **底板规格与服役**：新增或编辑球拍时可记录握拍柄型（横板 FL / ST / AN、直板 CS、日直 JP）、底板裸重、整拍重量、底板启用日期和录入前已打小时数；首页卡片和详情页会显示 `横板 FL`、`整拍 188g · 裸板 89g`、`底板已服役 X 天` 等标签，累计时长包含录入前的小时数。
-   - **补录正在用的老胶皮**：贴新胶皮时选择 **「已在用老胶皮」**，填写已投入使用日期、此前已打时长；已灌油的胶皮再填历史灌油次数、上次灌油日期和层数，保存时自动补记灌油记录，寿命和复灌提醒立即反映真实情况。
+   - **补录正在用的老胶皮**：贴新胶皮时选择 **「已在用老胶皮」**，填写已投入使用日期、此前已打时长；需要灌油的胶皮再填历史灌油次数、上次灌油日期和层数，保存时自动补记灌油记录，寿命和复灌提醒立即反映真实情况。
 3. **开启多端云同步（Cloudflare Worker + D1 后台服务）**：
    - 点击首页顶部的 **「本地模式」** 徽章打开 **「云端同步」** 弹窗：
      - 在 **「服务器设置」** 中填入你的 Cloudflare Worker 地址（或通过仓库 Actions 变量 `VITE_API_BASE_URL` 预置）。
@@ -60,13 +66,15 @@ The repository contains application code and optional demo seed data only; a use
 - **Racket detail** (`#/rackets/:id`)
   - edit name, blade, status (在用 / 闲置 / 退役) and notes; delete the racket
   - blade specs: grip (横板 FL / ST / AN, 直板 CS, 日直 JP), blade and total weight, 底板启用日期 and play hours before recording, shown as badges in the header
-  - per-side life bars; each rubber can override its calendar limit, play-time limit and re-boost cycle, and record its weight and play hours before recording
-  - 更换胶皮: mount a new rubber (全新胶皮 or 已在用老胶皮) or one from the inventory; the old rubber is retired on the replacement date
-  - 撕下退役: retire a rubber and leave the side empty
-  - boosting logs and play sessions in expandable lists with inline edit and delete
-  - 历任退役胶皮档案: the racket's retired rubbers; restore one to its empty side, or delete it
+  - per-side life bars; each rubber can have a custom name (自定义名称), override its calendar limit, play-time limit and (boosting rubbers) re-boost cycle, and record its weight and play hours not covered by sessions
+  - 更换胶皮: mount a new rubber (全新胶皮 or 已在用老胶皮) or one from the inventory; the old rubber is retired (退役归档) or put back into the inventory (放回囤货) on the replacement date
+  - 撕下: take a rubber off and leave the side empty — 放回囤货 (temporary, to be used again; the default) or 退役归档
+  - boosting is opt-in: rubbers that are not boosted show a single 开启灌油记录 row; boosting rubbers show their logs with inline edit and delete; play sessions are listed the same way
+  - 历任退役胶皮档案: the racket's retired rubbers; restore one to its empty side, put it back into the inventory (放回囤货), or delete it
 - **Inventory** (`#/inventory`)
-  - 闲置胶皮: add, edit and delete spare rubbers, or 贴到球拍 (a rubber already on that side is retired automatically)
+  - 全新未拆: brand-new stock; identical sheets share one record with a quantity (add several at once, ± on the card, `×3` badge); 贴到球拍 splits one sheet off
+  - 拆下待用: used sheets taken off a racket (or entered as 用过的) with their remaining life, first glued date, play hours and boosts; mounting one again continues its life
+  - 贴到球拍: the rubber already on the chosen side is retired or put back into the inventory; boosting rubbers can log the boost done before gluing (贴拍前灌油层数)
   - 闲置底板: add, edit and delete spare blades (with the same blade specs), or 配胶启用 with new or inventory rubbers
   - 已退役球拍: 恢复为闲置 or delete
 - **Add racket** (`#/rackets/new`): blade (racket name defaults to it) and optional blade specs; each side takes a new rubber, an inventory rubber, or 暂不贴. A blade with no rubbers is saved as a spare.
@@ -74,21 +82,25 @@ The repository contains application code and optional demo seed data only; a use
   - every blade and rubber name field is a searchable combobox over ~90 blades and ~60 rubbers, grouped by brand, with brand pills (全部 / 蝴蝶 / 红双喜 / 斯帝卡 / 挺拔 / 骄猛 / 尼塔库 / 亚萨卡 / 维克塔斯 / …), Chinese / English names and abbreviations (`vis`, `w968`, `hl5`, `fzd`, `zjk`, `cybershape`, `省狂`, `T05`, `D09c`), and ↑ / ↓ / Enter / Esc
   - suggestions only: any typed name is kept, so gear missing from the catalog can always be entered
   - 规格速选: thickness and hardness chips with the sizes the recognized rubber is sold in (e.g. 省狂蓝 `2.1 / 2.15 / 2.2 mm` · `39° / 40° / 41°`; free text such as `T05 2.1` is recognized too), or common values for unknown names
-- **已在用老胶皮** (used-rubber backfill): a rubber being mounted can be a brand-new sheet or one already in use. A used sheet records its 已投入使用日期 and 此前已打时长; a boosted one also records 历史已灌油次数, 上次灌油日期 and 上次灌油层数, and the past boosts are logged automatically (the last on 上次灌油日期, earlier ones spread evenly from the installation date and marked 日期估算).
+  - picking a commonly boosted rubber (狂飚 普狂 / 省狂 / 国狂) ticks 需要灌油; every other pick leaves it off
+- **已在用老胶皮** (used-rubber backfill): a rubber being mounted (or added to the inventory as 用过的) can be a brand-new sheet or one already in use. A used sheet records its 已投入使用日期 / 首次贴拍日期 and 此前已打时长; a boosting one also records 历史已灌油次数, 上次灌油日期 and 上次灌油层数, and the past boosts are logged automatically (the last on 上次灌油日期, earlier ones spread evenly from the installation date and marked 日期估算).
 - **Record session** (`#/add-session`): racket, date, duration and optional notes
 - Demo seed data for three rackets on first launch, local IndexedDB persistence, installable PWA
 
 ## Business Rules
 
-- Rubber calendar life starts from `installedAt`. Rubbers in the inventory have not started aging.
+- Rubber calendar life starts from `installedAt` (first glued on). Brand-new rubbers in the inventory have not started aging; used sheets put back into the inventory keep aging.
 - A play session duration is roughly from removing the protective film to cleaning and reapplying it. A session counts toward the rubbers on that racket on the session date.
-- A rubber's play time is its `initialPlayMinutes` (play before it was recorded) plus the sessions above. A used sheet keeps its own `installedAt`; when it goes onto a racket that already has history (更换胶皮 / 配胶启用), the change date is stored as `mountedAt` and only sessions from that day on are added, so earlier sessions are not counted twice.
+- A rubber's play time is its `initialPlayMinutes` (play before it was recorded, plus play on rackets it was taken off) plus the sessions above. A used sheet keeps its own `installedAt`; when it goes onto a racket (更换胶皮 / 配胶启用 / 贴到球拍 from the inventory), the mount date is stored as `mountedAt` and only sessions from that day on are added, so earlier sessions are not counted twice.
 - A rubber is used up when it reaches either limit: calendar days (default 120) or play time (default 90 h). Each rubber can override both limits.
-- Taking a rubber off (撕下退役 or 更换胶皮) sets `removedAt`. Its age and play time stop counting on that date.
-- Replacing a rubber retires the old one and mounts the new one on the same date.
+- Taking a rubber off for good (退役归档, from 撕下 or 更换胶皮) sets `removedAt`: its age and play time stop counting on that date and it joins the racket's archive.
+- Taking a rubber off temporarily (放回囤货) moves it to the inventory: its sessions on the racket up to that date are added to `initialPlayMinutes`, `installedAt` and its boosting logs stay. A retired rubber can be put back into the inventory the same way.
+- Inventory stock: identical brand-new sheets can share one record (`quantity`, up to 99); mounting one splits it off as its own record. Used sheets are always single records.
+- Replacing a rubber takes the old one off (retired or stashed) and mounts the new one on the same date.
 - Boosting does not reset rubber life.
-- Boosting only records date, count, layers, and notes. Boost numbers follow date order and are renumbered when a log is added, edited, or deleted. Adding a log marks the rubber as boosted; deleting its last log clears the mark.
-- 建议复灌 (re-boost reminder): a boosted rubber still in use whose last boost is at least one re-boost cycle old (default 21 days, adjustable per rubber).
+- Boosting is opt-in per rubber (需要灌油 / `boosted`): most rubbers are never boosted and show no boosting UI. Logging a boost switches it on; it stays on until switched off in the rubber editor (deleting logs does not switch it off).
+- Boosting only records date, count, layers, and notes. Boost numbers follow date order and are renumbered when a log is added, edited, or deleted.
+- 建议复灌 (re-boost reminder): a boosting rubber mounted on a racket whose last boost is at least one re-boost cycle old (default 21 days, adjustable per rubber).
 - Racket status: 在用 (active, shown on the dashboard), 闲置 (spare blade in the inventory), 退役 (retired).
 - A racket's total play time is its `initialPlayMinutes` plus all of its sessions. 底板已服役 counts days from `startedAt`.
 - Life prediction uses simple per-rubber parameters, not machine learning.
@@ -188,16 +200,16 @@ Then point the app at the Worker in either of two ways:
 - Add a repository variable `VITE_API_BASE_URL` (Settings → Secrets and variables → Actions → Variables) set to the Worker URL, and re-run the Pages workflow. Every visitor then uses it by default.
 - Open 云端同步 → 服务器设置 in the deployed app and enter the Worker URL. It is saved in that browser only.
 
-### Upgrade an existing database (grip, weights, used-rubber history)
+### Upgrade an existing database (grip, weights, used-rubber history, rubber names, stock quantity)
 
-Databases created from an older `worker/schema.sql` lack the columns added for blade specs and used-rubber history (`rackets.grip_type`, `blade_weight_grams`, `total_weight_grams`, `started_at`, `initial_play_minutes`; `rubbers.weight_grams`, `initial_play_minutes`, `mounted_at`). Add them in place, without touching existing rows:
+Databases created from an older `worker/schema.sql` lack the columns added later: blade specs and used-rubber history (`rackets.grip_type`, `blade_weight_grams`, `total_weight_grams`, `started_at`, `initial_play_minutes`; `rubbers.weight_grams`, `initial_play_minutes`, `mounted_at`) and the rubber custom name and inventory stock count (`rubbers.label`, `rubbers.quantity`). Add them in place, without touching existing rows:
 
 ```bash
 pnpm db:migrate:v2:remote   # live spinventory-db (pnpm db:migrate:v2:local for wrangler dev)
 pnpm deploy:worker
 ```
 
-`scripts/migrate-v2.mjs` runs `worker/migrate_v2.sql` and only executes the `ALTER TABLE ... ADD COLUMN` statements whose column is still missing, so re-running it is a no-op. As a safety net the Worker also adds any missing column itself on its first request after a deploy. Fresh databases created from the current `worker/schema.sql` already have every column. Local Mode upgrades its IndexedDB (Dexie v3) automatically.
+`scripts/migrate-v2.mjs` runs `worker/migrate_v2.sql` and only executes the `ALTER TABLE ... ADD COLUMN` statements whose column is still missing, so re-running it is a no-op. As a safety net the Worker also adds any missing column itself on its first request after a deploy. Fresh databases created from the current `worker/schema.sql` already have every column. Local Mode upgrades its IndexedDB (Dexie v4) automatically. Deploy the Worker before (or together with) the web app: the app calls `POST /api/rubbers/:id/stash` for 放回囤货.
 
 ### Worker settings (`wrangler.toml` → `[vars]`)
 

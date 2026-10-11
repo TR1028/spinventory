@@ -4,7 +4,10 @@ import {
   CalendarDays,
   Check,
   Clock3,
+  Droplets,
   History,
+  PackageOpen,
+  PackagePlus,
   Pencil,
   Plus,
   Save,
@@ -15,9 +18,10 @@ import {
 import { useMemo, useState, type FormEvent, type ReactNode } from "react";
 import { CatalogPicker } from "../components/CatalogPicker";
 import { LifeBar } from "../components/LifeBar";
+import { OutgoingRubberField } from "../components/OutgoingRubberField";
 import { RacketSpecBadges, RacketSpecFields, createRacketSpecForm, specFormToUpdate, type RacketSpecForm } from "../components/RacketSpecs";
 import { ReplaceRubberModal } from "../components/ReplaceRubberModal";
-import { describeRubberSpecs, formToRubberUpdate, rubberToForm, RubberFormFields } from "../components/RubberForm";
+import { describeRubberSpecs, formToRubberUpdate, rubberToForm, RubberFormFields, RubberLabelPill } from "../components/RubberForm";
 import {
   BackButton,
   ConfirmButton,
@@ -41,10 +45,13 @@ import {
   getMountedRubber,
   getRetiredRubbers,
   getRubberBoostingLogs,
+  INITIAL_BOOST_NOTE,
+  MOUNT_BOOST_NOTE,
 } from "../db/domain";
 import {
   getRacketRubberId,
   getRacketStatus,
+  getRubberDisplayName,
   getRubberMountedDate,
   RACKET_STATUSES,
   racketStatusLabel,
@@ -58,7 +65,7 @@ import {
   type Rubber,
   type RubberSide,
 } from "../db/schema";
-import { useAppData } from "../db/store";
+import { useAppData, type OutgoingRubberAction } from "../db/store";
 import { daysBetween, formatDate, formatFullDate, formatHours, todayISO } from "../utils/date";
 import { calculateRubberLife, getBoostingSummary } from "../utils/life";
 import { getRacketPlayMinutes } from "../utils/rackets";
@@ -72,12 +79,10 @@ type RacketDetailProps = {
   onOpenInventory: (tab?: "rubbers" | "blades") => void;
 };
 
-type Dialog = { type: "replace"; side: RubberSide } | { type: "retire"; side: RubberSide };
+type Dialog = { type: "replace"; side: RubberSide } | { type: "take-off"; side: RubberSide };
 
 const VISIBLE_BOOSTING_LOGS = 4;
 const VISIBLE_SESSIONS = 5;
-/** Note the planners attach to the boost logged when a boosted rubber is mounted. */
-const INITIAL_BOOST_NOTE = "Initial boost";
 
 const statusChipClass: Record<RacketStatus, string> = {
   active: "bg-limeglass text-court",
@@ -87,6 +92,7 @@ const statusChipClass: Record<RacketStatus, string> = {
 
 function boostNote(notes?: string) {
   if (notes === INITIAL_BOOST_NOTE) return "初始灌油";
+  if (notes === MOUNT_BOOST_NOTE) return "贴拍灌油";
   if (notes === BACKFILLED_BOOST_NOTE) return "录入前补记";
   if (notes === ESTIMATED_BOOST_NOTE) return "录入前补记 · 日期估算";
   return notes;
@@ -240,7 +246,8 @@ function RubberEditForm({ rubber, side }: { rubber: Rubber; side: RubberSide }) 
         testIdPrefix={`edit-${side}`}
       />
       <TextField
-        label="安装日期"
+        label={rubber.mountedAt ? "首次贴拍日期" : "安装日期"}
+        hint={rubber.mountedAt ? `贴上这块球拍：${formatFullDate(rubber.mountedAt)}` : undefined}
         type="date"
         value={installedAt}
         onChange={(value) => {
@@ -361,12 +368,13 @@ function BoostingLogRow({ log }: { log: BoostingLog }) {
 
 /** Boosting history of one rubber (`logs` newest first) with an add form and inline edit / delete. */
 function BoostingLogs({ rubber, logs, cycleDays }: { rubber: Rubber; logs: BoostingLog[]; cycleDays: number }) {
-  const { addBoostingLog } = useAppData();
+  const { addBoostingLog, updateRubber } = useAppData();
   const [date, setDate] = useState(todayISO);
   const [layers, setLayers] = useState("2");
   const [notes, setNotes] = useState("");
   const [expanded, setExpanded] = useState(false);
   const action = useAsyncAction();
+  const toggle = useAsyncAction();
   const visibleLogs = expanded ? logs : logs.slice(0, VISIBLE_BOOSTING_LOGS);
 
   function handleAdd(event: FormEvent<HTMLFormElement>) {
@@ -377,15 +385,53 @@ function BoostingLogs({ rubber, logs, cycleDays }: { rubber: Rubber; logs: Boost
     });
   }
 
+  // Most rubbers are never boosted: keep the section to one line until boosting is switched on.
+  if (!rubber.boosted && !logs.length) {
+    return (
+      <div className="mt-6 flex items-center justify-between gap-3 border-t border-ink/10 pt-4" data-testid={`boosting-off-${rubber.id}`}>
+        <div className="min-w-0">
+          <h3 className="text-sm font-black text-ink">灌油</h3>
+          <p className="mt-0.5 text-xs font-medium text-ink/50">这张胶皮不灌油，不提醒复灌。</p>
+          <ErrorBanner message={toggle.error} />
+        </div>
+        <button
+          type="button"
+          onClick={() => void toggle.run(() => updateRubber(rubber.id, { boosted: true }))}
+          disabled={toggle.pending}
+          className={buttonClass.secondary}
+          data-testid={`enable-boosting-${rubber.id}`}
+        >
+          <Droplets size={16} aria-hidden="true" />
+          开启灌油记录
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-6 border-t border-ink/10 pt-4">
       <div className="flex items-center justify-between gap-3">
         <h3 className="text-sm font-black text-ink">灌油记录</h3>
-        <div className="inline-flex items-center gap-1 text-xs font-bold text-court">
-          <Waves size={14} aria-hidden="true" />
-          {logs.length} 次 · 复灌周期 {cycleDays} 天
+        <div className="flex items-center gap-1">
+          <div className="inline-flex items-center gap-1 text-xs font-bold text-court">
+            <Waves size={14} aria-hidden="true" />
+            {logs.length} 次{rubber.boosted ? ` · 复灌周期 ${cycleDays} 天` : " · 不提醒复灌"}
+          </div>
+          {rubber.boosted && !logs.length ? (
+            <button
+              type="button"
+              onClick={() => void toggle.run(() => updateRubber(rubber.id, { boosted: false }))}
+              disabled={toggle.pending}
+              className={buttonClass.ghost}
+              title="这张胶皮不灌油"
+              data-testid={`disable-boosting-${rubber.id}`}
+            >
+              不灌油
+            </button>
+          ) : null}
         </div>
       </div>
+      <ErrorBanner message={toggle.error} />
 
       <form onSubmit={handleAdd} className="mt-4 grid gap-3">
         <div className="grid grid-cols-2 gap-3">
@@ -434,17 +480,18 @@ function MountedRubberCard({
   sessions,
   logs,
   onReplace,
-  onRetire,
+  onTakeOff,
 }: {
   side: RubberSide;
   rubber: Rubber;
   sessions: PlaySession[];
   logs: BoostingLog[];
   onReplace: () => void;
-  onRetire: () => void;
+  onTakeOff: () => void;
 }) {
   const life = calculateRubberLife(rubber, sessions);
   const boosting = getBoostingSummary(rubber, logs);
+  const mountedDate = getRubberMountedDate(rubber);
 
   return (
     <section className={cardClass} data-testid={`rubber-slot-${side}`}>
@@ -458,12 +505,16 @@ function MountedRubberCard({
               <ReboostBadge daysSinceLastBoost={boosting.daysSinceLastBoost} cycleDays={boosting.cycleDays} />
             ) : null}
           </div>
-          <h2 className="mt-1 truncate text-lg font-black text-ink">{rubber.name}</h2>
+          <div className="mt-1 flex min-w-0 items-center gap-1.5">
+            <h2 className="truncate text-lg font-black text-ink">{rubber.name}</h2>
+            <RubberLabelPill label={rubber.label} />
+          </div>
           <p className="mt-0.5 text-xs font-medium text-ink/55">{describeRubberSpecs(rubber)}</p>
         </div>
         <div className="shrink-0 text-right text-xs font-medium text-ink/55">
           <div>已用 {life.calendarDays} 天</div>
-          {boosting.lastDate ? <div>上次灌油 {formatDate(boosting.lastDate)}</div> : <div>未记录灌油</div>}
+          {rubber.mountedAt && mountedDate ? <div>本拍 {formatDate(mountedDate)} 起</div> : null}
+          {rubber.boosted ? boosting.lastDate ? <div>上次灌油 {formatDate(boosting.lastDate)}</div> : <div>未记录灌油</div> : null}
         </div>
       </div>
 
@@ -484,15 +535,21 @@ function MountedRubberCard({
           type="button"
           onClick={onReplace}
           className={buttonClass.secondary}
-          title="更换胶皮（退役当前胶皮）"
+          title="换上另一张胶皮（当前这张退役或放回囤货）"
           data-testid={`replace-rubber-${side}`}
         >
           <ArrowRightLeft size={16} aria-hidden="true" />
           更换胶皮
         </button>
-        <button type="button" onClick={onRetire} className={buttonClass.dangerSoft} data-testid={`retire-rubber-${side}`}>
-          <Archive size={16} aria-hidden="true" />
-          撕下退役
+        <button
+          type="button"
+          onClick={onTakeOff}
+          className={buttonClass.secondary}
+          title="撕下：退役，或暂时放回囤货之后再用"
+          data-testid={`retire-rubber-${side}`}
+        >
+          <PackageOpen size={16} aria-hidden="true" />
+          撕下
         </button>
       </div>
 
@@ -521,7 +578,8 @@ function EmptySlotCard({ side, onMount }: { side: RubberSide; onMount: () => voi
   );
 }
 
-function RetireRubberModal({
+/** 「撕下」: the side becomes empty; the rubber is retired, or put back into the inventory to be used again. */
+function TakeOffRubberModal({
   racket,
   side,
   rubber,
@@ -532,31 +590,32 @@ function RetireRubberModal({
   rubber: Rubber;
   onClose: () => void;
 }) {
-  const { retireRubber } = useAppData();
+  const { retireRubber, stashRubber } = useAppData();
   const [date, setDate] = useState(todayISO);
+  const [outgoing, setOutgoing] = useState<OutgoingRubberAction>("stash");
   const action = useAsyncAction();
+  const stash = outgoing === "stash";
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     void action.run(async () => {
-      await retireRubber(rubber.id, date);
+      if (stash) await stashRubber(rubber.id, date);
+      else await retireRubber(rubber.id, date);
       onClose();
     });
   }
 
   return (
     <Modal
-      title="撕下退役"
-      description={`${racket.name} · ${rubberSideName[side]} · ${rubber.name}`}
+      title="撕下胶皮"
+      description={`${racket.name} · ${rubberSideName[side]} · ${getRubberDisplayName(rubber)}`}
       onClose={onClose}
       testId="retire-rubber-modal"
     >
       <form onSubmit={handleSubmit} className="grid gap-4">
-        <Notice tone="muted" icon={<Archive size={16} aria-hidden="true" />}>
-          撕下后该位置变为空位，「{rubber.name}」会移入历任退役胶皮档案，寿命和打球时长冻结在退役日期。之后可以随时贴上新胶皮。
-        </Notice>
+        <OutgoingRubberField rubber={rubber} value={outgoing} onChange={setOutgoing} date={date} testIdPrefix="take-off" />
         <TextField
-          label="退役日期"
+          label="撕下日期"
           type="date"
           value={date}
           onChange={setDate}
@@ -564,10 +623,16 @@ function RetireRubberModal({
           required
           testId="retire-date"
         />
+        <p className="text-xs font-medium leading-5 text-ink/50">撕下后这一面变为空位，之后可以随时贴上新胶皮或囤货里的胶皮。</p>
         <ErrorBanner message={action.error} />
-        <button type="submit" disabled={action.pending} className={buttonClass.danger} data-testid="retire-submit">
-          <Archive size={18} aria-hidden="true" />
-          {action.pending ? "保存中…" : "确认撕下"}
+        <button
+          type="submit"
+          disabled={action.pending}
+          className={stash ? buttonClass.court : buttonClass.danger}
+          data-testid="retire-submit"
+        >
+          {stash ? <PackagePlus size={18} aria-hidden="true" /> : <Archive size={18} aria-hidden="true" />}
+          {action.pending ? "保存中…" : stash ? "撕下并放回囤货" : "撕下并退役"}
         </button>
       </form>
     </Modal>
@@ -718,36 +783,49 @@ function RetiredRubberRow({
   sessions: PlaySession[];
   boostingLogs: BoostingLog[];
 }) {
-  const { updateRubber, deleteRubber } = useAppData();
+  const { updateRubber, deleteRubber, stashRubber } = useAppData();
   const action = useAsyncAction();
   const life = calculateRubberLife(rubber, sessions);
   const boosting = getBoostingSummary(rubber, boostingLogs);
   const slotFree = rubber.side ? !getRacketRubberId(racket, rubber.side) : false;
+  const displayName = getRubberDisplayName(rubber);
 
   return (
     <article className="rounded-md border border-ink/10 bg-paper px-3 py-2.5" data-testid={`retired-rubber-${rubber.id}`}>
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2">
+          <div className="flex min-w-0 items-center gap-2">
             <span className="shrink-0 text-xs font-bold text-court">{rubber.side ? rubberSideLabel[rubber.side] : "—"}</span>
             <span className="truncate text-sm font-bold text-ink">{rubber.name}</span>
+            <RubberLabelPill label={rubber.label} />
           </div>
           <p className="mt-0.5 text-xs font-medium text-ink/55">
             {rubber.installedAt ? formatFullDate(rubber.installedAt) : "未知"} → {rubber.removedAt ? formatFullDate(rubber.removedAt) : "未知"}
           </p>
           <p className="mt-0.5 text-xs font-medium text-ink/55">
-            使用 {life.calendarDays} 天 · 打球 {formatHours(life.playMinutes)} h · 灌油 {boosting.count} 次 · 寿命{" "}
-            {Math.round(life.usedPercent)}%
+            使用 {life.calendarDays} 天 · 打球 {formatHours(life.playMinutes)} h
+            {rubber.boosted || boosting.count ? ` · 灌油 ${boosting.count} 次` : ""} · 寿命 {Math.round(life.usedPercent)}%
           </p>
         </div>
         <div className="flex shrink-0 items-center">
+          <button
+            type="button"
+            onClick={() => void action.run(() => stashRubber(rubber.id))}
+            disabled={action.pending}
+            className={buttonClass.icon}
+            aria-label={`把 ${displayName} 放回囤货，之后再用`}
+            title="放回囤货（之后还要用）"
+            data-testid={`stash-retired-rubber-${rubber.id}`}
+          >
+            <PackagePlus size={16} aria-hidden="true" />
+          </button>
           {slotFree && rubber.side ? (
             <button
               type="button"
               onClick={() => void action.run(() => updateRubber(rubber.id, { removedAt: null }))}
               disabled={action.pending}
               className={buttonClass.icon}
-              aria-label={`把 ${rubber.name} 恢复到${rubberSideName[rubber.side]}`}
+              aria-label={`把 ${displayName} 恢复到${rubberSideName[rubber.side]}`}
               title="恢复到原位置"
               data-testid={`restore-rubber-${rubber.id}`}
             >
@@ -756,7 +834,7 @@ function RetiredRubberRow({
           ) : null}
           <ConfirmButton
             onConfirm={() => void action.run(() => deleteRubber(rubber.id))}
-            ariaLabel={`删除 ${rubber.name} 的档案`}
+            ariaLabel={`删除 ${displayName} 的档案`}
             confirmLabel="删除"
             className={buttonClass.icon}
             armedClassName={buttonClass.armedPill}
@@ -800,7 +878,7 @@ function RetiredArchive({
             <RetiredRubberRow key={rubber.id} racket={racket} rubber={rubber} sessions={sessions} boostingLogs={boostingLogs} />
           ))
         ) : (
-          <p className="text-sm text-ink/50">还没有退役的胶皮。更换或撕下胶皮后，会带着寿命和灌油记录归档在这里。</p>
+          <p className="text-sm text-ink/50">还没有退役的胶皮。退役的胶皮会带着寿命和灌油记录归档在这里；暂时撕下、之后还要用的胶皮会放进囤货。</p>
         )}
       </div>
     </section>
@@ -925,7 +1003,7 @@ export function RacketDetail({ racketId, onBack, onAddSession, onDeleted, onOpen
               sessions={sessions}
               logs={getRubberBoostingLogs(data, rubber.id)}
               onReplace={() => setDialog({ type: "replace", side })}
-              onRetire={() => setDialog({ type: "retire", side })}
+              onTakeOff={() => setDialog({ type: "take-off", side })}
             />
           ) : (
             <EmptySlotCard key={`${side}:empty`} side={side} onMount={() => setDialog({ type: "replace", side })} />
@@ -941,8 +1019,8 @@ export function RacketDetail({ racketId, onBack, onAddSession, onDeleted, onOpen
       <DeleteRacketSection racket={racket} onDeleted={onDeleted} />
 
       {dialog?.type === "replace" ? <ReplaceRubberModal racket={racket} side={dialog.side} onClose={closeDialog} /> : null}
-      {dialog?.type === "retire" && dialogRubber ? (
-        <RetireRubberModal racket={racket} side={dialog.side} rubber={dialogRubber} onClose={closeDialog} />
+      {dialog?.type === "take-off" && dialogRubber ? (
+        <TakeOffRubberModal racket={racket} side={dialog.side} rubber={dialogRubber} onClose={closeDialog} />
       ) : null}
     </div>
   );

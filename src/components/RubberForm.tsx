@@ -1,5 +1,5 @@
 /** Rubber form state, its conversions to store inputs, and the shared rubber editor fields. */
-import { ChevronDown, History } from "lucide-react";
+import { ChevronDown, History, Minus, Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
   DEFAULT_HARDNESS_OPTIONS,
@@ -9,45 +9,62 @@ import {
   matchRubberCatalog,
   type RubberEntry,
 } from "../data/catalog";
-import type { Rubber } from "../db/schema";
-import type { RubberFields, RubberSource, UpdateRubberInput, UsedRubberHistory } from "../db/store";
+import { getRubberQuantity, type Rubber } from "../db/schema";
+import type { CreateRubberInput, RubberFields, RubberSource, UpdateRubberInput, UsedRubberHistory } from "../db/store";
 import { formatFullDate, formatHours, hoursInputValue, parseHoursInput, todayISO } from "../utils/date";
 import { DEFAULT_LIFE_PARAMETERS } from "../utils/life";
 import { CatalogPicker } from "./CatalogPicker";
 import { CheckboxField, ChoiceChips, FieldLabel, SegmentedControl, TextAreaField, TextField, inputClass } from "./ui";
 
-/** A rubber being mounted is a brand-new sheet, or one already in use before it was recorded. */
+/** A rubber being mounted or stocked is a brand-new sheet, or one that was already used. */
 export type RubberCondition = "fresh" | "used";
+
+/**
+ * Where the editor is used:
+ * - `mount`: a new rubber being glued on (全新胶皮 / 已在用老胶皮);
+ * - `stock`: a new inventory rubber (全新未拆, several sheets at once / 用过的, e.g. taken off earlier);
+ * - `stock-edit`: an inventory rubber (brand-new stock: quantity; used sheet: first glued date and play so far);
+ * - `edit`: a mounted or retired rubber.
+ */
+export type RubberFormVariant = "mount" | "stock" | "stock-edit" | "edit";
 
 /** Raw input values; blank life parameters mean "use the default". */
 export type RubberFormState = {
+  /** Model. */
   name: string;
+  /** Optional custom name telling sheets of the same model apart. */
+  label: string;
+  /** Brand-new inventory stock: identical sheets. */
+  quantity: string;
   hardness: string;
   thicknessMm: string;
   /** Sheet weight in grams. */
   weightGrams: string;
+  /** 需要灌油: a boosting rubber (most rubbers are not). */
   boosted: boolean;
   /** Layers of the first boost logged when a new boosted rubber is mounted (used sheets: of each backfilled boost). */
   boostLayers: string;
   calendarDays: string;
   playHours: string;
-  /** Play time before the rubber was recorded in the app, in hours. */
+  /** Play time not covered by sessions (before recording, on earlier rackets), in hours. */
   initialPlayHours: string;
   boostCycleDays: string;
   notes: string;
-  /** New rubbers only: a brand-new sheet, or a used one whose history is backfilled. */
+  /** New rubbers (mount / stock): a brand-new sheet, or a used one whose history is backfilled. */
   condition: RubberCondition;
   /** Used sheets: the day the sheet was first glued on. */
   usedInstalledAt: string;
-  /** Used + boosted sheets: boosts done before recording. */
+  /** Used + boosted new sheets: boosts done before recording. */
   priorBoostCount: string;
-  /** Used + boosted sheets: date of the latest of those boosts (blank = the installation date). */
+  /** Used + boosted new sheets: date of the latest of those boosts (blank = the installation date). */
   lastBoostDate: string;
 };
 
 export function createRubberForm(overrides: Partial<RubberFormState> = {}): RubberFormState {
   return {
     name: "",
+    label: "",
+    quantity: "1",
     hardness: "",
     thicknessMm: "",
     weightGrams: "",
@@ -71,6 +88,8 @@ const numberText = (value: number | undefined) => (value === undefined ? "" : St
 export function rubberToForm(rubber: Rubber): RubberFormState {
   return createRubberForm({
     name: rubber.name,
+    label: rubber.label ?? "",
+    quantity: String(getRubberQuantity(rubber)),
     hardness: rubber.hardness ?? "",
     thicknessMm: numberText(rubber.thicknessMm),
     weightGrams: numberText(rubber.weightGrams),
@@ -80,6 +99,9 @@ export function rubberToForm(rubber: Rubber): RubberFormState {
     initialPlayHours: hoursInputValue(rubber.initialPlayMinutes),
     boostCycleDays: numberText(rubber.boostCycleDays),
     notes: rubber.notes ?? "",
+    // Inventory editor: a used sheet shows its first installation date.
+    condition: rubber.installedAt ? "used" : "fresh",
+    usedInstalledAt: rubber.installedAt ?? "",
   });
 }
 
@@ -95,10 +117,11 @@ function parsePositive(value: string, label: string, integer = false): number | 
 /** Validates the form (throws with a Chinese message); `label` names the rubber in messages. */
 export function formToRubberFields(form: RubberFormState, label = "胶皮"): RubberFields {
   const name = form.name.trim();
-  if (!name) throw new Error(`请填写${label}名称`);
+  if (!name) throw new Error(`请填写${label}型号`);
   const playHours = parsePositive(form.playHours, "打球时长上限");
   return {
     name,
+    label: form.label.trim() || undefined,
     hardness: form.hardness.trim() || undefined,
     thicknessMm: parsePositive(form.thicknessMm, "厚度"),
     weightGrams: parsePositive(form.weightGrams, "胶皮重量"),
@@ -116,6 +139,7 @@ export function formToRubberUpdate(form: RubberFormState): UpdateRubberInput {
   const fields = formToRubberFields(form);
   return {
     name: fields.name,
+    label: fields.label ?? null,
     hardness: fields.hardness ?? null,
     thicknessMm: fields.thicknessMm ?? null,
     weightGrams: fields.weightGrams ?? null,
@@ -126,6 +150,19 @@ export function formToRubberUpdate(form: RubberFormState): UpdateRubberInput {
     boostCycleDays: fields.boostCycleDays ?? null,
     notes: fields.notes ?? null,
   };
+}
+
+/** History of a used sheet entered in a new-rubber form (mount or stock). */
+function formToUsedHistory(form: RubberFormState, rubber: RubberFields, label: string, mount: boolean): UsedRubberHistory {
+  const installedAt = form.usedInstalledAt.trim();
+  if (!installedAt) throw new Error(mount ? `请选择${label}的已投入使用日期` : `请选择${label}首次贴拍的日期`);
+  const history: UsedRubberHistory = { installedAt };
+  if (rubber.boosted) {
+    history.priorBoostCount = parsePositive(form.priorBoostCount, "历史已灌油次数", true) ?? 1;
+    history.lastBoostDate = form.lastBoostDate.trim() || undefined;
+    history.boostLayers = parsePositive(form.boostLayers, "上次灌油层数", true) ?? 1;
+  }
+  return history;
 }
 
 /**
@@ -142,37 +179,62 @@ export function formToNewSource(form: RubberFormState, label = "胶皮"): Rubber
     delete rubber.initialPlayMinutes;
     return { type: "new", rubber, initialBoostLayers: boostLayers };
   }
-
-  const installedAt = form.usedInstalledAt.trim();
-  if (!installedAt) throw new Error(`请选择${label}的已投入使用日期`);
-  const history: UsedRubberHistory = { installedAt };
-  if (rubber.boosted) {
-    history.priorBoostCount = parsePositive(form.priorBoostCount, "历史已灌油次数", true) ?? 1;
-    history.lastBoostDate = form.lastBoostDate.trim() || undefined;
-    history.boostLayers = boostLayers;
-  }
-  return { type: "new", rubber, initialBoostLayers: boostLayers, used: history };
+  return { type: "new", rubber, initialBoostLayers: boostLayers, used: formToUsedHistory(form, rubber, label, true) };
 }
 
-/** "硬度 47 · 2.1 mm · 48 g · 已灌油" (or a placeholder when nothing was filled in). */
+/** A new inventory record: `quantity` identical brand-new sheets, or one used sheet with its history. */
+export function formToStockInput(form: RubberFormState): CreateRubberInput {
+  const rubber = formToRubberFields(form);
+  if (form.condition !== "used") {
+    delete rubber.initialPlayMinutes;
+    return { ...rubber, quantity: parsePositive(form.quantity, "数量", true) ?? 1 };
+  }
+  return { ...rubber, used: formToUsedHistory(form, rubber, "这张胶皮", false) };
+}
+
+/** Edits of an inventory rubber: brand-new stock changes its quantity, a used sheet its first glued date. */
+export function formToStockUpdate(form: RubberFormState, rubber: Rubber): UpdateRubberInput {
+  const update = formToRubberUpdate(form);
+  if (rubber.installedAt) {
+    const installedAt = form.usedInstalledAt.trim();
+    if (!installedAt) throw new Error("请选择首次贴拍日期");
+    return { ...update, installedAt };
+  }
+  return { ...update, quantity: parsePositive(form.quantity, "数量", true) ?? 1 };
+}
+
+/** "硬度 47 · 2.1 mm · 48 g · 需灌油" (or a placeholder when nothing was filled in). */
 export function describeRubberSpecs(rubber: Pick<Rubber, "hardness" | "thicknessMm" | "weightGrams" | "boosted">) {
   const parts = [
     rubber.hardness ? `硬度 ${rubber.hardness}` : null,
     rubber.thicknessMm ? `${rubber.thicknessMm} mm` : null,
     rubber.weightGrams ? `${rubber.weightGrams} g` : null,
-    rubber.boosted ? "已灌油" : null,
+    rubber.boosted ? "需灌油" : null,
   ].filter(Boolean);
   return parts.length ? parts.join(" · ") : "未填写规格";
 }
 
 /** Summary of the life parameters a rubber overrides, or `undefined` when it uses the defaults. */
-export function describeCustomLife(rubber: Pick<Rubber, "customCalendarDays" | "customPlayMinutes" | "boostCycleDays">) {
+export function describeCustomLife(rubber: Pick<Rubber, "customCalendarDays" | "customPlayMinutes" | "boostCycleDays" | "boosted">) {
   const parts = [
     rubber.customCalendarDays ? `${rubber.customCalendarDays} 天` : null,
     rubber.customPlayMinutes ? `${formatHours(rubber.customPlayMinutes)} h` : null,
-    rubber.boostCycleDays ? `复灌 ${rubber.boostCycleDays} 天` : null,
+    rubber.boosted && rubber.boostCycleDays ? `复灌 ${rubber.boostCycleDays} 天` : null,
   ].filter(Boolean);
   return parts.length ? `自定义寿命 ${parts.join(" · ")}` : undefined;
+}
+
+/** The custom name as a small pill next to the model. */
+export function RubberLabelPill({ label, className = "" }: { label?: string; className?: string }) {
+  if (!label) return null;
+  return (
+    <span
+      className={`inline-block max-w-[10rem] shrink-0 truncate rounded-full bg-court/10 px-2 py-0.5 align-middle text-[11px] font-black text-court ${className}`}
+      title={label}
+    >
+      {label}
+    </span>
+  );
 }
 
 function CompactNumberField({
@@ -207,6 +269,48 @@ function CompactNumberField({
         className={inputClass}
       />
     </label>
+  );
+}
+
+const MAX_QUANTITY = 99;
+
+/** − / number / + for the sheets of a brand-new stock record. */
+function QuantityField({ value, onChange, testIdPrefix }: { value: string; onChange: (value: string) => void; testIdPrefix: string }) {
+  const count = Math.max(1, Math.round(Number(value) || 1));
+  const step = (delta: number) => onChange(String(Math.min(MAX_QUANTITY, Math.max(1, count + delta))));
+  const stepClass =
+    "tap-target inline-flex shrink-0 items-center justify-center rounded-lg bg-white text-ink shadow-sm ring-1 ring-ink/15 transition active:scale-95 disabled:cursor-not-allowed disabled:opacity-40";
+  return (
+    <div className="grid min-w-0 gap-2">
+      <FieldLabel hint="同款一次登记多张">数量 · 张</FieldLabel>
+      <div className="flex items-center gap-2">
+        <button type="button" onClick={() => step(-1)} disabled={count <= 1} className={stepClass} aria-label="少一张" data-testid={`${testIdPrefix}-rubber-quantity-minus`}>
+          <Minus size={16} aria-hidden="true" />
+        </button>
+        <input
+          type="number"
+          inputMode="numeric"
+          min="1"
+          max={MAX_QUANTITY}
+          step="1"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className={`${inputClass} text-center tabular-nums`}
+          aria-label="数量"
+          data-testid={`${testIdPrefix}-rubber-quantity`}
+        />
+        <button
+          type="button"
+          onClick={() => step(1)}
+          disabled={count >= MAX_QUANTITY}
+          className={stepClass}
+          aria-label="多一张"
+          data-testid={`${testIdPrefix}-rubber-quantity-plus`}
+        >
+          <Plus size={16} aria-hidden="true" />
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -276,35 +380,41 @@ function SpecChips({
   );
 }
 
+const CONDITION_COPY = {
+  mount: { fresh: "全新胶皮", used: "已在用老胶皮", freshHint: "第一次贴拍的新胶皮", usedHint: "补录投入日期、已打时长和灌油历史" },
+  stock: { fresh: "全新未拆", used: "用过的", freshHint: "新买的胶皮，同款可以一次登记多张", usedHint: "拆下来以后还会再贴的胶皮" },
+} as const;
+
 type RubberFormFieldsProps = {
   value: RubberFormState;
   onChange: (value: RubberFormState) => void;
   /** Prefix of the `data-testid`s: `${prefix}-rubber-name`, `${prefix}-rubber-hardness`, ... */
   testIdPrefix: string;
-  /**
-   * New rubbers (being mounted): offers 「全新胶皮」 / 「已在用老胶皮」. A fresh boosted sheet asks for
-   * the first boost's layers, a used one for its installation date, play time and boost history.
-   */
-  isNew?: boolean;
-  /** New rubbers: the day they are mounted, the latest a used sheet's installation date may be. */
+  /** See {@link RubberFormVariant} (default `edit`). */
+  variant?: RubberFormVariant;
+  /** `mount`: the day the rubber is mounted, the latest a used sheet's installation date may be. */
   mountDate?: string;
 };
 
-export function RubberFormFields({ value, onChange, testIdPrefix, isNew = false, mountDate }: RubberFormFieldsProps) {
+export function RubberFormFields({ value, onChange, testIdPrefix, variant = "edit", mountDate }: RubberFormFieldsProps) {
   const update = <K extends keyof RubberFormState>(key: K, next: RubberFormState[K]) => onChange({ ...value, [key]: next });
+  const isNew = variant === "mount" || variant === "stock";
+  const isStock = variant === "stock" || variant === "stock-edit";
+  const used = variant !== "edit" && value.condition === "used";
+  const showQuantity = isStock && !used;
   // Read once so React never toggles <details> while the user works inside it.
   const [lifeOpen] = useState(() =>
-    Boolean(value.calendarDays || value.playHours || value.boostCycleDays || (!isNew && value.initialPlayHours)),
+    Boolean(value.calendarDays || value.playHours || (value.boosted && value.boostCycleDays) || (variant === "edit" && value.initialPlayHours)),
   );
   const match = useMemo(() => matchRubberCatalog(value.name), [value.name]);
-  const used = isNew && value.condition === "used";
   const today = todayISO();
-  const latestUsedDate = mountDate && mountDate < today ? mountDate : today;
+  const latestUsedDate = variant === "mount" && mountDate && mountDate < today ? mountDate : today;
+  const copy = CONDITION_COPY[variant === "stock" ? "stock" : "mount"];
   const lifeSummary = [
     `${value.calendarDays.trim() || DEFAULT_LIFE_PARAMETERS.calendarDays} 天`,
     `${value.playHours.trim() || formatHours(DEFAULT_LIFE_PARAMETERS.playMinutes)} h`,
-    `复灌 ${value.boostCycleDays.trim() || DEFAULT_LIFE_PARAMETERS.boostCycleDays} 天`,
-    !isNew && value.initialPlayHours.trim() ? `录入前 ${value.initialPlayHours.trim()} h` : null,
+    value.boosted ? `复灌 ${value.boostCycleDays.trim() || DEFAULT_LIFE_PARAMETERS.boostCycleDays} 天` : null,
+    variant === "edit" && value.initialPlayHours.trim() ? `此前 ${value.initialPlayHours.trim()} h` : null,
   ]
     .filter(Boolean)
     .join(" · ");
@@ -314,13 +424,21 @@ export function RubberFormFields({ value, onChange, testIdPrefix, isNew = false,
   const lastBoostText = lastBoostDate ? formatFullDate(lastBoostDate) : "上次灌油日期";
   const backfillSummary =
     priorBoosts > 1
-      ? `保存时自动补记 ${priorBoosts} 次灌油：最后一次记在 ${lastBoostText}，此前 ${priorBoosts - 1} 次的日期从投入使用日起均匀估算。`
+      ? `保存时自动补记 ${priorBoosts} 次灌油：最后一次记在 ${lastBoostText}，此前 ${priorBoosts - 1} 次的日期从首次贴拍日起均匀估算。`
       : `保存时自动补记 1 次灌油，记在 ${lastBoostText}。`;
+
+  let boostDescription = "大多数胶皮不用灌油；国产粘性胶皮（如狂飚）常需灌油";
+  if (value.boosted) {
+    if (variant === "mount" && !used) boostDescription = "贴拍时记一次初始灌油，之后显示灌油记录和复灌提醒";
+    else if (isNew && used) boostDescription = "补录历史灌油次数和上次灌油";
+    else boostDescription = "显示灌油记录和复灌提醒";
+  }
 
   /** A catalog pick also applies the rubber's presets that are still blank. */
   function pickCatalogRubber(entry: RubberEntry, name: string) {
     const next: RubberFormState = { ...value, name };
-    if (isNew && entry.defaultBoosted !== undefined) next.boosted = entry.defaultBoosted;
+    // New rubbers follow the catalog: only rubbers it marks as commonly boosted start with 需要灌油.
+    if (isNew) next.boosted = entry.defaultBoosted ?? false;
     if (!value.hardness.trim() && entry.hardnessOptions?.length === 1) next.hardness = entry.hardnessOptions[0];
     if (!value.thicknessMm.trim() && entry.thicknessOptions.length === 1) next.thicknessMm = formatThickness(entry.thicknessOptions[0]);
     onChange(next);
@@ -330,27 +448,40 @@ export function RubberFormFields({ value, onChange, testIdPrefix, isNew = false,
     <div className="grid gap-4">
       {isNew ? (
         <div className="grid gap-2">
-          <FieldLabel hint={used ? "补录投入日期、已打时长和灌油历史" : "第一次贴拍的新胶皮"}>胶皮状况</FieldLabel>
+          <FieldLabel hint={used ? copy.usedHint : copy.freshHint}>胶皮状况</FieldLabel>
           <SegmentedControl
             ariaLabel="胶皮状况"
             value={value.condition}
             onChange={(condition) => update("condition", condition)}
             options={[
-              { value: "fresh", label: "全新胶皮", testId: `${testIdPrefix}-rubber-condition-fresh` },
-              { value: "used", label: "已在用老胶皮", testId: `${testIdPrefix}-rubber-condition-used` },
+              { value: "fresh", label: copy.fresh, testId: `${testIdPrefix}-rubber-condition-fresh` },
+              { value: "used", label: copy.used, testId: `${testIdPrefix}-rubber-condition-used` },
             ]}
           />
         </div>
       ) : null}
       <CatalogPicker
         kind="rubber"
-        label="胶皮名称"
+        label="胶皮型号"
         value={value.name}
         onChange={(name) => update("name", name)}
         onPick={pickCatalogRubber}
         testId={`${testIdPrefix}-rubber-name`}
         placeholder="搜索或直接输入，如 省狂 / T05 / D09c"
       />
+      <div className={showQuantity ? "grid gap-4 sm:grid-cols-[minmax(0,1fr)_11rem] sm:items-start" : "grid"}>
+        <TextField
+          label="自定义名称"
+          hint="选填，区分同款胶皮"
+          placeholder="如 1号、比赛用、备用"
+          value={value.label}
+          onChange={(label) => update("label", label)}
+          maxLength={40}
+          autoComplete="off"
+          testId={`${testIdPrefix}-rubber-label`}
+        />
+        {showQuantity ? <QuantityField value={value.quantity} onChange={(quantity) => update("quantity", quantity)} testIdPrefix={testIdPrefix} /> : null}
+      </div>
       <SpecChips value={value} onChange={onChange} match={match} testIdPrefix={testIdPrefix} />
       <div className="grid grid-cols-3 gap-3">
         <TextField
@@ -386,7 +517,7 @@ export function RubberFormFields({ value, onChange, testIdPrefix, isNew = false,
         <div className="grid gap-3 rounded-lg border border-amber-200 bg-amber-50/70 p-3" data-testid={`${testIdPrefix}-rubber-used-fields`}>
           <div className="grid gap-3 sm:grid-cols-2">
             <TextField
-              label="已投入使用日期"
+              label={variant === "mount" ? "已投入使用日期" : "首次贴拍日期"}
               type="date"
               max={latestUsedDate}
               required
@@ -408,18 +539,20 @@ export function RubberFormFields({ value, onChange, testIdPrefix, isNew = false,
           </div>
           <p className="flex items-start gap-1.5 text-xs font-medium leading-5 text-amber-800/80">
             <History size={14} className="mt-0.5 shrink-0" aria-hidden="true" />
-            日历寿命从投入使用日期算起，此前已打时长直接计入打球寿命。
+            {variant === "mount"
+              ? "日历寿命从投入使用日期算起，此前已打时长直接计入打球寿命。"
+              : "日历寿命从首次贴拍日算起（放在囤货里也会继续老化），已打时长计入打球寿命；再贴上球拍后接着累计。"}
           </p>
         </div>
       ) : null}
       <CheckboxField
-        label={isNew && !used ? "初始已灌油" : "已灌油"}
-        description={used ? "勾选后补录历史灌油次数和上次灌油" : undefined}
+        label="需要灌油"
+        description={boostDescription}
         checked={value.boosted}
         onChange={(boosted) => update("boosted", boosted)}
         testId={`${testIdPrefix}-rubber-boosted`}
       />
-      {isNew && value.boosted && !used ? (
+      {variant === "mount" && value.boosted && !used ? (
         <TextField
           label="初始灌油层数"
           type="number"
@@ -431,7 +564,7 @@ export function RubberFormFields({ value, onChange, testIdPrefix, isNew = false,
           testId={`${testIdPrefix}-rubber-boost-layers`}
         />
       ) : null}
-      {used && value.boosted ? (
+      {isNew && used && value.boosted ? (
         <div className="grid gap-3 rounded-lg border border-court/20 bg-court/5 p-3" data-testid={`${testIdPrefix}-rubber-boost-history`}>
           <div className="grid gap-3 sm:grid-cols-3">
             <TextField
@@ -474,14 +607,14 @@ export function RubberFormFields({ value, onChange, testIdPrefix, isNew = false,
           className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-3 py-2 [&::-webkit-details-marker]:hidden"
           data-testid={`${testIdPrefix}-rubber-life-toggle`}
         >
-          <span className="shrink-0 text-sm font-bold text-ink">寿命与复灌参数</span>
+          <span className="shrink-0 text-sm font-bold text-ink">{value.boosted ? "寿命与复灌参数" : "寿命参数"}</span>
           <span className="flex min-w-0 items-center gap-1.5 text-xs font-semibold text-ink/50">
             <span className="truncate">{lifeSummary}</span>
             <ChevronDown size={16} className="shrink-0 transition group-open:rotate-180" aria-hidden="true" />
           </span>
         </summary>
         <div className="grid gap-3 border-t border-ink/10 p-3">
-          <div className="grid grid-cols-3 gap-2">
+          <div className={`grid gap-2 ${value.boosted ? "grid-cols-3" : "grid-cols-2"}`}>
             <CompactNumberField
               label="日历寿命 · 天"
               placeholder={String(DEFAULT_LIFE_PARAMETERS.calendarDays)}
@@ -497,18 +630,20 @@ export function RubberFormFields({ value, onChange, testIdPrefix, isNew = false,
               onChange={(playHours) => update("playHours", playHours)}
               testId={`${testIdPrefix}-rubber-play-hours`}
             />
-            <CompactNumberField
-              label="复灌周期 · 天"
-              placeholder={String(DEFAULT_LIFE_PARAMETERS.boostCycleDays)}
-              value={value.boostCycleDays}
-              onChange={(boostCycleDays) => update("boostCycleDays", boostCycleDays)}
-              testId={`${testIdPrefix}-rubber-boost-cycle`}
-            />
+            {value.boosted ? (
+              <CompactNumberField
+                label="复灌周期 · 天"
+                placeholder={String(DEFAULT_LIFE_PARAMETERS.boostCycleDays)}
+                value={value.boostCycleDays}
+                onChange={(boostCycleDays) => update("boostCycleDays", boostCycleDays)}
+                testId={`${testIdPrefix}-rubber-boost-cycle`}
+              />
+            ) : null}
           </div>
-          {!isNew ? (
+          {variant === "edit" ? (
             <div className="grid grid-cols-3 items-end gap-2">
               <CompactNumberField
-                label="录入前已打 · h"
+                label="此前已打 · h"
                 placeholder="0"
                 decimal
                 min="0"
@@ -516,13 +651,14 @@ export function RubberFormFields({ value, onChange, testIdPrefix, isNew = false,
                 onChange={(initialPlayHours) => update("initialPlayHours", initialPlayHours)}
                 testId={`${testIdPrefix}-rubber-initial-hours`}
               />
-              <p className="col-span-2 pb-1 text-xs font-medium leading-5 text-ink/50">开始用 App 记录前这张胶皮已打的时长，计入打球寿命。</p>
+              <p className="col-span-2 pb-1 text-xs font-medium leading-5 text-ink/50">
+                不在这块球拍打球记录里的时长（录入 App 前、或在其他球拍上打的），计入打球寿命。
+              </p>
             </div>
           ) : null}
           <p className="text-xs font-medium leading-5 text-ink/50">
-            留空即使用默认值：日历寿命 {DEFAULT_LIFE_PARAMETERS.calendarDays} 天、打球{" "}
-            {formatHours(DEFAULT_LIFE_PARAMETERS.playMinutes)} 小时；已灌油的胶皮每{" "}
-            {DEFAULT_LIFE_PARAMETERS.boostCycleDays} 天提醒复灌。
+            留空即使用默认值：日历寿命 {DEFAULT_LIFE_PARAMETERS.calendarDays} 天、打球 {formatHours(DEFAULT_LIFE_PARAMETERS.playMinutes)} 小时
+            {value.boosted ? `；每 ${DEFAULT_LIFE_PARAMETERS.boostCycleDays} 天提醒复灌` : ""}。
           </p>
         </div>
       </details>

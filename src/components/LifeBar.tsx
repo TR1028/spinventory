@@ -22,8 +22,9 @@ const statusLabel: Record<RubberLife["status"], string> = {
 export function LifeBar({ life, showDetails = false }: LifeBarProps) {
   const percent = Math.round(life.usedPercent);
   const color = life.state === "retired" ? "bg-ink/40" : statusColor[life.status];
-  const label =
-    life.state === "inventory" ? "未贴拍，尚未开始计算" : life.state === "retired" ? "已退役 · 寿命已冻结" : statusLabel[life.status];
+  let label = statusLabel[life.status];
+  if (life.state === "retired") label = "已退役 · 寿命已冻结";
+  else if (life.state === "inventory") label = life.used ? `拆下待用 · ${statusLabel[life.status]}` : "未贴拍，尚未开始计算";
 
   return (
     <div className="space-y-2">

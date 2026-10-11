@@ -49,6 +49,16 @@ export class RacketLifeDatabase extends Dexie {
       playSessions: "&id, racketId, date, [racketId+date]",
       meta: "&key",
     });
+
+    // v4: rubber custom name (`label`) and inventory stock count (`quantity`); used sheets taken off
+    // to the inventory reuse `installedAt` / `initialPlayMinutes`. Plain optional properties again.
+    this.version(4).stores({
+      rackets: "&id, name, status, createdAt",
+      rubbers: "&id, racketId, [racketId+side], installedAt, removedAt",
+      boostingLogs: "&id, rubberId, date, boostNumber",
+      playSessions: "&id, racketId, date, [racketId+date]",
+      meta: "&key",
+    });
   }
 }
 

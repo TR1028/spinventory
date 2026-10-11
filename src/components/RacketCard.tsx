@@ -52,7 +52,10 @@ function RubberRow({
               <ReboostBadge daysSinceLastBoost={boosting.daysSinceLastBoost} cycleDays={boosting.cycleDays} />
             ) : null}
           </div>
-          <div className="truncate text-sm font-semibold text-ink">{rubber.name}</div>
+          <div className="truncate text-sm font-semibold text-ink">
+            {rubber.name}
+            {rubber.label ? <span className="font-bold text-court"> · {rubber.label}</span> : null}
+          </div>
         </div>
         <div className="shrink-0 text-right text-xs text-ink/55">
           <div>已用 {life.calendarDays} 天</div>

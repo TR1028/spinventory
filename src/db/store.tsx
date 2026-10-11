@@ -41,6 +41,7 @@ import {
   planDeleteRacket,
   planDeleteRubber,
   planReplaceRubber,
+  planStashRubber,
   planUpdateBoostingLog,
   planUpdatePlaySession,
   planUpdateRacket,
@@ -52,6 +53,7 @@ import {
   type DomainContext,
   type DomainResult,
   type ReplaceRubberInput,
+  type StashRubberInput,
   type UpdateBoostingLogInput,
   type UpdatePlaySessionInput,
   type UpdateRacketInput,
@@ -76,10 +78,12 @@ export type {
   CreatePlaySessionInput,
   CreateRacketInput,
   CreateRubberInput,
+  OutgoingRubberAction,
   RacketSpecs,
   ReplaceRubberInput,
   RubberFields,
   RubberSource,
+  StashRubberInput,
   UpdateBoostingLogInput,
   UpdatePlaySessionInput,
   UpdateRacketInput,
@@ -105,14 +109,19 @@ export type AppDataActions = {
   deleteRacket: (id: string) => Promise<void>;
 
   // Rubbers
-  /** Adds an unmounted rubber to the inventory; resolves to its id. */
+  /** Adds inventory rubbers (several identical new sheets, or one used sheet); resolves to the record id. */
   createRubber: (input: CreateRubberInput) => Promise<string>;
   /** Edits a rubber; `removedAt: null` restores a retired rubber onto its (empty) slot. */
   updateRubber: (id: string, input: UpdateRubberInput) => Promise<void>;
-  /** Takes a mounted rubber off (defaults to today), freezing its life; the slot becomes empty. */
+  /** Takes a mounted rubber off for good (defaults to today), freezing its life; the slot becomes empty. */
   retireRubber: (id: string, date?: string) => Promise<void>;
+  /**
+   * 「放回囤货」: takes a mounted rubber off on `date` (default today), or brings a retired one back,
+   * keeping it in the inventory as a used sheet whose life continues when it is mounted again.
+   */
+  stashRubber: (id: string, date?: string) => Promise<void>;
   deleteRubber: (id: string) => Promise<void>;
-  /** Retires whatever is on `input.side` and mounts a new or inventory rubber; resolves to its id. */
+  /** Takes off whatever is on `input.side` (retired or stashed) and mounts a new or inventory rubber; resolves to its id. */
   replaceRubber: (racketId: string, input: ReplaceRubberInput) => Promise<string>;
 
   // Play sessions
@@ -511,6 +520,10 @@ export function AppDataProvider({ children }: { children: ReactNode }) {
         return completed(
           mutate((snapshot, ctx) => planUpdateRubber(snapshot, id, input, ctx), (api) => api.updateRubber(id, input)),
         );
+      },
+      stashRubber: (id, date) => {
+        const input: StashRubberInput = { date: dateOrToday(date) };
+        return completed(mutate((snapshot, ctx) => planStashRubber(snapshot, id, input, ctx), (api) => api.stashRubber(id, input)));
       },
       deleteRubber: (id) =>
         completed(mutate((snapshot, ctx) => planDeleteRubber(snapshot, id, ctx), (api) => api.deleteRubber(id))),

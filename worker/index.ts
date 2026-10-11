@@ -20,6 +20,7 @@ import {
   planDeleteRacket,
   planDeleteRubber,
   planReplaceRubber,
+  planStashRubber,
   planUpdateBoostingLog,
   planUpdatePlaySession,
   planUpdateRacket,
@@ -31,6 +32,7 @@ import {
   type DomainContext,
   type DomainResult,
   type ReplaceRubberInput,
+  type StashRubberInput,
 } from "../src/db/domain";
 import type { AppSnapshot, MutationResponse } from "../src/db/schema";
 import { authGuard, authRoutes } from "./auth";
@@ -127,9 +129,10 @@ function inventorySourceIds(...sources: unknown[]) {
 // Rackets
 app.post("/api/rackets", async (c) => {
   const body = await readJsonObject(c);
+  const inventoryIds = inventorySourceIds(body.forehand, body.backhand);
   return runMutation(
     c,
-    { rackets: { all: true }, rubbers: { ids: inventorySourceIds(body.forehand, body.backhand) } },
+    { rackets: { all: true }, rubbers: { ids: inventoryIds }, boostingLogs: { rubberIds: inventoryIds } },
     (snapshot, ctx) => planCreateRacket(snapshot, body as CreateRacketInput, ctx),
   );
 });
@@ -149,13 +152,23 @@ app.delete("/api/rackets/:id", async (c) => {
   );
 });
 
-/** Atomic "retire the old rubber + mount a new or inventory rubber" (also fills empty slots). */
+/**
+ * Atomic "take the old rubber off (retire it, or stash it in the inventory) + mount a new or inventory
+ * rubber" (also fills empty slots).
+ */
 app.post("/api/rackets/:id/replace-rubber", async (c) => {
   const id = c.req.param("id");
   const body = await readJsonObject(c);
+  const inventoryIds = inventorySourceIds(body.source);
   return runMutation(
     c,
-    { rackets: { ids: [id] }, rubbers: { racketIds: [id], ids: inventorySourceIds(body.source) } },
+    {
+      rackets: { ids: [id] },
+      rubbers: { racketIds: [id], ids: inventoryIds },
+      boostingLogs: { rubberIds: inventoryIds },
+      // A stashed rubber's play on this racket is folded into its record.
+      playSessions: body.outgoing === "stash" ? { racketIds: [id] } : undefined,
+    },
     (snapshot, ctx) => planReplaceRubber(snapshot, id, body as ReplaceRubberInput, ctx),
   );
 });
@@ -173,6 +186,17 @@ app.put("/api/rubbers/:id", async (c) => {
     c,
     { rubbers: { ids: [id] }, rackets: { mountingRubberIds: [id], ofRubberIds: [id] } },
     (snapshot, ctx) => planUpdateRubber(snapshot, id, body, ctx),
+  );
+});
+
+/** 「放回囤货」: take a mounted rubber off (or bring a retired one back) into the inventory. */
+app.post("/api/rubbers/:id/stash", async (c) => {
+  const id = c.req.param("id");
+  const body = await readJsonObject(c);
+  return runMutation(
+    c,
+    { rubbers: { ids: [id] }, rackets: { mountingRubberIds: [id] }, playSessions: { ofRubberIds: [id] } },
+    (snapshot, ctx) => planStashRubber(snapshot, id, body as StashRubberInput, ctx),
   );
 });
 
@@ -223,11 +247,7 @@ app.put("/api/boosting-logs/:id", async (c) => {
 
 app.delete("/api/boosting-logs/:id", async (c) => {
   const id = c.req.param("id");
-  return runMutation(
-    c,
-    { boostingLogs: { siblingsOfIds: [id] }, rubbers: { ofBoostingLogIds: [id] } },
-    (snapshot, ctx) => planDeleteBoostingLog(snapshot, id, ctx),
-  );
+  return runMutation(c, { boostingLogs: { siblingsOfIds: [id] } }, (snapshot, ctx) => planDeleteBoostingLog(snapshot, id, ctx));
 });
 
 // ---------------------------------------------------------------------------

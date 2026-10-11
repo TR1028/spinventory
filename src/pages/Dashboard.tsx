@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { CloudSyncModal } from "../components/CloudSyncModal";
 import { RacketCard } from "../components/RacketCard";
 import { EmptyState, buttonClass } from "../components/ui";
-import { getInventoryRubbers, getMountedRubber } from "../db/domain";
+import { countInventorySheets, getMountedRubber } from "../db/domain";
 import { getRacketStatus, RUBBER_SIDES, rubberSideLabel, type Racket, type Rubber, type RubberSide } from "../db/schema";
 import { useAppData } from "../db/store";
 import { isWithinLastDays } from "../utils/date";
@@ -65,7 +65,7 @@ export function Dashboard({ onAddSession, onAddRacket, onOpenRacket, onOpenInven
     () => sortRackets(data.rackets.filter((racket) => getRacketStatus(racket) === "active")),
     [data.rackets],
   );
-  const inventoryRubberCount = useMemo(() => getInventoryRubbers(data).length, [data]);
+  const inventoryRubberCount = useMemo(() => countInventorySheets(data), [data]);
   const spareBladeCount = data.rackets.filter((racket) => getRacketStatus(racket) === "inventory").length;
   const rubberById = useMemo(() => new Map(data.rubbers.map((rubber) => [rubber.id, rubber])), [data.rubbers]);
   const reboostAlerts = useMemo<ReboostAlert[]>(

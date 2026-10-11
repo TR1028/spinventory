@@ -60,6 +60,8 @@ const TABLES: Record<EntityKey, TableSpec> = {
       { name: "racket_id", key: "racketId" },
       { name: "side", key: "side" },
       { name: "name", key: "name" },
+      { name: "label", key: "label" },
+      { name: "quantity", key: "quantity" },
       { name: "hardness", key: "hardness" },
       { name: "thickness_mm", key: "thicknessMm" },
       { name: "weight_grams", key: "weightGrams" },
@@ -177,6 +179,8 @@ const ADDED_COLUMNS: { table: string; column: string; type: "TEXT" | "REAL" | "I
   { table: "rubbers", column: "weight_grams", type: "REAL" },
   { table: "rubbers", column: "initial_play_minutes", type: "INTEGER" },
   { table: "rubbers", column: "mounted_at", type: "TEXT" },
+  { table: "rubbers", column: "label", type: "TEXT" },
+  { table: "rubbers", column: "quantity", type: "INTEGER" },
 ];
 
 let schemaCheck: Promise<void> | undefined;
@@ -241,6 +245,8 @@ type RubberRow = {
   racket_id: string | null;
   side: string | null;
   name: string;
+  label: string | null;
+  quantity: number | null;
   hardness: string | null;
   thickness_mm: number | null;
   weight_grams: number | null;
@@ -304,6 +310,8 @@ const toRubber = (row: RubberRow): Rubber =>
     racketId: row.racket_id,
     side: isRubberSide(row.side) ? row.side : undefined,
     name: row.name,
+    label: row.label,
+    quantity: typeof row.quantity === "number" && row.quantity > 1 ? row.quantity : undefined,
     hardness: row.hardness,
     thicknessMm: row.thickness_mm,
     weightGrams: row.weight_grams,
@@ -350,7 +358,8 @@ export type SnapshotScope = {
   rackets?: { all?: boolean; ids?: string[]; mountingRubberIds?: string[]; ofRubberIds?: string[] };
   rubbers?: { all?: boolean; ids?: string[]; racketIds?: string[]; ofBoostingLogIds?: string[] };
   boostingLogs?: { all?: boolean; ids?: string[]; rubberIds?: string[]; racketIds?: string[]; siblingsOfIds?: string[] };
-  playSessions?: { all?: boolean; ids?: string[]; racketIds?: string[] };
+  /** `ofRubberIds`: sessions of the rackets those rubbers are (or were last) on. */
+  playSessions?: { all?: boolean; ids?: string[]; racketIds?: string[]; ofRubberIds?: string[] };
 };
 
 type Filter = [condition: (param: string) => string, ids: string[] | undefined];
@@ -415,6 +424,10 @@ export async function loadScope(db: D1Database, userId: string, scope: SnapshotS
       scopedSelect(db, userId, "playSessions", playSessions?.all, [
         [(param) => `id ${IN_JSON(param)}`, playSessions?.ids],
         [(param) => `racket_id ${IN_JSON(param)}`, playSessions?.racketIds],
+        [
+          (param) => `racket_id IN (SELECT racket_id FROM rubbers WHERE user_id = ?1 AND id ${IN_JSON(param)})`,
+          playSessions?.ofRubberIds,
+        ],
       ]),
     ],
   ];
@@ -525,11 +538,14 @@ function sanitizeRubber(value: unknown, now: string): Rubber | undefined {
   const name = cleanText(raw?.name, LIMITS.textLength);
   if (!raw || !id || !name) return undefined;
   const createdAt = cleanTimestamp(raw.createdAt) ?? now;
+  const quantity = cleanPositive(raw.quantity, LIMITS.maxQuantity, true);
   return compact({
     id,
     racketId: cleanId(raw.racketId),
     side: isRubberSide(raw.side) ? raw.side : undefined,
     name,
+    label: cleanText(raw.label, LIMITS.labelLength),
+    quantity: quantity && quantity > 1 ? quantity : undefined,
     hardness: cleanText(raw.hardness, LIMITS.hardnessLength),
     thicknessMm: cleanPositive(raw.thicknessMm, LIMITS.maxThicknessMm, false),
     weightGrams: cleanPositive(raw.weightGrams, LIMITS.maxWeightGrams, false),

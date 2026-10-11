@@ -53,9 +53,9 @@ for (const table of new Set(statements.map((item) => item.table))) {
 
 const missing = statements.filter(({ table, column }) => !columns.get(table).has(column));
 if (!missing.length) {
-  console.log(`✔ ${DATABASE}: all ${statements.length} v2 columns already exist, nothing to do.`);
+  console.log(`✔ ${DATABASE}: all ${statements.length} migrated columns already exist, nothing to do.`);
 } else {
   console.log(`Adding ${missing.length} column(s) to ${DATABASE}: ${missing.map(({ table, column }) => `${table}.${column}`).join(", ")}`);
   execute(missing.map(({ statement }) => statement).join("\n"));
-  console.log("✔ Migration v2 applied; existing rows are unchanged.");
+  console.log("✔ Column migration applied; existing rows are unchanged.");
 }

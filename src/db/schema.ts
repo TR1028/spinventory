@@ -14,7 +14,10 @@ export type RubberSide = "forehand" | "backhand";
  */
 export type RacketStatus = "active" | "inventory" | "retired";
 
-/** Lifecycle of a rubber, derived from its fields (see {@link getRubberState}). */
+/**
+ * Lifecycle of a rubber, derived from its fields (see {@link getRubberState}). `inventory` covers
+ * brand-new sheets and used ones taken off a racket to be mounted again later (`installedAt` set).
+ */
 export type RubberState = "inventory" | "mounted" | "retired";
 
 /** Handle shape: shakehand flared / straight / anatomic, Chinese penhold, Japanese penhold. */
@@ -50,12 +53,23 @@ export type Rubber = {
   racketId?: string;
   /** Empty while the rubber sits in the inventory. */
   side?: RubberSide;
+  /** Model, e.g. `红双喜 狂飚3 省狂蓝海绵 (H3 Provincial Blue)`. */
   name: string;
+  /** Optional custom name that tells sheets of the same model apart, e.g. `1号` / `比赛备用` (v4). */
+  label?: string;
+  /**
+   * Inventory only: identical brand-new sheets this record stands for (v4); absent means 1.
+   * Mounting one of them splits it off as a record of its own.
+   */
+  quantity?: number;
   hardness?: string;
   thicknessMm?: number;
   /** Sheet weight in grams (v3). */
   weightGrams?: number;
-  /** `YYYY-MM-DD` the rubber was glued onto a racket; calendar life starts here. */
+  /**
+   * `YYYY-MM-DD` the rubber was first glued onto a racket; calendar life starts here. Also set on a
+   * used sheet back in the inventory (it keeps aging there); empty for a brand-new sheet.
+   */
   installedAt?: string;
   /**
    * `YYYY-MM-DD` the rubber went onto its current racket, set only when that is later than
@@ -65,12 +79,19 @@ export type Rubber = {
   mountedAt?: string;
   /** `YYYY-MM-DD` the rubber was taken off (retired); its life stops accumulating. */
   removedAt?: string;
+  /**
+   * A boosting rubber (灌油胶皮): shows its boosting logs and re-boost reminders. Set by the user or
+   * by logging a boost; most rubbers are never boosted.
+   */
   boosted: boolean;
   /** Calendar-life limit in days (default 120). */
   customCalendarDays?: number;
   /** Play-time limit in minutes (default 5400 = 90 h). */
   customPlayMinutes?: number;
-  /** Play time before the rubber was recorded in the app, in minutes; counts toward its play life (v3). */
+  /**
+   * Play time not covered by the current racket's sessions, in minutes; counts toward its play life:
+   * play before the rubber was recorded (v3) plus play on rackets it was taken off to the inventory.
+   */
   initialPlayMinutes?: number;
   /** Re-boost reminder cycle in days (default 21). */
   boostCycleDays?: number;
@@ -145,6 +166,22 @@ export function getRacketStatus(racket: Pick<Racket, "status">): RacketStatus {
 export function getRubberState(rubber: Pick<Rubber, "racketId" | "removedAt">): RubberState {
   if (rubber.removedAt) return "retired";
   return rubber.racketId ? "mounted" : "inventory";
+}
+
+/** Sheets a record stands for: its `quantity` (inventory stock), otherwise 1. */
+export function getRubberQuantity(rubber: Pick<Rubber, "quantity">) {
+  const { quantity } = rubber;
+  return typeof quantity === "number" && Number.isFinite(quantity) && quantity > 1 ? Math.floor(quantity) : 1;
+}
+
+/** A sheet that has been glued on before (`installedAt` set), as opposed to a brand-new one. */
+export function isUsedRubber(rubber: Pick<Rubber, "installedAt">) {
+  return Boolean(rubber.installedAt);
+}
+
+/** Model plus the custom name, for plain-text mentions: `狂飚3 省狂 · 比赛备用`. */
+export function getRubberDisplayName(rubber: Pick<Rubber, "name" | "label">) {
+  return rubber.label ? `${rubber.name} · ${rubber.label}` : rubber.name;
 }
 
 /** First day the rubber has been on its current racket: `mountedAt` when later than `installedAt`. */

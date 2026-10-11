@@ -1,4 +1,4 @@
--- Spinventory · D1 migration v2: grip type, weights, blade service history, used-rubber backfill
+-- Spinventory · D1 column migrations: v2 (grip type, weights, blade service history, used-rubber backfill) and v4 (rubber custom name, stock quantity)
 --
 --   Local:   pnpm run db:migrate:v2:local
 --   Remote:  pnpm run db:migrate:v2:remote
@@ -29,3 +29,7 @@ ALTER TABLE rackets ADD COLUMN initial_play_minutes INTEGER;
 ALTER TABLE rubbers ADD COLUMN weight_grams REAL;
 ALTER TABLE rubbers ADD COLUMN initial_play_minutes INTEGER;
 ALTER TABLE rubbers ADD COLUMN mounted_at TEXT;
+
+-- v4 · Rubbers: custom name and inventory stock count (several identical brand-new sheets).
+ALTER TABLE rubbers ADD COLUMN label TEXT;
+ALTER TABLE rubbers ADD COLUMN quantity INTEGER;
