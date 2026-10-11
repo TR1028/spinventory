@@ -1,10 +1,11 @@
 import { CalendarDays, Clock3, Plus, Waves } from "lucide-react";
 import type { KeyboardEvent, MouseEvent } from "react";
-import type { BoostingLog, PlaySession, Racket, Rubber } from "../db/schema";
+import type { BoostingLog, PlaySession, Racket, Rubber, RubberSide } from "../db/schema";
 import { rubberSideLabel } from "../db/schema";
 import { formatDate, isWithinLastDays } from "../utils/date";
 import { calculateRubberLife, getBoostingSummary } from "../utils/life";
 import { LifeBar } from "./LifeBar";
+import { ReboostBadge } from "./ui";
 
 type RacketCardProps = {
   racket: Racket;
@@ -17,15 +18,24 @@ type RacketCardProps = {
 };
 
 function RubberRow({
+  side,
   rubber,
   sessions,
   boostingLogs,
 }: {
+  side: RubberSide;
   rubber?: Rubber;
   sessions: PlaySession[];
   boostingLogs: BoostingLog[];
 }) {
-  if (!rubber) return null;
+  if (!rubber) {
+    return (
+      <div className="flex items-center justify-between gap-3 rounded-md border border-dashed border-ink/15 px-3 py-2">
+        <span className="text-xs font-semibold uppercase tracking-wide text-court">{rubberSideLabel[side]}</span>
+        <span className="text-xs font-semibold text-ink/45">未贴胶皮</span>
+      </div>
+    );
+  }
 
   const life = calculateRubberLife(rubber, sessions);
   const boosting = getBoostingSummary(rubber, boostingLogs);
@@ -34,15 +44,18 @@ function RubberRow({
     <div className="space-y-2">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-xs font-semibold uppercase tracking-wide text-court">
-            {rubberSideLabel[rubber.side]}
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-semibold uppercase tracking-wide text-court">{rubberSideLabel[side]}</span>
+            {boosting.needsReboost ? (
+              <ReboostBadge daysSinceLastBoost={boosting.daysSinceLastBoost} cycleDays={boosting.cycleDays} />
+            ) : null}
           </div>
           <div className="truncate text-sm font-semibold text-ink">{rubber.name}</div>
         </div>
         <div className="shrink-0 text-right text-xs text-ink/55">
           <div>已用 {life.calendarDays} 天</div>
           {rubber.boosted ? (
-            <div className="mt-1 inline-flex items-center gap-1 text-court">
+            <div className={`mt-1 inline-flex items-center gap-1 ${boosting.needsReboost ? "text-amber-600" : "text-court"}`}>
               <Waves size={13} aria-hidden="true" />
               <span>
                 {boosting.count} 次
@@ -125,8 +138,8 @@ export function RacketCard({
       </div>
 
       <div className="mt-4 space-y-4">
-        <RubberRow rubber={forehand} sessions={racketSessions} boostingLogs={boostingLogs} />
-        <RubberRow rubber={backhand} sessions={racketSessions} boostingLogs={boostingLogs} />
+        <RubberRow side="forehand" rubber={forehand} sessions={racketSessions} boostingLogs={boostingLogs} />
+        <RubberRow side="backhand" rubber={backhand} sessions={racketSessions} boostingLogs={boostingLogs} />
       </div>
 
       <div className="mt-4 text-xs font-medium text-ink/50">

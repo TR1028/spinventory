@@ -1,4 +1,4 @@
-const CACHE_NAME = "racket-life-v1";
+const CACHE_NAME = "racket-life-v2";
 const APP_SHELL = ["./", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", (event) => {
@@ -23,6 +23,8 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
+  // Cloud API responses (auth + live data) must never be served from this cache-first cache.
+  if (url.pathname.includes("/api/")) return;
 
   event.respondWith(
     caches.match(event.request).then((cached) => {

@@ -1,0 +1,804 @@
+/**
+ * Pure domain logic shared by Local Mode (Dexie) and the Cloudflare Worker (D1).
+ *
+ * Every mutation is a *planner*: it receives the relevant slice of data as an {@link AppSnapshot},
+ * validates the input and returns an {@link AppDataDelta}. Local Mode applies the delta to
+ * IndexedDB; the Worker persists it to D1 and returns it so the client can merge it into its
+ * in-memory snapshot. Keep this module free of runtime dependencies so `worker/` can import it.
+ */
+import {
+  getRacketRubberId,
+  getRubberState,
+  RACKET_STATUSES,
+  RUBBER_SIDES,
+  type AppDataDelta,
+  type AppSnapshot,
+  type BoostingLog,
+  type EntityKey,
+  type PlaySession,
+  type Racket,
+  type RacketStatus,
+  type Rubber,
+  type RubberSide,
+} from "./schema";
+
+export class DomainError extends Error {
+  readonly status: 400 | 404 | 409;
+
+  constructor(message: string, status: 400 | 404 | 409 = 400) {
+    super(message);
+    this.name = "DomainError";
+    this.status = status;
+  }
+}
+
+export type DomainContext = {
+  /** ISO timestamp used for `createdAt` / `updatedAt`. */
+  now: string;
+  /** Calendar date (`YYYY-MM-DD`) used when an input omits its date. */
+  today: string;
+  createId: (prefix: string) => string;
+};
+
+export type DomainResult = { delta: AppDataDelta; id?: string };
+export type CreateResult = { delta: AppDataDelta; id: string };
+
+// ---------------------------------------------------------------------------
+// Inputs (shared by the store actions and the Worker request bodies)
+// ---------------------------------------------------------------------------
+
+export type RubberFields = {
+  name: string;
+  hardness?: string;
+  thicknessMm?: number;
+  boosted?: boolean;
+  customCalendarDays?: number;
+  customPlayMinutes?: number;
+  boostCycleDays?: number;
+  notes?: string;
+};
+
+/** Where a rubber that is being mounted comes from. */
+export type RubberSource =
+  | {
+      type: "new";
+      rubber: RubberFields;
+      /** When the new rubber is boosted, also log its first boost with this many layers. */
+      initialBoostLayers?: number;
+    }
+  | { type: "inventory"; rubberId: string };
+
+export type CreateRacketInput = {
+  name: string;
+  blade: string;
+  /** Defaults to `active` when a rubber is mounted, otherwise `inventory` (bare blade). */
+  status?: RacketStatus;
+  notes?: string;
+  sortOrder?: number;
+  /** Installation date of the mounted rubbers (defaults to today). */
+  installedAt?: string;
+  forehand?: RubberSource;
+  backhand?: RubberSource;
+};
+
+/** In every `Update*Input`, `undefined` keeps a field and `null` clears an optional field. */
+export type UpdateRacketInput = {
+  name?: string;
+  blade?: string;
+  status?: RacketStatus;
+  notes?: string | null;
+  sortOrder?: number | null;
+};
+
+/** Creates an unmounted rubber in the inventory. */
+export type CreateRubberInput = RubberFields;
+
+export type UpdateRubberInput = {
+  name?: string;
+  hardness?: string | null;
+  thicknessMm?: number | null;
+  boosted?: boolean;
+  customCalendarDays?: number | null;
+  customPlayMinutes?: number | null;
+  boostCycleDays?: number | null;
+  notes?: string | null;
+  /** Only for mounted or retired rubbers. */
+  installedAt?: string;
+  /** A date retires a mounted rubber (its racket slot is freed); `null` restores a retired one. */
+  removedAt?: string | null;
+};
+
+export type ReplaceRubberInput = {
+  side: RubberSide;
+  /** Change date: `removedAt` of the outgoing rubber and `installedAt` of the new one (defaults to today). */
+  date?: string;
+  source: RubberSource;
+};
+
+export type CreatePlaySessionInput = {
+  racketId: string;
+  date: string;
+  durationMinutes: number;
+  notes?: string;
+};
+
+export type UpdatePlaySessionInput = {
+  racketId?: string;
+  date?: string;
+  durationMinutes?: number;
+  notes?: string | null;
+};
+
+export type CreateBoostingLogInput = {
+  rubberId: string;
+  date: string;
+  layers: number;
+  notes?: string;
+};
+
+export type UpdateBoostingLogInput = {
+  date?: string;
+  layers?: number;
+  notes?: string | null;
+};
+
+export const LIMITS = {
+  textLength: 120,
+  hardnessLength: 20,
+  notesLength: 1000,
+  maxThicknessMm: 10,
+  maxCalendarDays: 3650,
+  maxPlayMinutes: 100_000,
+  maxBoostCycleDays: 365,
+  maxLayers: 20,
+  maxSessionMinutes: 24 * 60,
+} as const;
+
+// ---------------------------------------------------------------------------
+// Validation helpers (inputs may be untrusted JSON on the Worker)
+// ---------------------------------------------------------------------------
+
+const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+
+export function isISODate(value: unknown): value is string {
+  if (typeof value !== "string" || !DATE_PATTERN.test(value)) return false;
+  const [year, month, day] = value.split("-").map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
+}
+
+function isBlank(value: unknown) {
+  return value === undefined || value === null || (typeof value === "string" && value.trim() === "");
+}
+
+function toNumber(value: unknown) {
+  if (typeof value === "number") return value;
+  if (typeof value === "string" && value.trim()) return Number(value);
+  return Number.NaN;
+}
+
+export function requireText(value: unknown, label: string, maxLength: number = LIMITS.textLength): string {
+  if (typeof value !== "string" || !value.trim()) throw new DomainError(`请填写${label}`);
+  const text = value.trim();
+  if (text.length > maxLength) throw new DomainError(`${label}不能超过 ${maxLength} 个字符`);
+  return text;
+}
+
+export function optionalText(value: unknown, label: string, maxLength: number = LIMITS.notesLength) {
+  return isBlank(value) ? undefined : requireText(value, label, maxLength);
+}
+
+export function requireDate(value: unknown, label: string): string {
+  if (!isISODate(value)) throw new DomainError(`请选择有效的${label}`);
+  return value;
+}
+
+export function optionalDate(value: unknown, label: string) {
+  return isBlank(value) ? undefined : requireDate(value, label);
+}
+
+export function requirePositiveNumber(value: unknown, label: string, max: number): number {
+  const parsed = toNumber(value);
+  if (!Number.isFinite(parsed) || parsed <= 0) throw new DomainError(`${label}必须大于 0`);
+  if (parsed > max) throw new DomainError(`${label}不能超过 ${max}`);
+  return parsed;
+}
+
+export function optionalPositiveNumber(value: unknown, label: string, max: number) {
+  return isBlank(value) ? undefined : requirePositiveNumber(value, label, max);
+}
+
+export function requirePositiveInt(value: unknown, label: string, max: number): number {
+  const rounded = Math.round(requirePositiveNumber(value, label, max));
+  if (rounded < 1) throw new DomainError(`${label}至少为 1`);
+  return rounded;
+}
+
+export function optionalPositiveInt(value: unknown, label: string, max: number) {
+  return isBlank(value) ? undefined : requirePositiveInt(value, label, max);
+}
+
+function optionalInteger(value: unknown, label: string) {
+  if (isBlank(value)) return undefined;
+  const parsed = toNumber(value);
+  if (!Number.isFinite(parsed)) throw new DomainError(`${label}必须是数字`);
+  return Math.round(parsed);
+}
+
+function requireBoolean(value: unknown, label: string): boolean {
+  if (typeof value !== "boolean") throw new DomainError(`${label}无效`);
+  return value;
+}
+
+function requireId(value: unknown, label: string): string {
+  if (typeof value !== "string" || !value.trim()) throw new DomainError(`请选择${label}`);
+  return value.trim();
+}
+
+function requireSide(value: unknown): RubberSide {
+  if (!RUBBER_SIDES.includes(value as RubberSide)) throw new DomainError("请选择正手或反手");
+  return value as RubberSide;
+}
+
+function requireRacketStatus(value: unknown): RacketStatus {
+  if (!RACKET_STATUSES.includes(value as RacketStatus)) throw new DomainError("球拍状态无效");
+  return value as RacketStatus;
+}
+
+function asObject(value: unknown, label: string): Record<string, unknown> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) throw new DomainError(`${label}无效`);
+  return value as Record<string, unknown>;
+}
+
+/** Applies one patch value: `undefined` keeps `current`, `null` clears it, anything else is parsed. */
+function patch<T>(current: T | undefined, value: unknown, parse: (value: unknown) => T | undefined) {
+  if (value === undefined) return current;
+  if (value === null) return undefined;
+  return parse(value);
+}
+
+/** Drops `undefined` / `null` properties so records match the optional-field model. */
+export function compact<T extends object>(value: T): { [K in keyof T]: Exclude<T[K], null> } {
+  const result: Record<string, unknown> = {};
+  for (const [key, entry] of Object.entries(value)) {
+    if (entry !== undefined && entry !== null) result[key] = entry;
+  }
+  return result as { [K in keyof T]: Exclude<T[K], null> };
+}
+
+// ---------------------------------------------------------------------------
+// Deltas
+// ---------------------------------------------------------------------------
+
+type EntityRecord = {
+  rackets: Racket;
+  rubbers: Rubber;
+  boostingLogs: BoostingLog;
+  playSessions: PlaySession;
+};
+
+export function createEmptySnapshot(): AppSnapshot {
+  return { rackets: [], rubbers: [], boostingLogs: [], playSessions: [] };
+}
+
+export function createEmptyDelta(): AppDataDelta {
+  return {
+    upserts: createEmptySnapshot(),
+    deletes: { rackets: [], rubbers: [], boostingLogs: [], playSessions: [] },
+  };
+}
+
+class DeltaBuilder {
+  private readonly upserts: Record<EntityKey, Map<string, { id: string }>> = {
+    rackets: new Map(),
+    rubbers: new Map(),
+    boostingLogs: new Map(),
+    playSessions: new Map(),
+  };
+
+  private readonly deletes: Record<EntityKey, Set<string>> = {
+    rackets: new Set(),
+    rubbers: new Set(),
+    boostingLogs: new Set(),
+    playSessions: new Set(),
+  };
+
+  put<K extends EntityKey>(key: K, record: EntityRecord[K]) {
+    this.deletes[key].delete(record.id);
+    this.upserts[key].set(record.id, record);
+  }
+
+  remove(key: EntityKey, id: string) {
+    this.upserts[key].delete(id);
+    this.deletes[key].add(id);
+  }
+
+  /** Latest staged version of a record within this plan, or the given snapshot copy. */
+  current<K extends EntityKey>(key: K, record: EntityRecord[K]): EntityRecord[K] {
+    return (this.upserts[key].get(record.id) as EntityRecord[K] | undefined) ?? record;
+  }
+
+  build(): AppDataDelta {
+    return {
+      upserts: {
+        rackets: [...this.upserts.rackets.values()] as Racket[],
+        rubbers: [...this.upserts.rubbers.values()] as Rubber[],
+        boostingLogs: [...this.upserts.boostingLogs.values()] as BoostingLog[],
+        playSessions: [...this.upserts.playSessions.values()] as PlaySession[],
+      },
+      deletes: {
+        rackets: [...this.deletes.rackets],
+        rubbers: [...this.deletes.rubbers],
+        boostingLogs: [...this.deletes.boostingLogs],
+        playSessions: [...this.deletes.playSessions],
+      },
+    };
+  }
+}
+
+function applyTableDelta<T extends { id: string }>(rows: T[], upserts: T[] = [], deletes: string[] = []): T[] {
+  if (!upserts.length && !deletes.length) return rows;
+  const removed = new Set(deletes);
+  const pending = new Map(upserts.map((row) => [row.id, row]));
+  const next: T[] = [];
+  for (const row of rows) {
+    if (removed.has(row.id)) continue;
+    const replacement = pending.get(row.id);
+    if (replacement) {
+      next.push(replacement);
+      pending.delete(row.id);
+    } else {
+      next.push(row);
+    }
+  }
+  for (const row of pending.values()) {
+    if (!removed.has(row.id)) next.push(row);
+  }
+  return next;
+}
+
+/** Returns a new snapshot with the delta applied (unchanged tables keep their identity). */
+export function applyDelta(snapshot: AppSnapshot, delta: AppDataDelta): AppSnapshot {
+  return {
+    rackets: applyTableDelta(snapshot.rackets, delta.upserts?.rackets, delta.deletes?.rackets),
+    rubbers: applyTableDelta(snapshot.rubbers, delta.upserts?.rubbers, delta.deletes?.rubbers),
+    boostingLogs: applyTableDelta(snapshot.boostingLogs, delta.upserts?.boostingLogs, delta.deletes?.boostingLogs),
+    playSessions: applyTableDelta(snapshot.playSessions, delta.upserts?.playSessions, delta.deletes?.playSessions),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Selectors
+// ---------------------------------------------------------------------------
+
+function compareText(left: string, right: string) {
+  return left < right ? -1 : left > right ? 1 : 0;
+}
+
+/** Chronological order behind `boostNumber`: date, creation time, id (mirrored by the Worker's SQL). */
+export function compareBoostingLogs(left: BoostingLog, right: BoostingLog) {
+  return compareText(left.date, right.date) || compareText(left.createdAt, right.createdAt) || compareText(left.id, right.id);
+}
+
+export function getMountedRubber(snapshot: Pick<AppSnapshot, "rubbers">, racket: Racket, side: RubberSide) {
+  const rubberId = getRacketRubberId(racket, side);
+  return rubberId ? snapshot.rubbers.find((rubber) => rubber.id === rubberId) : undefined;
+}
+
+/** Unmounted rubbers in the inventory, newest first. */
+export function getInventoryRubbers(snapshot: Pick<AppSnapshot, "rubbers">) {
+  return snapshot.rubbers
+    .filter((rubber) => getRubberState(rubber) === "inventory")
+    .sort((left, right) => compareText(right.createdAt, left.createdAt));
+}
+
+/** Rubbers previously used on a racket, most recently retired first. */
+export function getRetiredRubbers(snapshot: Pick<AppSnapshot, "rubbers">, racketId: string) {
+  return snapshot.rubbers
+    .filter((rubber) => rubber.racketId === racketId && getRubberState(rubber) === "retired")
+    .sort((left, right) => compareText(right.removedAt ?? "", left.removedAt ?? ""));
+}
+
+/** A rubber's boosting logs, newest first. */
+export function getRubberBoostingLogs(snapshot: Pick<AppSnapshot, "boostingLogs">, rubberId: string) {
+  return snapshot.boostingLogs.filter((log) => log.rubberId === rubberId).sort((left, right) => compareBoostingLogs(right, left));
+}
+
+// ---------------------------------------------------------------------------
+// Planner internals
+// ---------------------------------------------------------------------------
+
+function findRacket(snapshot: AppSnapshot, id: unknown) {
+  const racketId = requireId(id, "球拍");
+  const racket = snapshot.rackets.find((item) => item.id === racketId);
+  if (!racket) throw new DomainError("没有找到这块球拍", 404);
+  return racket;
+}
+
+function findRubber(snapshot: AppSnapshot, id: unknown) {
+  const rubberId = requireId(id, "胶皮");
+  const rubber = snapshot.rubbers.find((item) => item.id === rubberId);
+  if (!rubber) throw new DomainError("没有找到这张胶皮", 404);
+  return rubber;
+}
+
+function findPlaySession(snapshot: AppSnapshot, id: unknown) {
+  const sessionId = requireId(id, "打球记录");
+  const session = snapshot.playSessions.find((item) => item.id === sessionId);
+  if (!session) throw new DomainError("没有找到这条打球记录", 404);
+  return session;
+}
+
+function findBoostingLog(snapshot: AppSnapshot, id: unknown) {
+  const logId = requireId(id, "灌油记录");
+  const log = snapshot.boostingLogs.find((item) => item.id === logId);
+  if (!log) throw new DomainError("没有找到这条灌油记录", 404);
+  return log;
+}
+
+function withSlot(racket: Racket, side: RubberSide, rubberId: string | undefined): Racket {
+  return compact(side === "forehand" ? { ...racket, forehandRubberId: rubberId } : { ...racket, backhandRubberId: rubberId });
+}
+
+/** Stages every racket whose slot points at `rubberId` with that slot emptied. */
+function stageFreedSlots(snapshot: AppSnapshot, builder: DeltaBuilder, rubberId: string, ctx: DomainContext) {
+  for (const snapshotRacket of snapshot.rackets) {
+    let racket = builder.current("rackets", snapshotRacket);
+    if (racket.forehandRubberId !== rubberId && racket.backhandRubberId !== rubberId) continue;
+    if (racket.forehandRubberId === rubberId) racket = withSlot(racket, "forehand", undefined);
+    if (racket.backhandRubberId === rubberId) racket = withSlot(racket, "backhand", undefined);
+    builder.put("rackets", { ...racket, updatedAt: ctx.now });
+  }
+}
+
+/** Re-numbers one rubber's logs 1..n chronologically and stages each log whose number changed. */
+function stageRenumberedLogs(builder: DeltaBuilder, logs: BoostingLog[]) {
+  [...logs].sort(compareBoostingLogs).forEach((log, index) => {
+    const boostNumber = index + 1;
+    if (log.boostNumber !== boostNumber) builder.put("boostingLogs", { ...log, boostNumber });
+  });
+}
+
+function logsOfRubber(snapshot: AppSnapshot, rubberId: string) {
+  return snapshot.boostingLogs.filter((log) => log.rubberId === rubberId);
+}
+
+function normalizeRubberFields(input: unknown) {
+  const fields = asObject(input, "胶皮信息");
+  return compact({
+    name: requireText(fields.name, "胶皮名称"),
+    hardness: optionalText(fields.hardness, "硬度", LIMITS.hardnessLength),
+    thicknessMm: optionalPositiveNumber(fields.thicknessMm, "厚度", LIMITS.maxThicknessMm),
+    boosted: isBlank(fields.boosted) ? false : requireBoolean(fields.boosted, "灌油状态"),
+    customCalendarDays: optionalPositiveInt(fields.customCalendarDays, "日历寿命天数", LIMITS.maxCalendarDays),
+    customPlayMinutes: optionalPositiveInt(fields.customPlayMinutes, "打球时长上限", LIMITS.maxPlayMinutes),
+    boostCycleDays: optionalPositiveInt(fields.boostCycleDays, "复灌周期", LIMITS.maxBoostCycleDays),
+    notes: optionalText(fields.notes, "备注"),
+  });
+}
+
+type MountTarget = { racketId: string; side: RubberSide; date: string };
+
+/** Stages the rubber described by `sourceInput` as mounted on `target`; returns its id. */
+function stageMount(snapshot: AppSnapshot, builder: DeltaBuilder, target: MountTarget, sourceInput: unknown, ctx: DomainContext) {
+  const source = asObject(sourceInput, "胶皮来源");
+
+  if (source.type === "new") {
+    const rubber: Rubber = {
+      ...normalizeRubberFields(source.rubber),
+      id: ctx.createId("rubber"),
+      racketId: target.racketId,
+      side: target.side,
+      installedAt: target.date,
+      createdAt: ctx.now,
+      updatedAt: ctx.now,
+    };
+    builder.put("rubbers", rubber);
+
+    const layers = optionalPositiveInt(source.initialBoostLayers, "灌油层数", LIMITS.maxLayers);
+    if (rubber.boosted && layers) {
+      builder.put("boostingLogs", {
+        id: ctx.createId("boost"),
+        rubberId: rubber.id,
+        date: target.date,
+        boostNumber: 1,
+        layers,
+        notes: "Initial boost",
+        createdAt: ctx.now,
+      });
+    }
+    return rubber.id;
+  }
+
+  if (source.type === "inventory") {
+    const rubber = builder.current("rubbers", findRubber(snapshot, source.rubberId));
+    if (getRubberState(rubber) !== "inventory") throw new DomainError("这张胶皮已经贴在球拍上或已退役", 409);
+    builder.put("rubbers", { ...rubber, racketId: target.racketId, side: target.side, installedAt: target.date, updatedAt: ctx.now });
+    return rubber.id;
+  }
+
+  throw new DomainError("胶皮来源无效");
+}
+
+function nextSortOrder(rackets: Racket[]) {
+  return rackets.reduce((max, racket) => Math.max(max, racket.sortOrder ?? 0), 0) + 1;
+}
+
+// ---------------------------------------------------------------------------
+// Planners: rackets
+// ---------------------------------------------------------------------------
+
+/** Needs: all rackets (sort order) and any inventory rubbers referenced by the sources. */
+export function planCreateRacket(snapshot: AppSnapshot, input: CreateRacketInput, ctx: DomainContext): CreateResult {
+  const builder = new DeltaBuilder();
+  const id = ctx.createId("racket");
+  const date = optionalDate(input.installedAt, "安装日期") ?? ctx.today;
+  const hasRubber = Boolean(input.forehand || input.backhand);
+
+  const racket: Racket = compact({
+    id,
+    name: requireText(input.name, "球拍名"),
+    blade: requireText(input.blade, "底板"),
+    status: isBlank(input.status) ? (hasRubber ? "active" : "inventory") : requireRacketStatus(input.status),
+    notes: optionalText(input.notes, "备注"),
+    sortOrder: optionalInteger(input.sortOrder, "排序") ?? nextSortOrder(snapshot.rackets),
+    createdAt: ctx.now,
+    updatedAt: ctx.now,
+  });
+
+  if (input.forehand) {
+    racket.forehandRubberId = stageMount(snapshot, builder, { racketId: id, side: "forehand", date }, input.forehand, ctx);
+  }
+  if (input.backhand) {
+    racket.backhandRubberId = stageMount(snapshot, builder, { racketId: id, side: "backhand", date }, input.backhand, ctx);
+  }
+
+  builder.put("rackets", racket);
+  return { delta: builder.build(), id };
+}
+
+/** Needs: the racket. Rubber slots change only through replace / retire / delete flows. */
+export function planUpdateRacket(snapshot: AppSnapshot, id: string, input: UpdateRacketInput, ctx: DomainContext): DomainResult {
+  const racket = findRacket(snapshot, id);
+  const builder = new DeltaBuilder();
+  builder.put(
+    "rackets",
+    compact({
+      ...racket,
+      name: input.name === undefined ? racket.name : requireText(input.name, "球拍名"),
+      blade: input.blade === undefined ? racket.blade : requireText(input.blade, "底板"),
+      status: input.status === undefined ? racket.status : requireRacketStatus(input.status),
+      notes: patch(racket.notes, input.notes, (value) => optionalText(value, "备注")),
+      sortOrder: patch(racket.sortOrder, input.sortOrder, (value) => optionalInteger(value, "排序")),
+      updatedAt: ctx.now,
+    }),
+  );
+  return { delta: builder.build() };
+}
+
+/** Deletes the racket with all its rubbers (mounted + retired), their boosting logs and its sessions. */
+export function planDeleteRacket(snapshot: AppSnapshot, id: string): DomainResult {
+  const racket = findRacket(snapshot, id);
+  const builder = new DeltaBuilder();
+  const rubberIds = new Set(snapshot.rubbers.filter((rubber) => rubber.racketId === racket.id).map((rubber) => rubber.id));
+
+  builder.remove("rackets", racket.id);
+  rubberIds.forEach((rubberId) => builder.remove("rubbers", rubberId));
+  snapshot.boostingLogs.filter((log) => rubberIds.has(log.rubberId)).forEach((log) => builder.remove("boostingLogs", log.id));
+  snapshot.playSessions.filter((session) => session.racketId === racket.id).forEach((session) => builder.remove("playSessions", session.id));
+  return { delta: builder.build() };
+}
+
+// ---------------------------------------------------------------------------
+// Planners: rubbers
+// ---------------------------------------------------------------------------
+
+/** Adds an unmounted rubber to the inventory. */
+export function planCreateRubber(_snapshot: AppSnapshot, input: CreateRubberInput, ctx: DomainContext): CreateResult {
+  const builder = new DeltaBuilder();
+  const rubber: Rubber = { ...normalizeRubberFields(input), id: ctx.createId("rubber"), createdAt: ctx.now, updatedAt: ctx.now };
+  builder.put("rubbers", rubber);
+  return { delta: builder.build(), id: rubber.id };
+}
+
+/**
+ * Edits a rubber. Setting `removedAt` on a mounted rubber retires it and frees its racket slot;
+ * clearing `removedAt` puts a retired rubber back on its slot when that slot is empty.
+ * Needs: the rubber, rackets pointing at it and its own racket.
+ */
+export function planUpdateRubber(snapshot: AppSnapshot, id: string, input: UpdateRubberInput, ctx: DomainContext): DomainResult {
+  const rubber = findRubber(snapshot, id);
+  const state = getRubberState(rubber);
+  const builder = new DeltaBuilder();
+
+  let installedAt = rubber.installedAt;
+  if (input.installedAt !== undefined) {
+    if (state === "inventory") throw new DomainError("囤货中的胶皮还没有贴拍，不能设置安装日期");
+    installedAt = requireDate(input.installedAt, "安装日期");
+  }
+
+  let removedAt = rubber.removedAt;
+  if (input.removedAt !== undefined) {
+    if (state === "inventory") throw new DomainError("囤货中的胶皮无需退役，可以直接删除");
+    removedAt = input.removedAt === null ? undefined : requireDate(input.removedAt, "退役日期");
+  }
+  if (installedAt && removedAt && removedAt < installedAt) throw new DomainError("退役日期不能早于安装日期");
+
+  const next: Rubber = compact({
+    ...rubber,
+    name: input.name === undefined ? rubber.name : requireText(input.name, "胶皮名称"),
+    hardness: patch(rubber.hardness, input.hardness, (value) => optionalText(value, "硬度", LIMITS.hardnessLength)),
+    thicknessMm: patch(rubber.thicknessMm, input.thicknessMm, (value) =>
+      optionalPositiveNumber(value, "厚度", LIMITS.maxThicknessMm),
+    ),
+    boosted: input.boosted === undefined ? rubber.boosted : requireBoolean(input.boosted, "灌油状态"),
+    customCalendarDays: patch(rubber.customCalendarDays, input.customCalendarDays, (value) =>
+      optionalPositiveInt(value, "日历寿命天数", LIMITS.maxCalendarDays),
+    ),
+    customPlayMinutes: patch(rubber.customPlayMinutes, input.customPlayMinutes, (value) =>
+      optionalPositiveInt(value, "打球时长上限", LIMITS.maxPlayMinutes),
+    ),
+    boostCycleDays: patch(rubber.boostCycleDays, input.boostCycleDays, (value) =>
+      optionalPositiveInt(value, "复灌周期", LIMITS.maxBoostCycleDays),
+    ),
+    notes: patch(rubber.notes, input.notes, (value) => optionalText(value, "备注")),
+    installedAt,
+    removedAt,
+    updatedAt: ctx.now,
+  });
+  builder.put("rubbers", next);
+
+  if (!rubber.removedAt && next.removedAt) {
+    stageFreedSlots(snapshot, builder, rubber.id, ctx);
+  } else if (rubber.removedAt && !next.removedAt) {
+    const racket = snapshot.rackets.find((item) => item.id === next.racketId);
+    if (!racket || !next.side) throw new DomainError("原球拍已不存在，无法恢复这张胶皮", 409);
+    const occupant = getRacketRubberId(racket, next.side);
+    if (occupant && occupant !== next.id) throw new DomainError("该位置已有在用胶皮，请先更换或退役", 409);
+    builder.put("rackets", { ...withSlot(racket, next.side, next.id), updatedAt: ctx.now });
+  }
+
+  return { delta: builder.build() };
+}
+
+/** Deletes a rubber and its boosting logs, freeing any racket slot that points at it. */
+export function planDeleteRubber(snapshot: AppSnapshot, id: string, ctx: DomainContext): DomainResult {
+  const rubber = findRubber(snapshot, id);
+  const builder = new DeltaBuilder();
+  builder.remove("rubbers", rubber.id);
+  logsOfRubber(snapshot, rubber.id).forEach((log) => builder.remove("boostingLogs", log.id));
+  stageFreedSlots(snapshot, builder, rubber.id, ctx);
+  return { delta: builder.build() };
+}
+
+/**
+ * Mounts a rubber (new, or taken from the inventory) on one side of a racket. Whatever was mounted
+ * there is retired on the same date, freezing its life, play time and boosting history.
+ * Works for empty slots too. Needs: the racket, its rubbers and the inventory rubber (if any).
+ */
+export function planReplaceRubber(snapshot: AppSnapshot, racketId: string, input: ReplaceRubberInput, ctx: DomainContext): CreateResult {
+  const racket = findRacket(snapshot, racketId);
+  const side = requireSide(input.side);
+  const date = optionalDate(input.date, "更换日期") ?? ctx.today;
+  const builder = new DeltaBuilder();
+  const currentId = getRacketRubberId(racket, side);
+
+  const outgoing = snapshot.rubbers.filter(
+    (rubber) => !rubber.removedAt && (rubber.id === currentId || (rubber.racketId === racket.id && rubber.side === side)),
+  );
+  for (const rubber of outgoing) {
+    if (rubber.installedAt && date < rubber.installedAt) throw new DomainError("更换日期不能早于旧胶皮的安装日期");
+    builder.put("rubbers", {
+      ...rubber,
+      racketId: rubber.racketId ?? racket.id,
+      side: rubber.side ?? side,
+      removedAt: date,
+      updatedAt: ctx.now,
+    });
+  }
+
+  const rubberId = stageMount(snapshot, builder, { racketId: racket.id, side, date }, input.source, ctx);
+  builder.put("rackets", { ...withSlot(racket, side, rubberId), updatedAt: ctx.now });
+  return { delta: builder.build(), id: rubberId };
+}
+
+// ---------------------------------------------------------------------------
+// Planners: play sessions
+// ---------------------------------------------------------------------------
+
+export function planCreatePlaySession(snapshot: AppSnapshot, input: CreatePlaySessionInput, ctx: DomainContext): CreateResult {
+  const racket = findRacket(snapshot, input.racketId);
+  const builder = new DeltaBuilder();
+  const session: PlaySession = compact({
+    id: ctx.createId("session"),
+    racketId: racket.id,
+    date: requireDate(input.date, "日期"),
+    durationMinutes: requirePositiveInt(input.durationMinutes, "时长", LIMITS.maxSessionMinutes),
+    notes: optionalText(input.notes, "备注"),
+    createdAt: ctx.now,
+  });
+  builder.put("playSessions", session);
+  return { delta: builder.build(), id: session.id };
+}
+
+/** Needs: the session and, when `racketId` changes, the target racket. */
+export function planUpdatePlaySession(snapshot: AppSnapshot, id: string, input: UpdatePlaySessionInput): DomainResult {
+  const session = findPlaySession(snapshot, id);
+  const builder = new DeltaBuilder();
+  builder.put(
+    "playSessions",
+    compact({
+      ...session,
+      racketId: input.racketId === undefined ? session.racketId : findRacket(snapshot, input.racketId).id,
+      date: input.date === undefined ? session.date : requireDate(input.date, "日期"),
+      durationMinutes:
+        input.durationMinutes === undefined
+          ? session.durationMinutes
+          : requirePositiveInt(input.durationMinutes, "时长", LIMITS.maxSessionMinutes),
+      notes: patch(session.notes, input.notes, (value) => optionalText(value, "备注")),
+    }),
+  );
+  return { delta: builder.build() };
+}
+
+export function planDeletePlaySession(snapshot: AppSnapshot, id: string): DomainResult {
+  const session = findPlaySession(snapshot, id);
+  const builder = new DeltaBuilder();
+  builder.remove("playSessions", session.id);
+  return { delta: builder.build() };
+}
+
+// ---------------------------------------------------------------------------
+// Planners: boosting logs (boostNumber is always recalculated chronologically)
+// ---------------------------------------------------------------------------
+
+/** Needs: the rubber and its logs. Marks the rubber as boosted. */
+export function planCreateBoostingLog(snapshot: AppSnapshot, input: CreateBoostingLogInput, ctx: DomainContext): CreateResult {
+  const rubber = findRubber(snapshot, input.rubberId);
+  const builder = new DeltaBuilder();
+  const log: BoostingLog = compact({
+    id: ctx.createId("boost"),
+    rubberId: rubber.id,
+    date: requireDate(input.date, "灌油日期"),
+    boostNumber: 0,
+    layers: requirePositiveInt(input.layers, "层数", LIMITS.maxLayers),
+    notes: optionalText(input.notes, "备注"),
+    createdAt: ctx.now,
+  });
+  stageRenumberedLogs(builder, [...logsOfRubber(snapshot, rubber.id), log]);
+  if (!rubber.boosted) builder.put("rubbers", { ...rubber, boosted: true, updatedAt: ctx.now });
+  return { delta: builder.build(), id: log.id };
+}
+
+/** Needs: the log and its sibling logs (same rubber). */
+export function planUpdateBoostingLog(snapshot: AppSnapshot, id: string, input: UpdateBoostingLogInput): DomainResult {
+  const log = findBoostingLog(snapshot, id);
+  const builder = new DeltaBuilder();
+  const next: BoostingLog = compact({
+    ...log,
+    date: input.date === undefined ? log.date : requireDate(input.date, "灌油日期"),
+    layers: input.layers === undefined ? log.layers : requirePositiveInt(input.layers, "层数", LIMITS.maxLayers),
+    notes: patch(log.notes, input.notes, (value) => optionalText(value, "备注")),
+  });
+  builder.put("boostingLogs", next);
+  stageRenumberedLogs(
+    builder,
+    logsOfRubber(snapshot, log.rubberId).map((item) => (item.id === next.id ? next : item)),
+  );
+  return { delta: builder.build() };
+}
+
+/** Needs: the log, its siblings and its rubber. `boosted` follows whether any log remains. */
+export function planDeleteBoostingLog(snapshot: AppSnapshot, id: string, ctx: DomainContext): DomainResult {
+  const log = findBoostingLog(snapshot, id);
+  const builder = new DeltaBuilder();
+  builder.remove("boostingLogs", log.id);
+
+  const remaining = logsOfRubber(snapshot, log.rubberId).filter((item) => item.id !== log.id);
+  stageRenumberedLogs(builder, remaining);
+
+  const rubber = snapshot.rubbers.find((item) => item.id === log.rubberId);
+  const boosted = remaining.length > 0;
+  if (rubber && rubber.boosted !== boosted) builder.put("rubbers", { ...rubber, boosted, updatedAt: ctx.now });
+  return { delta: builder.build() };
+}

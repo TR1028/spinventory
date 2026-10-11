@@ -1,9 +1,9 @@
 import { ArrowLeft, Check, Clock3 } from "lucide-react";
-import { FormEvent, useEffect, useMemo, useState } from "react";
-import { useLiveQuery } from "dexie-react-hooks";
-import { db } from "../db/database";
+import { FormEvent, useMemo, useState } from "react";
+import { ErrorBanner, TextAreaField } from "../components/ui";
+import { getRacketStatus } from "../db/schema";
+import { useAppData } from "../db/store";
 import { todayISO } from "../utils/date";
-import { createId } from "../utils/id";
 import { sortRackets } from "../utils/rackets";
 
 type AddSessionProps = {
@@ -15,31 +15,23 @@ type AddSessionProps = {
 const quickDurations = [60, 90, 120, 150];
 
 export function AddSession({ initialRacketId, onBack, onSaved }: AddSessionProps) {
-  const rackets = useLiveQuery(
-    async () => sortRackets(await db.rackets.toArray()),
-    [],
+  const { data, addPlaySession } = useAppData();
+  // Retired rackets are hidden unless the page was opened for one of them.
+  const rackets = useMemo(
+    () => sortRackets(data.rackets.filter((racket) => getRacketStatus(racket) !== "retired" || racket.id === initialRacketId)),
+    [data.rackets, initialRacketId],
   );
-  const [racketId, setRacketId] = useState(initialRacketId ?? "");
+  const activeRackets = rackets.filter((racket) => getRacketStatus(racket) === "active");
+  const otherRackets = rackets.filter((racket) => getRacketStatus(racket) !== "active");
+  const [selectedId, setSelectedId] = useState(initialRacketId ?? "");
   const [date, setDate] = useState(todayISO());
   const [durationMinutes, setDurationMinutes] = useState("90");
+  const [notes, setNotes] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    if (initialRacketId) {
-      setRacketId(initialRacketId);
-      return;
-    }
-
-    if (!racketId && rackets?.[0]) {
-      setRacketId(rackets[0].id);
-    }
-  }, [initialRacketId, racketId, rackets]);
-
-  const selectedRacket = useMemo(
-    () => rackets?.find((racket) => racket.id === racketId),
-    [racketId, rackets],
-  );
+  const racketId = rackets.some((racket) => racket.id === selectedId) ? selectedId : (activeRackets[0] ?? rackets[0])?.id ?? "";
+  const selectedRacket = rackets.find((racket) => racket.id === racketId);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -55,7 +47,7 @@ export function AddSession({ initialRacketId, onBack, onSaved }: AddSessionProps
       return;
     }
 
-    if (!Number.isFinite(minutes) || minutes <= 0) {
+    if (!durationMinutes.trim() || !Number.isFinite(minutes) || minutes <= 0) {
       setError("请输入有效时长");
       return;
     }
@@ -63,13 +55,18 @@ export function AddSession({ initialRacketId, onBack, onSaved }: AddSessionProps
     setIsSaving(true);
     setError("");
 
-    await db.playSessions.add({
-      id: createId("session"),
-      racketId,
-      date,
-      durationMinutes: Math.round(minutes),
-      createdAt: new Date().toISOString(),
-    });
+    try {
+      await addPlaySession({
+        racketId,
+        date,
+        durationMinutes: Math.round(minutes),
+        notes: notes.trim() || undefined,
+      });
+    } catch (caught) {
+      setError(caught instanceof Error && caught.message ? caught.message : "保存失败，请稍后再试");
+      setIsSaving(false);
+      return;
+    }
 
     setIsSaving(false);
     onSaved();
@@ -102,14 +99,24 @@ export function AddSession({ initialRacketId, onBack, onSaved }: AddSessionProps
           <span className="text-sm font-bold text-ink">球拍</span>
           <select
             value={racketId}
-            onChange={(event) => setRacketId(event.target.value)}
+            onChange={(event) => setSelectedId(event.target.value)}
+            data-testid="session-racket"
             className="tap-target w-full rounded-lg border border-ink/12 bg-white px-3 text-base font-semibold text-ink shadow-sm outline-none transition focus:border-court focus:ring-4 focus:ring-court/15"
           >
-            {rackets?.map((racket) => (
+            {activeRackets.map((racket) => (
               <option value={racket.id} key={racket.id}>
                 {racket.name}
               </option>
             ))}
+            {otherRackets.length ? (
+              <optgroup label="闲置 / 退役">
+                {otherRackets.map((racket) => (
+                  <option value={racket.id} key={racket.id}>
+                    {racket.name}
+                  </option>
+                ))}
+              </optgroup>
+            ) : null}
           </select>
         </label>
 
@@ -119,6 +126,7 @@ export function AddSession({ initialRacketId, onBack, onSaved }: AddSessionProps
             type="date"
             value={date}
             onChange={(event) => setDate(event.target.value)}
+            data-testid="session-date"
             className="tap-target w-full rounded-lg border border-ink/12 bg-white px-3 text-base font-semibold text-ink shadow-sm outline-none transition focus:border-court focus:ring-4 focus:ring-court/15"
           />
         </label>
@@ -166,12 +174,14 @@ export function AddSession({ initialRacketId, onBack, onSaved }: AddSessionProps
           </div>
         </div>
 
-        {error ? <div className="rounded-lg bg-spin/10 px-3 py-2 text-sm font-semibold text-spin">{error}</div> : null}
+        <TextAreaField label="备注" hint="选填" value={notes} onChange={setNotes} placeholder="对手、训练内容、手感…" testId="session-notes" />
+
+        <ErrorBanner message={error} />
 
         <div className="mt-auto pb-3">
           <button
             type="submit"
-            disabled={isSaving || !rackets?.length}
+            disabled={isSaving || !rackets.length}
             className="tap-target inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink px-4 text-base font-black text-white shadow-soft transition active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-ink/40"
           >
             <Check size={20} aria-hidden="true" />

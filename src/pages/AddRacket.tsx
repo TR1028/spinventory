@@ -1,194 +1,59 @@
 import { ArrowLeft, Check, Plus } from "lucide-react";
-import { FormEvent, useState } from "react";
-import { useLiveQuery } from "dexie-react-hooks";
-import { db } from "../db/database";
-import type { RubberSide } from "../db/schema";
+import { FormEvent, useMemo, useState } from "react";
+import { createRubberForm } from "../components/RubberForm";
+import { RubberSourcePicker, createSourceState, resolveRubberSource, type RubberSourceState } from "../components/RubberSourcePicker";
+import { ErrorBanner, Notice, TextAreaField, inputClass, useAsyncAction } from "../components/ui";
+import { getInventoryRubbers } from "../db/domain";
+import { RUBBER_SIDES, rubberSideName, type RubberSide } from "../db/schema";
+import { useAppData } from "../db/store";
 import { todayISO } from "../utils/date";
-import { createId } from "../utils/id";
 
 type AddRacketProps = {
   onBack: () => void;
   onCreated: (racketId: string) => void;
 };
 
-type NewRubberState = {
-  name: string;
-  hardness: string;
-  thicknessMm: string;
-  boosted: boolean;
-  boostLayers: string;
+const testIdPrefixes: Record<RubberSide, string> = {
+  forehand: "new-forehand",
+  backhand: "new-backhand",
 };
-
-const defaultRubberState: NewRubberState = {
-  name: "",
-  hardness: "",
-  thicknessMm: "",
-  boosted: false,
-  boostLayers: "2",
-};
-
-function parseOptionalNumber(value: string) {
-  const parsed = Number(value);
-  return Number.isFinite(parsed) && parsed > 0 ? parsed : undefined;
-}
-
-function RubberFields({
-  label,
-  value,
-  onChange,
-  testIdPrefix,
-}: {
-  label: string;
-  value: NewRubberState;
-  onChange: (value: NewRubberState) => void;
-  testIdPrefix: string;
-}) {
-  return (
-    <section className="rounded-lg border border-ink/10 bg-white p-4 shadow-soft">
-      <h2 className="text-base font-black text-ink">{label}</h2>
-      <div className="mt-4 grid gap-4">
-        <label className="grid gap-2">
-          <span className="text-sm font-bold text-ink">胶皮名称</span>
-          <input
-            data-testid={`${testIdPrefix}-rubber-name`}
-            value={value.name}
-            onChange={(event) => onChange({ ...value, name: event.target.value })}
-            className="tap-target w-full rounded-lg border border-ink/12 bg-white px-3 text-base font-semibold text-ink shadow-sm outline-none transition focus:border-court focus:ring-4 focus:ring-court/15"
-          />
-        </label>
-        <div className="grid grid-cols-2 gap-3">
-          <label className="grid gap-2">
-            <span className="text-sm font-bold text-ink">硬度</span>
-            <input
-              data-testid={`${testIdPrefix}-rubber-hardness`}
-              value={value.hardness}
-              onChange={(event) => onChange({ ...value, hardness: event.target.value })}
-              className="tap-target w-full rounded-lg border border-ink/12 bg-white px-3 text-base font-semibold text-ink shadow-sm outline-none transition focus:border-court focus:ring-4 focus:ring-court/15"
-            />
-          </label>
-          <label className="grid gap-2">
-            <span className="text-sm font-bold text-ink">厚度 mm</span>
-            <input
-              data-testid={`${testIdPrefix}-rubber-thickness`}
-              type="number"
-              inputMode="decimal"
-              value={value.thicknessMm}
-              onChange={(event) => onChange({ ...value, thicknessMm: event.target.value })}
-              className="tap-target w-full rounded-lg border border-ink/12 bg-white px-3 text-base font-semibold text-ink shadow-sm outline-none transition focus:border-court focus:ring-4 focus:ring-court/15"
-            />
-          </label>
-        </div>
-        <label className="flex min-h-11 items-center justify-between gap-4 rounded-lg border border-ink/10 bg-paper px-3">
-          <span className="text-sm font-bold text-ink">初始已灌油</span>
-          <input
-            data-testid={`${testIdPrefix}-rubber-boosted`}
-            type="checkbox"
-            checked={value.boosted}
-            onChange={(event) => onChange({ ...value, boosted: event.target.checked })}
-            className="h-5 w-5 accent-court"
-          />
-        </label>
-        {value.boosted ? (
-          <label className="grid gap-2">
-            <span className="text-sm font-bold text-ink">初始灌油层数</span>
-            <input
-              data-testid={`${testIdPrefix}-rubber-boost-layers`}
-              type="number"
-              inputMode="numeric"
-              min="1"
-              value={value.boostLayers}
-              onChange={(event) => onChange({ ...value, boostLayers: event.target.value })}
-              className="tap-target w-full rounded-lg border border-ink/12 bg-white px-3 text-base font-semibold text-ink shadow-sm outline-none transition focus:border-court focus:ring-4 focus:ring-court/15"
-            />
-          </label>
-        ) : null}
-      </div>
-    </section>
-  );
-}
 
 export function AddRacket({ onBack, onCreated }: AddRacketProps) {
-  const rackets = useLiveQuery(() => db.rackets.toArray(), []);
+  const { data, createRacket } = useAppData();
+  const inventory = useMemo(() => getInventoryRubbers(data), [data]);
   const [name, setName] = useState("");
   const [blade, setBlade] = useState("");
   const [installedAt, setInstalledAt] = useState(todayISO());
-  const [forehand, setForehand] = useState<NewRubberState>({
-    ...defaultRubberState,
-    boosted: true,
-  });
-  const [backhand, setBackhand] = useState<NewRubberState>(defaultRubberState);
-  const [error, setError] = useState("");
-  const [isSaving, setIsSaving] = useState(false);
+  const [notes, setNotes] = useState("");
+  const [sources, setSources] = useState<Record<RubberSide, RubberSourceState>>(() => ({
+    forehand: createSourceState("new", createRubberForm({ boosted: true })),
+    backhand: createSourceState("new"),
+  }));
+  const action = useAsyncAction();
+  const bareBlade = sources.forehand.choice === "keep" && sources.backhand.choice === "keep";
 
-  async function createRubber({
-    racketId,
-    side,
-    rubber,
-  }: {
-    racketId: string;
-    side: RubberSide;
-    rubber: NewRubberState;
-  }) {
-    const rubberId = createId("rubber");
-    await db.rubbers.add({
-      id: rubberId,
-      racketId,
-      side,
-      name: rubber.name.trim(),
-      hardness: rubber.hardness.trim() || undefined,
-      thicknessMm: parseOptionalNumber(rubber.thicknessMm),
-      installedAt,
-      boosted: rubber.boosted,
-      createdAt: new Date().toISOString(),
-    });
+  /** Inventory offered to one side, without the rubber the other side already picked. */
+  const inventoryFor = (side: RubberSide) => {
+    const other = sources[side === "forehand" ? "backhand" : "forehand"];
+    return other.choice === "inventory" ? inventory.filter((rubber) => rubber.id !== other.inventoryId) : inventory;
+  };
 
-    if (rubber.boosted) {
-      const layers = Number(rubber.boostLayers);
-      await db.boostingLogs.add({
-        id: createId("boost"),
-        rubberId,
-        date: installedAt,
-        boostNumber: 1,
-        layers: Number.isFinite(layers) && layers > 0 ? Math.round(layers) : 1,
-        notes: "Initial boost",
-        createdAt: new Date().toISOString(),
-      });
-    }
-
-    return rubberId;
-  }
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    if (!name.trim() || !blade.trim() || !forehand.name.trim() || !backhand.name.trim()) {
-      setError("请填写球拍、底板和两面胶皮名称");
-      return;
-    }
-
-    setIsSaving(true);
-    setError("");
-
-    const racketId = createId("racket");
-    const sortOrder = (rackets?.reduce((max, racket) => Math.max(max, racket.sortOrder ?? 0), 0) ?? 0) + 1;
-
-    await db.transaction("rw", db.rackets, db.rubbers, db.boostingLogs, async () => {
-      const forehandRubberId = await createRubber({ racketId, side: "forehand", rubber: forehand });
-      const backhandRubberId = await createRubber({ racketId, side: "backhand", rubber: backhand });
-
-      await db.rackets.add({
-        id: racketId,
-        name: name.trim(),
-        blade: blade.trim(),
-        forehandRubberId,
-        backhandRubberId,
-        sortOrder,
-        createdAt: new Date().toISOString(),
+    void action.run(async () => {
+      if (!name.trim() || !blade.trim()) throw new Error("请填写球拍名和底板");
+      const forehand = resolveRubberSource(sources.forehand, inventoryFor("forehand"), "正手胶皮") ?? undefined;
+      const backhand = resolveRubberSource(sources.backhand, inventoryFor("backhand"), "反手胶皮") ?? undefined;
+      const racketId = await createRacket({
+        name,
+        blade,
+        installedAt,
+        notes: notes.trim() || undefined,
+        forehand,
+        backhand,
       });
+      onCreated(racketId);
     });
-
-    setIsSaving(false);
-    onCreated(racketId);
   }
 
   return (
@@ -221,7 +86,7 @@ export function AddRacket({ onBack, onCreated }: AddRacketProps) {
                 data-testid="new-racket-name"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
-                className="tap-target w-full rounded-lg border border-ink/12 bg-white px-3 text-base font-semibold text-ink shadow-sm outline-none transition focus:border-court focus:ring-4 focus:ring-court/15"
+                className={inputClass}
               />
             </label>
             <label className="grid gap-2">
@@ -230,7 +95,7 @@ export function AddRacket({ onBack, onCreated }: AddRacketProps) {
                 data-testid="new-racket-blade"
                 value={blade}
                 onChange={(event) => setBlade(event.target.value)}
-                className="tap-target w-full rounded-lg border border-ink/12 bg-white px-3 text-base font-semibold text-ink shadow-sm outline-none transition focus:border-court focus:ring-4 focus:ring-court/15"
+                className={inputClass}
               />
             </label>
             <label className="grid gap-2">
@@ -240,25 +105,42 @@ export function AddRacket({ onBack, onCreated }: AddRacketProps) {
                 type="date"
                 value={installedAt}
                 onChange={(event) => setInstalledAt(event.target.value)}
-                className="tap-target w-full rounded-lg border border-ink/12 bg-white px-3 text-base font-semibold text-ink shadow-sm outline-none transition focus:border-court focus:ring-4 focus:ring-court/15"
+                className={inputClass}
               />
             </label>
+            <TextAreaField label="备注" hint="选填" value={notes} onChange={setNotes} testId="new-racket-notes" />
           </div>
         </section>
 
-        <RubberFields label="正手胶皮" value={forehand} onChange={setForehand} testIdPrefix="new-forehand" />
-        <RubberFields label="反手胶皮" value={backhand} onChange={setBackhand} testIdPrefix="new-backhand" />
+        {RUBBER_SIDES.map((side) => (
+          <section key={side} className="rounded-lg border border-ink/10 bg-white p-4 shadow-soft">
+            <h2 className="text-base font-black text-ink">{rubberSideName[side]}胶皮</h2>
+            <div className="mt-4">
+              <RubberSourcePicker
+                value={sources[side]}
+                onChange={(next) => setSources((current) => ({ ...current, [side]: next }))}
+                choices={["new", "inventory", "keep"]}
+                keepLabel="暂不贴"
+                inventory={inventoryFor(side)}
+                testIdPrefix={testIdPrefixes[side]}
+                ariaLabel={`${rubberSideName[side]}胶皮来源`}
+              />
+            </div>
+          </section>
+        ))}
 
-        {error ? <div className="rounded-lg bg-spin/10 px-3 py-2 text-sm font-semibold text-spin">{error}</div> : null}
+        {bareBlade ? <Notice tone="muted">两面都不贴时，这块球拍会作为闲置底板放进囤货，之后可以随时配胶启用。</Notice> : null}
+
+        <ErrorBanner message={action.error} />
 
         <button
           data-testid="create-racket-button"
           type="submit"
-          disabled={isSaving}
+          disabled={action.pending}
           className="tap-target mb-3 inline-flex items-center justify-center gap-2 rounded-lg bg-ink px-4 text-base font-black text-white shadow-soft transition active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-ink/40"
         >
-          {isSaving ? <Check size={20} aria-hidden="true" /> : <Plus size={20} aria-hidden="true" />}
-          {isSaving ? "保存中" : "创建球拍"}
+          {action.pending ? <Check size={20} aria-hidden="true" /> : <Plus size={20} aria-hidden="true" />}
+          {action.pending ? "保存中" : "创建球拍"}
         </button>
       </form>
     </div>

@@ -1,0 +1,3 @@
+# Copy to `.dev.vars` for `pnpm run dev:worker` (wrangler dev). Never commit `.dev.vars`.
+# Production: `pnpm exec wrangler secret put JWT_SECRET`
+JWT_SECRET=replace-with-a-long-random-string

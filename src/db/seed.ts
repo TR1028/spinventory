@@ -1,5 +1,5 @@
 import { db } from "./database";
-import type { BoostingLog, Racket, Rubber } from "./schema";
+import type { AppSnapshot, BoostingLog, Racket, Rubber } from "./schema";
 
 const createdAt = "2026-06-27T00:00:00.000Z";
 
@@ -8,6 +8,7 @@ const seedRackets: Racket[] = [
     id: "racket-harimoto-innerforce-alc",
     name: "Harimoto Innerforce ALC",
     blade: "Butterfly Harimoto Innerforce ALC",
+    status: "active",
     forehandRubberId: "rubber-harimoto-fh",
     backhandRubberId: "rubber-harimoto-bh",
     sortOrder: 1,
@@ -17,6 +18,7 @@ const seedRackets: Racket[] = [
     id: "racket-hurricane-long-5",
     name: "Hurricane Long 5",
     blade: "DHS Hurricane Long 5",
+    status: "active",
     forehandRubberId: "rubber-hl5-fh",
     backhandRubberId: "rubber-hl5-bh",
     sortOrder: 2,
@@ -26,6 +28,7 @@ const seedRackets: Racket[] = [
     id: "racket-cybershape-carbon",
     name: "Cybershape Carbon",
     blade: "Stiga Cybershape Carbon",
+    status: "active",
     forehandRubberId: "rubber-cybershape-fh",
     backhandRubberId: "rubber-cybershape-bh",
     sortOrder: 3,
@@ -171,4 +174,35 @@ async function ensureSeedSortOrder() {
     );
     await db.meta.put({ key: "seed:sort-order:v1", value: "done" });
   });
+}
+
+/** Canonical form of a flat record: sorted keys, `undefined` values dropped. */
+function canonicalRecord(record: object) {
+  return JSON.stringify(
+    Object.entries(record)
+      .filter(([, value]) => value !== undefined)
+      .sort(([left], [right]) => (left < right ? -1 : left > right ? 1 : 0)),
+  );
+}
+
+function matchesSeed<T extends { id: string }>(records: T[], seeds: T[], normalize: (record: T) => object = (record) => record) {
+  if (records.length !== seeds.length) return false;
+  const byId = new Map(records.map((record) => [record.id, record]));
+  return seeds.every((seed) => {
+    const record = byId.get(seed.id);
+    return record !== undefined && canonicalRecord(normalize(record)) === canonicalRecord(normalize(seed));
+  });
+}
+
+/**
+ * True when `snapshot` still holds exactly the bundled demo data, i.e. the user has not entered
+ * anything worth importing into a cloud account.
+ */
+export function isPristineSeedData(snapshot: AppSnapshot) {
+  return (
+    snapshot.playSessions.length === 0 &&
+    matchesSeed(snapshot.rackets, seedRackets, (racket) => ({ ...racket, status: racket.status ?? "active" })) &&
+    matchesSeed(snapshot.rubbers, seedRubbers) &&
+    matchesSeed(snapshot.boostingLogs, seedBoostingLogs)
+  );
 }

@@ -1,7 +1,10 @@
+import { formatHours } from "../utils/date";
 import type { RubberLife } from "../utils/life";
 
 type LifeBarProps = {
   life: RubberLife;
+  /** Also show calendar and play-time usage against the rubber's limits. */
+  showDetails?: boolean;
 };
 
 const statusColor: Record<RubberLife["status"], string> = {
@@ -16,19 +19,38 @@ const statusLabel: Record<RubberLife["status"], string> = {
   replace: "建议更换",
 };
 
-export function LifeBar({ life }: LifeBarProps) {
+export function LifeBar({ life, showDetails = false }: LifeBarProps) {
+  const percent = Math.round(life.usedPercent);
+  const color = life.state === "retired" ? "bg-ink/40" : statusColor[life.status];
+  const label =
+    life.state === "inventory" ? "未贴拍，尚未开始计算" : life.state === "retired" ? "已退役 · 寿命已冻结" : statusLabel[life.status];
+
   return (
     <div className="space-y-2">
-      <div className="h-2 overflow-hidden rounded-full bg-ink/10">
-        <div
-          className={`h-full rounded-full ${statusColor[life.status]}`}
-          style={{ width: `${life.usedPercent}%` }}
-        />
+      <div
+        className="h-2 overflow-hidden rounded-full bg-ink/10"
+        role="progressbar"
+        aria-label="胶皮寿命消耗"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={percent}
+      >
+        <div className={`h-full rounded-full ${color}`} style={{ width: `${life.usedPercent}%` }} />
       </div>
-      <div className="flex items-center justify-between gap-3 text-[11px] font-medium text-ink/58">
-        <span>{statusLabel[life.status]}</span>
-        <span>{Math.round(life.usedPercent)}%</span>
+      <div className="flex items-center justify-between gap-3 text-[11px] font-medium text-ink/60">
+        <span>{label}</span>
+        <span>{percent}%</span>
       </div>
+      {showDetails ? (
+        <div className="flex items-center justify-between gap-3 text-[11px] font-semibold text-ink/50">
+          <span>
+            日历 {life.calendarDays}/{life.calendarLimitDays} 天
+          </span>
+          <span>
+            打球 {formatHours(life.playMinutes)}/{formatHours(life.playLimitMinutes)} h
+          </span>
+        </div>
+      ) : null}
     </div>
   );
 }

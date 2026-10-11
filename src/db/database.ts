@@ -18,6 +18,26 @@ export class RacketLifeDatabase extends Dexie {
       playSessions: "&id, racketId, date, [racketId+date]",
       meta: "&key",
     });
+
+    // v2: racket status (active / inventory / retired), optional racket <-> rubber links for the
+    // inventory, custom life parameters and notes. Only `rackets.status` needs a new index; the
+    // other new fields are plain optional properties.
+    this.version(2)
+      .stores({
+        rackets: "&id, name, status, createdAt",
+        rubbers: "&id, racketId, [racketId+side], installedAt, removedAt",
+        boostingLogs: "&id, rubberId, date, boostNumber",
+        playSessions: "&id, racketId, date, [racketId+date]",
+        meta: "&key",
+      })
+      .upgrade((transaction) =>
+        transaction
+          .table<Racket, string>("rackets")
+          .toCollection()
+          .modify((racket) => {
+            if (!racket.status) racket.status = "active";
+          }),
+      );
   }
 }
 

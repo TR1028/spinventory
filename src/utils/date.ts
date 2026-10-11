@@ -19,11 +19,39 @@ export function daysBetween(startISO: string, endISO = todayISO()) {
   return Math.max(0, Math.floor((end - start) / MS_PER_DAY));
 }
 
+/** Formats a `YYYY-MM-DD` value; returns the input unchanged when it is not a valid date. */
+function formatCalendarDate(value: string, options: Intl.DateTimeFormatOptions) {
+  const date = parseLocalDate(value);
+  return Number.isNaN(date.getTime()) ? value : new Intl.DateTimeFormat("zh-CN", options).format(date);
+}
+
 export function formatDate(value: string) {
+  return formatCalendarDate(value, {
+    month: "short",
+    day: "numeric",
+  });
+}
+
+/** `YYYY-MM-DD` with the year, e.g. for archives that span several seasons. */
+export function formatFullDate(value: string) {
+  return formatCalendarDate(value, { year: "numeric", month: "short", day: "numeric" });
+}
+
+/** Formats an ISO timestamp (`createdAt`, sync times) in the device's time zone. */
+export function formatTimestamp(value: string, { withTime = false } = {}) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
   return new Intl.DateTimeFormat("zh-CN", {
     month: "short",
     day: "numeric",
-  }).format(parseLocalDate(value));
+    ...(withTime ? { hour: "2-digit", minute: "2-digit" } : {}),
+  }).format(date);
+}
+
+/** Minutes as hours: whole hours stay whole (`90`), anything else keeps one decimal (`1.5`). */
+export function formatHours(minutes: number) {
+  const hours = minutes / 60;
+  return Number.isInteger(hours) ? String(hours) : hours.toFixed(1);
 }
 
 export function isWithinLastDays(value: string, dayCount: number, asOf = todayISO()) {
