@@ -1,4 +1,4 @@
-const CACHE_NAME = "racket-life-v6";
+const CACHE_NAME = "racket-life-v7";
 const APP_SHELL = ["./", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", (event) => {

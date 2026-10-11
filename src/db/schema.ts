@@ -47,6 +47,14 @@ export type Racket = {
   updatedAt?: string;
 };
 
+/**
+ * A completed period of a rubber's timeline (v4): a stint on a racket that ended with the rubber
+ * going back to the inventory, or a stretch stored in the inventory. Dates are inclusive `YYYY-MM-DD`.
+ */
+export type RubberPeriod =
+  | { kind: "mounted"; racketId: string; side: RubberSide; from: string; to: string }
+  | { kind: "stored"; from: string; to: string };
+
 export type Rubber = {
   id: string;
   /** Empty while the rubber sits in the inventory; kept after retirement for the racket's history. */
@@ -68,17 +76,26 @@ export type Rubber = {
   weightGrams?: number;
   /**
    * `YYYY-MM-DD` the rubber was first glued onto a racket; calendar life starts here. Also set on a
-   * used sheet back in the inventory (it keeps aging there); empty for a brand-new sheet.
+   * used sheet back in the inventory (it keeps aging there, more slowly); empty for a brand-new sheet.
    */
   installedAt?: string;
   /**
    * `YYYY-MM-DD` the rubber went onto its current racket, set only when that is later than
-   * `installedAt`: a rubber that was already in use elsewhere when it was recorded (v3). Play
-   * sessions of the racket count from this date (its earlier play is in `initialPlayMinutes`).
+   * `installedAt` (a used sheet, v3). Play sessions of the racket count from this date.
    */
   mountedAt?: string;
   /** `YYYY-MM-DD` the rubber was taken off (retired); its life stops accumulating. */
   removedAt?: string;
+  /**
+   * Completed periods before the current one, oldest first (v4): stints on rackets the rubber was
+   * taken off to the inventory (sessions of those stints keep counting toward its play time) and
+   * stretches it spent stored in the inventory (they age it at `storageAgingPercent`).
+   */
+  history?: RubberPeriod[];
+  /** Inventory only: `YYYY-MM-DD` a used sheet was taken off and stored (v4); slower aging runs from here. */
+  stashedAt?: string;
+  /** Calendar aging speed while a used sheet is stored in the inventory, in percent (default 50) (v4). */
+  storageAgingPercent?: number;
   /**
    * A boosting rubber (灌油胶皮): shows its boosting logs and re-boost reminders. Set by the user or
    * by logging a boost; most rubbers are never boosted.
@@ -89,8 +106,8 @@ export type Rubber = {
   /** Play-time limit in minutes (default 5400 = 90 h). */
   customPlayMinutes?: number;
   /**
-   * Play time not covered by the current racket's sessions, in minutes; counts toward its play life:
-   * play before the rubber was recorded (v3) plus play on rackets it was taken off to the inventory.
+   * Play time not covered by recorded sessions, in minutes; counts toward its play life: play before
+   * the rubber was recorded in the app (v3), and play on rackets that were deleted since.
    */
   initialPlayMinutes?: number;
   /** Re-boost reminder cycle in days (default 21). */
@@ -189,6 +206,21 @@ export function getRubberMountedDate(rubber: Pick<Rubber, "installedAt" | "mount
   const { installedAt, mountedAt } = rubber;
   if (!installedAt) return mountedAt;
   return mountedAt && mountedAt > installedAt ? mountedAt : installedAt;
+}
+
+/** A racket stretch whose sessions count toward a rubber's play time (`to` empty: still on it). */
+export type RubberStint = { racketId: string; from: string; to?: string };
+
+/** The rubber's stints on rackets: completed ones from its `history`, then the current mount (if any). */
+export function getRubberStints(
+  rubber: Pick<Rubber, "history" | "racketId" | "installedAt" | "mountedAt" | "removedAt">,
+): RubberStint[] {
+  const stints: RubberStint[] = (rubber.history ?? []).flatMap((period) =>
+    period.kind === "mounted" ? [{ racketId: period.racketId, from: period.from, to: period.to }] : [],
+  );
+  const from = getRubberMountedDate(rubber);
+  if (rubber.racketId && from) stints.push({ racketId: rubber.racketId, from, to: rubber.removedAt });
+  return stints;
 }
 
 export function getRacketRubberId(racket: Pick<Racket, "forehandRubberId" | "backhandRubberId">, side: RubberSide) {

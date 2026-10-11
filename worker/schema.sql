@@ -69,6 +69,9 @@ CREATE TABLE IF NOT EXISTS rubbers (
   installed_at TEXT, -- first glued on; calendar life starts here. NULL for brand-new inventory sheets
   mounted_at TEXT, -- used sheets moved onto their racket after installed_at; sessions count from here
   removed_at TEXT, -- set when retired; life stops accumulating
+  history TEXT, -- JSON array of completed periods: racket stints (sessions keep counting) and stored stretches (v4)
+  stashed_at TEXT, -- inventory: day a used sheet was taken off; slower storage aging runs from here (v4)
+  storage_aging_percent INTEGER, -- calendar aging speed while stored; NULL = 50 (v4)
   boosted INTEGER NOT NULL DEFAULT 0, -- 1 = boosting rubber (灌油胶皮): boosting logs and re-boost reminders
   custom_calendar_days INTEGER, -- NULL = 120 days
   custom_play_minutes INTEGER, -- NULL = 5400 minutes (90 h)

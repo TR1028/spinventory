@@ -33,3 +33,8 @@ ALTER TABLE rubbers ADD COLUMN mounted_at TEXT;
 -- v4 · Rubbers: custom name and inventory stock count (several identical brand-new sheets).
 ALTER TABLE rubbers ADD COLUMN label TEXT;
 ALTER TABLE rubbers ADD COLUMN quantity INTEGER;
+
+-- v4 · Rubbers: timeline of racket stints / storage, take-off date and storage aging speed.
+ALTER TABLE rubbers ADD COLUMN history TEXT;
+ALTER TABLE rubbers ADD COLUMN stashed_at TEXT;
+ALTER TABLE rubbers ADD COLUMN storage_aging_percent INTEGER;

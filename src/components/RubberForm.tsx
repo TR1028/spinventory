@@ -46,14 +46,18 @@ export type RubberFormState = {
   boostLayers: string;
   calendarDays: string;
   playHours: string;
-  /** Play time not covered by sessions (before recording, on earlier rackets), in hours. */
+  /** Play time not covered by sessions (before recording, on deleted rackets), in hours. */
   initialPlayHours: string;
   boostCycleDays: string;
+  /** Calendar aging speed while stored in the inventory, percent (blank = 50). */
+  storageAgingPercent: string;
   notes: string;
   /** New rubbers (mount / stock): a brand-new sheet, or a used one whose history is backfilled. */
   condition: RubberCondition;
   /** Used sheets: the day the sheet was first glued on. */
   usedInstalledAt: string;
+  /** Used inventory sheets: the day they were taken off and stored (slower aging from here). */
+  stashedAt: string;
   /** Used + boosted new sheets: boosts done before recording. */
   priorBoostCount: string;
   /** Used + boosted new sheets: date of the latest of those boosts (blank = the installation date). */
@@ -74,9 +78,11 @@ export function createRubberForm(overrides: Partial<RubberFormState> = {}): Rubb
     playHours: "",
     initialPlayHours: "",
     boostCycleDays: "",
+    storageAgingPercent: "",
     notes: "",
     condition: "fresh",
     usedInstalledAt: "",
+    stashedAt: "",
     priorBoostCount: "1",
     lastBoostDate: "",
     ...overrides,
@@ -98,10 +104,12 @@ export function rubberToForm(rubber: Rubber): RubberFormState {
     playHours: rubber.customPlayMinutes === undefined ? "" : formatHours(rubber.customPlayMinutes),
     initialPlayHours: hoursInputValue(rubber.initialPlayMinutes),
     boostCycleDays: numberText(rubber.boostCycleDays),
+    storageAgingPercent: numberText(rubber.storageAgingPercent),
     notes: rubber.notes ?? "",
-    // Inventory editor: a used sheet shows its first installation date.
+    // Inventory editor: a used sheet shows its first installation and take-off dates.
     condition: rubber.installedAt ? "used" : "fresh",
     usedInstalledAt: rubber.installedAt ?? "",
+    stashedAt: rubber.stashedAt ?? "",
   });
 }
 
@@ -112,6 +120,12 @@ function parsePositive(value: string, label: string, integer = false): number | 
   const parsed = Number(text);
   if (!Number.isFinite(parsed) || parsed <= 0) throw new Error(`${label}需为大于 0 的数字`);
   return integer ? Math.max(1, Math.round(parsed)) : parsed;
+}
+
+function parseStoragePercent(value: string) {
+  const percent = parsePositive(value, "囤货老化速度", true);
+  if (percent !== undefined && percent > 100) throw new Error("囤货老化速度需在 1–100% 之间");
+  return percent;
 }
 
 /** Validates the form (throws with a Chinese message); `label` names the rubber in messages. */
@@ -130,6 +144,7 @@ export function formToRubberFields(form: RubberFormState, label = "胶皮"): Rub
     customPlayMinutes: playHours === undefined ? undefined : Math.round(playHours * 60),
     initialPlayMinutes: parseHoursInput(form.initialPlayHours, "此前已打时长"),
     boostCycleDays: parsePositive(form.boostCycleDays, "复灌周期", true),
+    storageAgingPercent: parseStoragePercent(form.storageAgingPercent),
     notes: form.notes.trim() || undefined,
   };
 }
@@ -148,6 +163,7 @@ export function formToRubberUpdate(form: RubberFormState): UpdateRubberInput {
     customPlayMinutes: fields.customPlayMinutes ?? null,
     initialPlayMinutes: fields.initialPlayMinutes ?? null,
     boostCycleDays: fields.boostCycleDays ?? null,
+    storageAgingPercent: fields.storageAgingPercent ?? null,
     notes: fields.notes ?? null,
   };
 }
@@ -157,6 +173,8 @@ function formToUsedHistory(form: RubberFormState, rubber: RubberFields, label: s
   const installedAt = form.usedInstalledAt.trim();
   if (!installedAt) throw new Error(mount ? `请选择${label}的已投入使用日期` : `请选择${label}首次贴拍的日期`);
   const history: UsedRubberHistory = { installedAt };
+  // A used sheet going into the inventory: storage (slower aging) starts on its take-off date.
+  if (!mount) history.stashedAt = form.stashedAt.trim() || undefined;
   if (rubber.boosted) {
     history.priorBoostCount = parsePositive(form.priorBoostCount, "历史已灌油次数", true) ?? 1;
     history.lastBoostDate = form.lastBoostDate.trim() || undefined;
@@ -192,13 +210,16 @@ export function formToStockInput(form: RubberFormState): CreateRubberInput {
   return { ...rubber, used: formToUsedHistory(form, rubber, "这张胶皮", false) };
 }
 
-/** Edits of an inventory rubber: brand-new stock changes its quantity, a used sheet its first glued date. */
+/**
+ * Edits of an inventory rubber: brand-new stock changes its quantity, a used sheet its first glued
+ * and take-off dates.
+ */
 export function formToStockUpdate(form: RubberFormState, rubber: Rubber): UpdateRubberInput {
   const update = formToRubberUpdate(form);
   if (rubber.installedAt) {
     const installedAt = form.usedInstalledAt.trim();
     if (!installedAt) throw new Error("请选择首次贴拍日期");
-    return { ...update, installedAt };
+    return { ...update, installedAt, stashedAt: form.stashedAt.trim() || null };
   }
   return { ...update, quantity: parsePositive(form.quantity, "数量", true) ?? 1 };
 }
@@ -215,11 +236,14 @@ export function describeRubberSpecs(rubber: Pick<Rubber, "hardness" | "thickness
 }
 
 /** Summary of the life parameters a rubber overrides, or `undefined` when it uses the defaults. */
-export function describeCustomLife(rubber: Pick<Rubber, "customCalendarDays" | "customPlayMinutes" | "boostCycleDays" | "boosted">) {
+export function describeCustomLife(
+  rubber: Pick<Rubber, "customCalendarDays" | "customPlayMinutes" | "boostCycleDays" | "boosted" | "storageAgingPercent">,
+) {
   const parts = [
     rubber.customCalendarDays ? `${rubber.customCalendarDays} 天` : null,
     rubber.customPlayMinutes ? `${formatHours(rubber.customPlayMinutes)} h` : null,
     rubber.boosted && rubber.boostCycleDays ? `复灌 ${rubber.boostCycleDays} 天` : null,
+    rubber.storageAgingPercent ? `囤货老化 ${rubber.storageAgingPercent}%` : null,
   ].filter(Boolean);
   return parts.length ? `自定义寿命 ${parts.join(" · ")}` : undefined;
 }
@@ -404,16 +428,24 @@ export function RubberFormFields({ value, onChange, testIdPrefix, variant = "edi
   const showQuantity = isStock && !used;
   // Read once so React never toggles <details> while the user works inside it.
   const [lifeOpen] = useState(() =>
-    Boolean(value.calendarDays || value.playHours || (value.boosted && value.boostCycleDays) || (variant === "edit" && value.initialPlayHours)),
+    Boolean(
+      value.calendarDays ||
+        value.playHours ||
+        value.storageAgingPercent ||
+        (value.boosted && value.boostCycleDays) ||
+        (variant === "edit" && value.initialPlayHours),
+    ),
   );
   const match = useMemo(() => matchRubberCatalog(value.name), [value.name]);
   const today = todayISO();
   const latestUsedDate = variant === "mount" && mountDate && mountDate < today ? mountDate : today;
   const copy = CONDITION_COPY[variant === "stock" ? "stock" : "mount"];
+  const storagePercent = value.storageAgingPercent.trim() || String(DEFAULT_LIFE_PARAMETERS.storageAgingPercent);
   const lifeSummary = [
     `${value.calendarDays.trim() || DEFAULT_LIFE_PARAMETERS.calendarDays} 天`,
     `${value.playHours.trim() || formatHours(DEFAULT_LIFE_PARAMETERS.playMinutes)} h`,
     value.boosted ? `复灌 ${value.boostCycleDays.trim() || DEFAULT_LIFE_PARAMETERS.boostCycleDays} 天` : null,
+    `囤货 ${storagePercent}%`,
     variant === "edit" && value.initialPlayHours.trim() ? `此前 ${value.initialPlayHours.trim()} h` : null,
   ]
     .filter(Boolean)
@@ -515,7 +547,7 @@ export function RubberFormFields({ value, onChange, testIdPrefix, variant = "edi
       </div>
       {used ? (
         <div className="grid gap-3 rounded-lg border border-amber-200 bg-amber-50/70 p-3" data-testid={`${testIdPrefix}-rubber-used-fields`}>
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className={`grid gap-3 ${isStock ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
             <TextField
               label={variant === "mount" ? "已投入使用日期" : "首次贴拍日期"}
               type="date"
@@ -525,6 +557,18 @@ export function RubberFormFields({ value, onChange, testIdPrefix, variant = "edi
               onChange={(usedInstalledAt) => update("usedInstalledAt", usedInstalledAt)}
               testId={`${testIdPrefix}-rubber-used-installed-at`}
             />
+            {isStock ? (
+              <TextField
+                label="拆下日期"
+                hint="从这天起按囤货速度老化"
+                type="date"
+                min={value.usedInstalledAt || undefined}
+                max={today}
+                value={value.stashedAt}
+                onChange={(stashedAt) => update("stashedAt", stashedAt)}
+                testId={`${testIdPrefix}-rubber-stashed-at`}
+              />
+            ) : null}
             <TextField
               label="此前已打时长（小时）"
               type="number"
@@ -541,7 +585,7 @@ export function RubberFormFields({ value, onChange, testIdPrefix, variant = "edi
             <History size={14} className="mt-0.5 shrink-0" aria-hidden="true" />
             {variant === "mount"
               ? "日历寿命从投入使用日期算起，此前已打时长直接计入打球寿命。"
-              : "日历寿命从首次贴拍日算起（放在囤货里也会继续老化），已打时长计入打球寿命；再贴上球拍后接着累计。"}
+              : `日历寿命从首次贴拍日算起；拆下后放在囤货里不再打球，按 ${storagePercent}% 的速度继续老化。已打时长计入打球寿命，再贴上球拍后接着累计。`}
           </p>
         </div>
       ) : null}
@@ -614,7 +658,7 @@ export function RubberFormFields({ value, onChange, testIdPrefix, variant = "edi
           </span>
         </summary>
         <div className="grid gap-3 border-t border-ink/10 p-3">
-          <div className={`grid gap-2 ${value.boosted ? "grid-cols-3" : "grid-cols-2"}`}>
+          <div className={`grid grid-cols-2 gap-2 ${value.boosted ? "sm:grid-cols-4" : "sm:grid-cols-3"}`}>
             <CompactNumberField
               label="日历寿命 · 天"
               placeholder={String(DEFAULT_LIFE_PARAMETERS.calendarDays)}
@@ -639,6 +683,13 @@ export function RubberFormFields({ value, onChange, testIdPrefix, variant = "edi
                 testId={`${testIdPrefix}-rubber-boost-cycle`}
               />
             ) : null}
+            <CompactNumberField
+              label="囤货老化 · %"
+              placeholder={String(DEFAULT_LIFE_PARAMETERS.storageAgingPercent)}
+              value={value.storageAgingPercent}
+              onChange={(storageAgingPercent) => update("storageAgingPercent", storageAgingPercent)}
+              testId={`${testIdPrefix}-rubber-storage-aging`}
+            />
           </div>
           {variant === "edit" ? (
             <div className="grid grid-cols-3 items-end gap-2">
@@ -652,13 +703,14 @@ export function RubberFormFields({ value, onChange, testIdPrefix, variant = "edi
                 testId={`${testIdPrefix}-rubber-initial-hours`}
               />
               <p className="col-span-2 pb-1 text-xs font-medium leading-5 text-ink/50">
-                不在这块球拍打球记录里的时长（录入 App 前、或在其他球拍上打的），计入打球寿命。
+                没有打球记录的时长（录入 App 之前打的），计入打球寿命。贴在其他球拍时的打球记录会自动算上。
               </p>
             </div>
           ) : null}
           <p className="text-xs font-medium leading-5 text-ink/50">
             留空即使用默认值：日历寿命 {DEFAULT_LIFE_PARAMETERS.calendarDays} 天、打球 {formatHours(DEFAULT_LIFE_PARAMETERS.playMinutes)} 小时
-            {value.boosted ? `；每 ${DEFAULT_LIFE_PARAMETERS.boostCycleDays} 天提醒复灌` : ""}。
+            {value.boosted ? `、每 ${DEFAULT_LIFE_PARAMETERS.boostCycleDays} 天提醒复灌` : ""}。暂时撕下放在囤货里时不再打球，日历寿命按「囤货老化」的速度继续（默认{" "}
+            {DEFAULT_LIFE_PARAMETERS.storageAgingPercent}%，即两天算一天）。
           </p>
         </div>
       </details>

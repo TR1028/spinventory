@@ -1000,7 +1000,7 @@ export function RacketDetail({ racketId, onBack, onAddSession, onDeleted, onOpen
               key={`${side}:${rubber.id}`}
               side={side}
               rubber={rubber}
-              sessions={sessions}
+              sessions={data.playSessions}
               logs={getRubberBoostingLogs(data, rubber.id)}
               onReplace={() => setDialog({ type: "replace", side })}
               onTakeOff={() => setDialog({ type: "take-off", side })}
@@ -1013,7 +1013,7 @@ export function RacketDetail({ racketId, onBack, onAddSession, onDeleted, onOpen
 
       <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
         <SessionsSection sessions={sessions} />
-        <RetiredArchive racket={racket} rubbers={retiredRubbers} sessions={sessions} boostingLogs={data.boostingLogs} />
+        <RetiredArchive racket={racket} rubbers={retiredRubbers} sessions={data.playSessions} boostingLogs={data.boostingLogs} />
       </div>
 
       <DeleteRacketSection racket={racket} onDeleted={onDeleted} />

@@ -5,7 +5,7 @@
  * which keeps every statement far below D1's 100-parameter limit and lets one batch (= one
  * transaction) carry any number of records.
  */
-import { compact, createEmptySnapshot, isISODate, LIMITS } from "../src/db/domain";
+import { compact, createEmptySnapshot, isISODate, LIMITS, sanitizeRubberHistory } from "../src/db/domain";
 import {
   ENTITY_KEYS,
   isGripType,
@@ -68,6 +68,10 @@ const TABLES: Record<EntityKey, TableSpec> = {
       { name: "installed_at", key: "installedAt" },
       { name: "mounted_at", key: "mountedAt" },
       { name: "removed_at", key: "removedAt" },
+      // JSON text of the timeline array (`json_extract` returns arrays as JSON text).
+      { name: "history", key: "history" },
+      { name: "stashed_at", key: "stashedAt" },
+      { name: "storage_aging_percent", key: "storageAgingPercent" },
       { name: "boosted", key: "boosted", fallback: "0" },
       { name: "custom_calendar_days", key: "customCalendarDays" },
       { name: "custom_play_minutes", key: "customPlayMinutes" },
@@ -181,6 +185,9 @@ const ADDED_COLUMNS: { table: string; column: string; type: "TEXT" | "REAL" | "I
   { table: "rubbers", column: "mounted_at", type: "TEXT" },
   { table: "rubbers", column: "label", type: "TEXT" },
   { table: "rubbers", column: "quantity", type: "INTEGER" },
+  { table: "rubbers", column: "history", type: "TEXT" },
+  { table: "rubbers", column: "stashed_at", type: "TEXT" },
+  { table: "rubbers", column: "storage_aging_percent", type: "INTEGER" },
 ];
 
 let schemaCheck: Promise<void> | undefined;
@@ -253,6 +260,9 @@ type RubberRow = {
   installed_at: string | null;
   mounted_at: string | null;
   removed_at: string | null;
+  history: string | null;
+  stashed_at: string | null;
+  storage_aging_percent: number | null;
   boosted: number;
   custom_calendar_days: number | null;
   custom_play_minutes: number | null;
@@ -284,6 +294,16 @@ type PlaySessionRow = {
 
 const isRacketStatus = (value: unknown): value is RacketStatus => RACKET_STATUSES.includes(value as RacketStatus);
 const isRubberSide = (value: unknown): value is RubberSide => RUBBER_SIDES.includes(value as RubberSide);
+
+/** Timeline stored as JSON text; malformed values are dropped. */
+function parseHistory(text: string | null) {
+  if (!text) return undefined;
+  try {
+    return sanitizeRubberHistory(JSON.parse(text));
+  } catch {
+    return undefined;
+  }
+}
 
 const toRacket = (row: RacketRow): Racket =>
   compact({
@@ -318,6 +338,9 @@ const toRubber = (row: RubberRow): Rubber =>
     installedAt: row.installed_at,
     mountedAt: row.mounted_at,
     removedAt: row.removed_at,
+    history: parseHistory(row.history),
+    stashedAt: row.stashed_at,
+    storageAgingPercent: row.storage_aging_percent,
     boosted: Boolean(row.boosted),
     customCalendarDays: row.custom_calendar_days,
     customPlayMinutes: row.custom_play_minutes,
@@ -356,13 +379,14 @@ const toPlaySession = (row: PlaySessionRow): PlaySession =>
 /** Which rows of each table a request needs. Filters within one table are OR-ed. */
 export type SnapshotScope = {
   rackets?: { all?: boolean; ids?: string[]; mountingRubberIds?: string[]; ofRubberIds?: string[] };
-  rubbers?: { all?: boolean; ids?: string[]; racketIds?: string[]; ofBoostingLogIds?: string[] };
+  /** `withHistory`: every rubber that has a timeline (it may have stints on any racket). */
+  rubbers?: { all?: boolean; ids?: string[]; racketIds?: string[]; ofBoostingLogIds?: string[]; withHistory?: boolean };
   boostingLogs?: { all?: boolean; ids?: string[]; rubberIds?: string[]; racketIds?: string[]; siblingsOfIds?: string[] };
-  /** `ofRubberIds`: sessions of the rackets those rubbers are (or were last) on. */
-  playSessions?: { all?: boolean; ids?: string[]; racketIds?: string[]; ofRubberIds?: string[] };
+  playSessions?: { all?: boolean; ids?: string[]; racketIds?: string[] };
 };
 
-type Filter = [condition: (param: string) => string, ids: string[] | undefined];
+/** A condition on a JSON array parameter of ids, or (`true`) a condition without parameters. */
+type Filter = [condition: (param: string) => string, ids: string[] | boolean | undefined];
 
 const IN_JSON = (param: string) => `IN (SELECT value FROM json_each(${param}))`;
 
@@ -373,7 +397,11 @@ function scopedSelect(db: D1Database, userId: string, key: EntityKey, all: boole
   const params: string[] = [];
   const conditions: string[] = [];
   for (const [condition, ids] of filters) {
-    if (!ids?.length) continue;
+    if (ids === true) {
+      conditions.push(`(${condition("")})`);
+      continue;
+    }
+    if (!Array.isArray(ids) || !ids.length) continue;
     params.push(JSON.stringify(ids));
     conditions.push(`(${condition(`?${params.length + 1}`)})`);
   }
@@ -402,6 +430,7 @@ export async function loadScope(db: D1Database, userId: string, scope: SnapshotS
           (param) => `id IN (SELECT rubber_id FROM boosting_logs WHERE user_id = ?1 AND id ${IN_JSON(param)})`,
           rubbers?.ofBoostingLogIds,
         ],
+        [() => "history IS NOT NULL", rubbers?.withHistory],
       ]),
     ],
     [
@@ -424,10 +453,6 @@ export async function loadScope(db: D1Database, userId: string, scope: SnapshotS
       scopedSelect(db, userId, "playSessions", playSessions?.all, [
         [(param) => `id ${IN_JSON(param)}`, playSessions?.ids],
         [(param) => `racket_id ${IN_JSON(param)}`, playSessions?.racketIds],
-        [
-          (param) => `racket_id IN (SELECT racket_id FROM rubbers WHERE user_id = ?1 AND id ${IN_JSON(param)})`,
-          playSessions?.ofRubberIds,
-        ],
       ]),
     ],
   ];
@@ -552,6 +577,9 @@ function sanitizeRubber(value: unknown, now: string): Rubber | undefined {
     installedAt: cleanDate(raw.installedAt),
     mountedAt: cleanDate(raw.mountedAt),
     removedAt: cleanDate(raw.removedAt),
+    history: sanitizeRubberHistory(raw.history),
+    stashedAt: cleanDate(raw.stashedAt),
+    storageAgingPercent: cleanPositive(raw.storageAgingPercent, LIMITS.maxStorageAgingPercent, true),
     boosted: raw.boosted === true,
     customCalendarDays: cleanPositive(raw.customCalendarDays, LIMITS.maxCalendarDays, true),
     customPlayMinutes: cleanPositive(raw.customPlayMinutes, LIMITS.maxPlayMinutes, true),

@@ -509,7 +509,7 @@ export function AppDataProvider({ children }: { children: ReactNode }) {
       },
       updateRacket: (id, input) =>
         completed(mutate((snapshot, ctx) => planUpdateRacket(snapshot, id, input, ctx), (api) => api.updateRacket(id, input))),
-      deleteRacket: (id) => completed(mutate((snapshot) => planDeleteRacket(snapshot, id), (api) => api.deleteRacket(id))),
+      deleteRacket: (id) => completed(mutate((snapshot, ctx) => planDeleteRacket(snapshot, id, ctx), (api) => api.deleteRacket(id))),
 
       createRubber: (input) =>
         createdId(mutate((snapshot, ctx) => planCreateRubber(snapshot, input, ctx), (api) => api.createRubber(input))),

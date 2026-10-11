@@ -52,7 +52,8 @@ import {
 /** Adds rubbers to the inventory (several brand-new sheets, or one used sheet), or edits one (`rubber`). */
 export function RubberFormModal({ rubber, onClose }: { rubber?: Rubber; onClose: () => void }) {
   const { createRubber, updateRubber } = useAppData();
-  const [form, setForm] = useState(() => (rubber ? rubberToForm(rubber) : createRubberForm()));
+  // A used sheet added now was usually just taken off: storage starts today unless changed.
+  const [form, setForm] = useState(() => (rubber ? rubberToForm(rubber) : createRubberForm({ stashedAt: todayISO() })));
   const action = useAsyncAction();
   const used = rubber ? Boolean(rubber.installedAt) : form.condition === "used";
   const count = Math.max(1, Math.round(Number(form.quantity) || 1));
@@ -69,7 +70,7 @@ export function RubberFormModal({ rubber, onClose }: { rubber?: Rubber; onClose:
   let description = "新买的胶皮不计算寿命，贴到球拍后才开始计时；拆下来还要用的胶皮选「用过的」。";
   if (rubber) {
     description = used
-      ? "拆下待用的胶皮：首次贴拍日期和已打时长决定剩余寿命，再贴上球拍后接着累计。"
+      ? "拆下待用的胶皮：囤货期间日历寿命放慢继续，再贴上球拍后打球时长接着累计。"
       : "全新未拆的囤货胶皮，贴到球拍后才开始计时。";
   }
 
@@ -120,7 +121,7 @@ export function MountRubberModal({ rubber, onClose }: { rubber: Rubber; onClose:
   const occupant = racket ? getMountedRubber(data, racket, side) : undefined;
   const isSpare = racket ? getRacketStatus(racket) === "inventory" : false;
   const count = getRubberQuantity(rubber);
-  const earliest = [occupant ? getRubberMountedDate(occupant) : undefined, rubber.installedAt].filter(Boolean).sort().pop();
+  const earliest = [occupant ? getRubberMountedDate(occupant) : undefined, rubber.installedAt, rubber.stashedAt].filter(Boolean).sort().pop();
 
   function selectRacket(nextId: string) {
     setRacketId(nextId);
@@ -155,7 +156,7 @@ export function MountRubberModal({ rubber, onClose }: { rubber: Rubber; onClose:
         <form onSubmit={handleSubmit} className="grid gap-4">
           {rubber.installedAt ? (
             <Notice tone="info" testId="mount-used-notice">
-              这张胶皮用过（{describeInventoryState(rubber)}），贴上后寿命接着之前的累计。
+              这张胶皮用过（{describeInventoryState(rubber, data.playSessions)}），贴上后寿命接着之前的累计。
             </Notice>
           ) : count > 1 ? (
             <Notice tone="muted">囤货里有 {count} 张，贴上其中 1 张，剩下 {count - 1} 张继续囤着。</Notice>

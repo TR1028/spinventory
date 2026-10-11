@@ -145,8 +145,9 @@ export function RacketCard({
       </div>
 
       <div className="mt-4 space-y-4">
-        <RubberRow side="forehand" rubber={forehand} sessions={racketSessions} boostingLogs={boostingLogs} />
-        <RubberRow side="backhand" rubber={backhand} sessions={racketSessions} boostingLogs={boostingLogs} />
+        {/* All sessions: a rubber also carries play from earlier stints on other rackets. */}
+        <RubberRow side="forehand" rubber={forehand} sessions={sessions} boostingLogs={boostingLogs} />
+        <RubberRow side="backhand" rubber={backhand} sessions={sessions} boostingLogs={boostingLogs} />
       </div>
 
       <div className="mt-4 text-xs font-medium text-ink/50">

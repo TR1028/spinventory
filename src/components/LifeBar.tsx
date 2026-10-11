@@ -43,14 +43,21 @@ export function LifeBar({ life, showDetails = false }: LifeBarProps) {
         <span>{percent}%</span>
       </div>
       {showDetails ? (
-        <div className="flex items-center justify-between gap-3 text-[11px] font-semibold text-ink/50">
-          <span>
-            日历 {life.calendarDays}/{life.calendarLimitDays} 天
-          </span>
-          <span>
-            打球 {formatHours(life.playMinutes)}/{formatHours(life.playLimitMinutes)} h
-          </span>
-        </div>
+        <>
+          <div className="flex items-center justify-between gap-3 text-[11px] font-semibold text-ink/50">
+            <span>
+              日历 {life.calendarDays}/{life.calendarLimitDays} 天
+            </span>
+            <span>
+              打球 {formatHours(life.playMinutes)}/{formatHours(life.playLimitMinutes)} h
+            </span>
+          </div>
+          {life.storedDays > 0 ? (
+            <div className="text-[11px] font-medium text-ink/45" data-testid="life-storage-note">
+              实际 {life.elapsedDays} 天，其中囤货 {life.storedDays} 天按 {life.storageAgingPercent}% 计入日历寿命
+            </div>
+          ) : null}
+        </>
       ) : null}
     </div>
   );

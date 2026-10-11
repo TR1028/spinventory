@@ -19,7 +19,8 @@ Local-first PWA + Cloudflare (Workers + D1) cloud-synced app for tracking table 
    - **灌油是可选的**：大多数胶皮不用灌油，所以胶皮默认 **不灌油**，详情页只显示一行「开启灌油记录」；勾选 **「需要灌油」**（或从目录选择狂飚省狂/国狂等常灌油的胶皮时自动勾选）后才显示灌油记录、首次灌油层数和复灌提醒。
    - **囤货库存（`#/inventory`）**：点击首页的 **「囤货」** 按钮，管理手头没贴拍的胶皮与 **闲置底板**：
      - **全新未拆**：同款新胶皮可以 **一次登记多张**（数量 ±），卡片上显示 `×3`；「贴 1 张到球拍」时自动拆出 1 张，其余继续囤着。
-     - **拆下待用**：暂时撕下或「用过的」胶皮，显示剩余寿命、首次贴拍日期、已打时长和灌油次数；放在囤货里日历寿命会继续计算，重新贴上后打球时长接着累计。
+     - **拆下待用**：暂时撕下或「用过的」胶皮，显示剩余寿命、首次贴拍和拆下日期、已打时长和灌油次数。囤着不打球，日历寿命会 **放慢继续**（默认按 50% 的速度，即两天算一天；每张胶皮可在「寿命参数 → 囤货老化 %」里调整）；重新贴上后恢复正常速度，打球时长接着累计。
+     - **打球时长按胶皮算**：每张胶皮记得自己在哪块拍子上贴过哪段时间，打球记录按日期算到当时贴着的胶皮上——撕下以后再补录之前的打球也会算对；删除球拍时，已经挪到别处的胶皮会保留在那块拍子上打的时长。
      - 每张胶皮都可以填 **自定义名称**（如 `1号`、`比赛用`），用来区分同款胶皮。
      - 「添加胶皮」时选 **「用过的」** 可以直接补录一张之前用过、现在拆下来的胶皮（首次贴拍日期、已打时长、灌油历史）。
    - **器材目录 & 规格速选**：底板和胶皮名称都是可搜索的下拉框，内置蝴蝶、红双喜、斯帝卡、挺拔、骄猛、尼塔库、亚萨卡、维克塔斯、银河等品牌的常见型号，支持中英文和缩写搜索（如 `vis`、`w968`、`hl5`、`fzd`、`zjk`、`省狂`、`T05`、`D09c`），也可以按品牌筛选；目录里没有的型号直接输入名称即可保存。选中或输入能识别的胶皮后，会按该型号实际在售的规格显示 **厚度 / 硬度速选按钮**（如 `2.15 mm`、`41°`），点一下即可填入。
@@ -89,12 +90,12 @@ The repository contains application code and optional demo seed data only; a use
 
 ## Business Rules
 
-- Rubber calendar life starts from `installedAt` (first glued on). Brand-new rubbers in the inventory have not started aging; used sheets put back into the inventory keep aging.
+- Rubber calendar life starts from `installedAt` (first glued on). Brand-new rubbers in the inventory have not started aging. A used sheet stored in the inventory keeps aging, but slower — it is not played: stored days count at its storage aging speed (`storageAgingPercent`, default 50%, i.e. two days count as one).
 - A play session duration is roughly from removing the protective film to cleaning and reapplying it. A session counts toward the rubbers on that racket on the session date.
-- A rubber's play time is its `initialPlayMinutes` (play before it was recorded, plus play on rackets it was taken off) plus the sessions above. A used sheet keeps its own `installedAt`; when it goes onto a racket (更换胶皮 / 配胶启用 / 贴到球拍 from the inventory), the mount date is stored as `mountedAt` and only sessions from that day on are added, so earlier sessions are not counted twice.
+- Play time belongs to the rubber: it is its `initialPlayMinutes` (play before it was recorded in the app) plus the sessions of every stint it had on a racket — past stints kept in its timeline (`history`) and the current mount (from `mountedAt`, or `installedAt`). Sessions logged later for a past stint still count, and a session counts once even if stints touch.
 - A rubber is used up when it reaches either limit: calendar days (default 120) or play time (default 90 h). Each rubber can override both limits.
 - Taking a rubber off for good (退役归档, from 撕下 or 更换胶皮) sets `removedAt`: its age and play time stop counting on that date and it joins the racket's archive.
-- Taking a rubber off temporarily (放回囤货) moves it to the inventory: its sessions on the racket up to that date are added to `initialPlayMinutes`, `installedAt` and its boosting logs stay. A retired rubber can be put back into the inventory the same way.
+- Taking a rubber off temporarily (放回囤货) moves it to the inventory: the stint on the racket goes into its timeline and `stashedAt` starts the slower storage aging; `installedAt` and its boosting logs stay. Mounting it again closes the storage stretch. A retired rubber can be put back into the inventory the same way (storage from its removal date). Deleting a racket folds the minutes of other rubbers' stints on it into their `initialPlayMinutes` before its sessions go.
 - Inventory stock: identical brand-new sheets can share one record (`quantity`, up to 99); mounting one splits it off as its own record. Used sheets are always single records.
 - Replacing a rubber takes the old one off (retired or stashed) and mounts the new one on the same date.
 - Boosting does not reset rubber life.
@@ -202,7 +203,7 @@ Then point the app at the Worker in either of two ways:
 
 ### Upgrade an existing database (grip, weights, used-rubber history, rubber names, stock quantity)
 
-Databases created from an older `worker/schema.sql` lack the columns added later: blade specs and used-rubber history (`rackets.grip_type`, `blade_weight_grams`, `total_weight_grams`, `started_at`, `initial_play_minutes`; `rubbers.weight_grams`, `initial_play_minutes`, `mounted_at`) and the rubber custom name and inventory stock count (`rubbers.label`, `rubbers.quantity`). Add them in place, without touching existing rows:
+Databases created from an older `worker/schema.sql` lack the columns added later: blade specs and used-rubber history (`rackets.grip_type`, `blade_weight_grams`, `total_weight_grams`, `started_at`, `initial_play_minutes`; `rubbers.weight_grams`, `initial_play_minutes`, `mounted_at`), the rubber custom name and inventory stock count (`rubbers.label`, `rubbers.quantity`), and the rubber timeline (`rubbers.history`, `stashed_at`, `storage_aging_percent`). Add them in place, without touching existing rows:
 
 ```bash
 pnpm db:migrate:v2:remote   # live spinventory-db (pnpm db:migrate:v2:local for wrangler dev)

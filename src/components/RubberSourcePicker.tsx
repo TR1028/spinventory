@@ -1,8 +1,8 @@
 /** Picks where the rubber for one racket side comes from: keep / a new rubber / the inventory. */
 import { Package } from "lucide-react";
 import { useId } from "react";
-import { getRubberQuantity, type Rubber } from "../db/schema";
-import type { RubberSource } from "../db/store";
+import { getRubberQuantity, type PlaySession, type Rubber } from "../db/schema";
+import { useAppData, type RubberSource } from "../db/store";
 import { formatFullDate, formatHours } from "../utils/date";
 import { calculateRubberLife } from "../utils/life";
 import {
@@ -61,13 +61,14 @@ export function resolveRubberSource(state: RubberSourceState, inventory: Rubber[
 }
 
 /** One line about an inventory rubber's state: `×3 张` for stock, used life for taken-off sheets. */
-export function describeInventoryState(rubber: Rubber) {
+export function describeInventoryState(rubber: Rubber, sessions: readonly PlaySession[]) {
   if (!rubber.installedAt) {
     const count = getRubberQuantity(rubber);
     return count > 1 ? `全新未拆 · ${count} 张` : "全新未拆";
   }
-  const life = calculateRubberLife(rubber, []);
-  return `用过 · 首贴 ${formatFullDate(rubber.installedAt)} · 已打 ${formatHours(life.playMinutes)} h · 寿命 ${Math.round(life.usedPercent)}%`;
+  const life = calculateRubberLife(rubber, sessions);
+  const stored = rubber.stashedAt ? ` · 拆下 ${formatFullDate(rubber.stashedAt)}` : "";
+  return `用过 · 首贴 ${formatFullDate(rubber.installedAt)}${stored} · 已打 ${formatHours(life.playMinutes)} h · 寿命 ${Math.round(life.usedPercent)}%`;
 }
 
 /** 「贴拍前灌油」 for a boosting rubber taken from the inventory. */
@@ -121,6 +122,7 @@ export function RubberSourcePicker({
   mountDate,
 }: RubberSourcePickerProps) {
   const groupName = useId();
+  const { data } = useAppData();
   const selected = inventory.find((rubber) => rubber.id === value.inventoryId);
   const labels: Record<SourceChoice, string> = {
     keep: keepLabel,
@@ -182,7 +184,7 @@ export function RubberSourcePicker({
                   </span>
                   <span className="mt-0.5 block text-xs font-medium text-ink/55">{describeRubberSpecs(rubber)}</span>
                   <span className={`mt-0.5 block text-xs font-semibold ${rubber.installedAt ? "text-amber-700" : "text-ink/45"}`}>
-                    {describeInventoryState(rubber)}
+                    {describeInventoryState(rubber, data.playSessions)}
                   </span>
                   {customLife ? <span className="mt-0.5 block text-xs font-semibold text-court">{customLife}</span> : null}
                   {rubber.notes ? <span className="mt-0.5 block truncate text-xs text-ink/45">{rubber.notes}</span> : null}

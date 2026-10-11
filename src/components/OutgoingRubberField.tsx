@@ -3,6 +3,7 @@ import { Archive, PackageOpen } from "lucide-react";
 import { getRubberDisplayName, type Rubber } from "../db/schema";
 import type { OutgoingRubberAction } from "../db/store";
 import { formatFullDate } from "../utils/date";
+import { getStorageAgingPercent } from "../utils/life";
 import { FieldLabel, SegmentedControl } from "./ui";
 
 export function OutgoingRubberField({
@@ -44,7 +45,7 @@ export function OutgoingRubberField({
           <Archive size={14} className="mt-0.5 shrink-0" aria-hidden="true" />
         )}
         {stash
-          ? `${when}撕下，放进囤货的「拆下待用」：已用天数、打球时长和灌油记录都保留，之后贴到任意球拍接着计算。`
+          ? `${when}撕下，放进囤货的「拆下待用」：打球时长和灌油记录跟着这张胶皮走；囤着不打球，日历寿命按 ${getStorageAgingPercent(rubber)}% 的速度继续，之后贴到任意球拍接着计算。`
           : `${when}退役，移入这块球拍的历任退役胶皮档案；寿命、打球时长和灌油记录冻结保存。`}
       </p>
     </div>

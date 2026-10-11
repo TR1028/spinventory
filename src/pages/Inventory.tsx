@@ -22,6 +22,7 @@ import {
   RUBBER_SIDES,
   rubberSideLabel,
   type BoostingLog,
+  type PlaySession,
   type Racket,
   type Rubber,
   type RubberSide,
@@ -142,21 +143,23 @@ function StockRubberCard({
   );
 }
 
-/** A used sheet taken off a racket, waiting to be mounted again: its life keeps counting. */
+/** A used sheet taken off a racket, waiting to be mounted again: its life keeps counting, more slowly. */
 function UsedRubberCard({
   rubber,
+  sessions,
   boostingLogs,
   onMount,
   onEdit,
   onDelete,
 }: {
   rubber: Rubber;
+  sessions: PlaySession[];
   boostingLogs: BoostingLog[];
   onMount: () => void;
   onEdit: () => void;
   onDelete: () => void;
 }) {
-  const life = calculateRubberLife(rubber, []);
+  const life = calculateRubberLife(rubber, sessions);
   const boosting = getBoostingSummary(rubber, boostingLogs);
   const customLife = describeCustomLife(rubber);
   return (
@@ -176,6 +179,7 @@ function UsedRubberCard({
           <History size={13} aria-hidden="true" />
           首次贴拍 {rubber.installedAt ? formatFullDate(rubber.installedAt) : "未知"}
         </span>
+        {rubber.stashedAt ? <span>拆下 {formatFullDate(rubber.stashedAt)}</span> : null}
         <span>已打 {formatHours(life.playMinutes)} h</span>
         {rubber.boosted || boosting.count ? (
           <span className="inline-flex items-center gap-1 text-court">
@@ -184,6 +188,7 @@ function UsedRubberCard({
           </span>
         ) : null}
       </p>
+      <p className="mt-1 text-xs font-medium text-ink/45">囤着不打球，日历寿命按 {life.storageAgingPercent}% 的速度继续</p>
       {customLife ? <p className="mt-1 text-xs font-semibold text-court">{customLife}</p> : null}
       {rubber.notes ? <p className="mt-1 whitespace-pre-wrap break-words text-xs text-ink/50">{rubber.notes}</p> : null}
       <div className="mt-4 flex flex-wrap items-center gap-2">
@@ -388,6 +393,7 @@ export function Inventory({ initialTab = "rubbers", onBack, onTabChange, onOpenR
                       <UsedRubberCard
                         key={rubber.id}
                         rubber={rubber}
+                        sessions={data.playSessions}
                         boostingLogs={data.boostingLogs}
                         onMount={() => setDialog({ type: "mount", rubberId: rubber.id })}
                         onEdit={() => setDialog({ type: "rubber-form", rubberId: rubber.id })}
