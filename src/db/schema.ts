@@ -17,6 +17,9 @@ export type RacketStatus = "active" | "inventory" | "retired";
 /** Lifecycle of a rubber, derived from its fields (see {@link getRubberState}). */
 export type RubberState = "inventory" | "mounted" | "retired";
 
+/** Handle shape: shakehand flared / straight / anatomic, Chinese penhold, Japanese penhold. */
+export type GripType = "FL" | "ST" | "AN" | "CS" | "JP";
+
 export type Racket = {
   id: string;
   name: string;
@@ -27,6 +30,16 @@ export type Racket = {
   backhandRubberId?: string;
   sortOrder?: number;
   notes?: string;
+  /** Handle shape (v3). */
+  gripType?: GripType;
+  /** Bare blade weight in grams (v3). */
+  bladeWeightGrams?: number;
+  /** Assembled racket weight (blade + rubbers) in grams (v3). */
+  totalWeightGrams?: number;
+  /** `YYYY-MM-DD` the blade was first put into service (v3). */
+  startedAt?: string;
+  /** Play time on the blade before it was recorded in the app, in minutes (v3). */
+  initialPlayMinutes?: number;
   createdAt: string;
   updatedAt?: string;
 };
@@ -40,8 +53,16 @@ export type Rubber = {
   name: string;
   hardness?: string;
   thicknessMm?: number;
+  /** Sheet weight in grams (v3). */
+  weightGrams?: number;
   /** `YYYY-MM-DD` the rubber was glued onto a racket; calendar life starts here. */
   installedAt?: string;
+  /**
+   * `YYYY-MM-DD` the rubber went onto its current racket, set only when that is later than
+   * `installedAt`: a rubber that was already in use elsewhere when it was recorded (v3). Play
+   * sessions of the racket count from this date (its earlier play is in `initialPlayMinutes`).
+   */
+  mountedAt?: string;
   /** `YYYY-MM-DD` the rubber was taken off (retired); its life stops accumulating. */
   removedAt?: string;
   boosted: boolean;
@@ -49,6 +70,8 @@ export type Rubber = {
   customCalendarDays?: number;
   /** Play-time limit in minutes (default 5400 = 90 h). */
   customPlayMinutes?: number;
+  /** Play time before the rubber was recorded in the app, in minutes; counts toward its play life (v3). */
+  initialPlayMinutes?: number;
   /** Re-boost reminder cycle in days (default 21). */
   boostCycleDays?: number;
   /** Free-form notes (batch, shop, weight, ...). */
@@ -101,6 +124,20 @@ export const racketStatusLabel: Record<RacketStatus, string> = {
   retired: "退役",
 };
 
+export const GRIP_TYPES: readonly GripType[] = ["FL", "ST", "AN", "CS", "JP"];
+
+export const gripTypeLabel: Record<GripType, string> = {
+  FL: "横板 FL",
+  ST: "横板 ST",
+  AN: "横板 AN",
+  CS: "直板 CS",
+  JP: "日直 JP",
+};
+
+export function isGripType(value: unknown): value is GripType {
+  return GRIP_TYPES.includes(value as GripType);
+}
+
 export function getRacketStatus(racket: Pick<Racket, "status">): RacketStatus {
   return racket.status ?? "active";
 }
@@ -108,6 +145,13 @@ export function getRacketStatus(racket: Pick<Racket, "status">): RacketStatus {
 export function getRubberState(rubber: Pick<Rubber, "racketId" | "removedAt">): RubberState {
   if (rubber.removedAt) return "retired";
   return rubber.racketId ? "mounted" : "inventory";
+}
+
+/** First day the rubber has been on its current racket: `mountedAt` when later than `installedAt`. */
+export function getRubberMountedDate(rubber: Pick<Rubber, "installedAt" | "mountedAt">) {
+  const { installedAt, mountedAt } = rubber;
+  if (!installedAt) return mountedAt;
+  return mountedAt && mountedAt > installedAt ? mountedAt : installedAt;
 }
 
 export function getRacketRubberId(racket: Pick<Racket, "forehandRubberId" | "backhandRubberId">, side: RubberSide) {

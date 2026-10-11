@@ -42,6 +42,8 @@ type RubberSourcePickerProps = {
   inventory: Rubber[];
   testIdPrefix: string;
   ariaLabel: string;
+  /** Day the rubber is mounted (replace / activate flows): a used sheet's installation date may not be later. */
+  mountDate?: string;
 };
 
 export function RubberSourcePicker({
@@ -52,12 +54,13 @@ export function RubberSourcePicker({
   inventory,
   testIdPrefix,
   ariaLabel,
+  mountDate,
 }: RubberSourcePickerProps) {
   const groupName = useId();
   const selectedId = inventory.some((rubber) => rubber.id === value.inventoryId) ? value.inventoryId : "";
   const labels: Record<SourceChoice, string> = {
     keep: keepLabel,
-    new: "新胶皮",
+    new: "录入胶皮",
     inventory: inventory.length ? `从囤货选 (${inventory.length})` : "从囤货选",
   };
   const options: SegmentOption<SourceChoice>[] = choices.map((choice) => ({
@@ -82,6 +85,7 @@ export function RubberSourcePicker({
           onChange={(form) => onChange({ ...value, form })}
           testIdPrefix={testIdPrefix}
           isNew
+          mountDate={mountDate}
         />
       ) : null}
 

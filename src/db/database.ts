@@ -38,6 +38,17 @@ export class RacketLifeDatabase extends Dexie {
             if (!racket.status) racket.status = "active";
           }),
       );
+
+    // v3: racket grip type / weights / blade start date / pre-recorded play time, and rubber sheet
+    // weight / pre-recorded play time / mount date (used sheets). All plain optional properties, so
+    // the stores are unchanged and existing records need no upgrade.
+    this.version(3).stores({
+      rackets: "&id, name, status, createdAt",
+      rubbers: "&id, racketId, [racketId+side], installedAt, removedAt",
+      boostingLogs: "&id, rubberId, date, boostNumber",
+      playSessions: "&id, racketId, date, [racketId+date]",
+      meta: "&key",
+    });
   }
 }
 

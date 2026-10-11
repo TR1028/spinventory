@@ -2,10 +2,21 @@
 import { Boxes, Check, Link2, PackagePlus, Sparkles } from "lucide-react";
 import { useMemo, useState, type FormEvent } from "react";
 import { getInventoryRubbers, getMountedRubber } from "../db/domain";
-import { getRacketStatus, RUBBER_SIDES, rubberSideName, type AppSnapshot, type Racket, type Rubber, type RubberSide } from "../db/schema";
+import {
+  getRacketStatus,
+  getRubberMountedDate,
+  RUBBER_SIDES,
+  rubberSideName,
+  type AppSnapshot,
+  type Racket,
+  type Rubber,
+  type RubberSide,
+} from "../db/schema";
 import { useAppData } from "../db/store";
 import { todayISO } from "../utils/date";
 import { sortRackets } from "../utils/rackets";
+import { CatalogPicker } from "./CatalogPicker";
+import { RacketSpecFields, createRacketSpecForm, specFormToInput, specFormToUpdate } from "./RacketSpecs";
 import {
   createRubberForm,
   describeRubberSpecs,
@@ -167,7 +178,7 @@ export function MountRubberModal({ rubber, onClose }: { rubber: Rubber; onClose:
             type="date"
             value={date}
             onChange={setDate}
-            min={occupant?.installedAt}
+            min={occupant ? getRubberMountedDate(occupant) : undefined}
             required
             testId="mount-date"
           />
@@ -209,6 +220,7 @@ export function BladeFormModal({ racket, onClose }: { racket?: Racket; onClose: 
   const [blade, setBlade] = useState(racket?.blade ?? "");
   const [name, setName] = useState(racket?.name ?? "");
   const [notes, setNotes] = useState(racket?.notes ?? "");
+  const [specs, setSpecs] = useState(() => createRacketSpecForm(racket));
   const action = useAsyncAction();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -217,8 +229,17 @@ export function BladeFormModal({ racket, onClose }: { racket?: Racket; onClose: 
       const bladeName = blade.trim();
       if (!bladeName) throw new Error("请填写底板型号");
       const racketName = name.trim() || bladeName;
-      if (racket) await updateRacket(racket.id, { name: racketName, blade: bladeName, notes: notes.trim() || null });
-      else await createRacket({ name: racketName, blade: bladeName, notes: notes.trim() || undefined, status: "inventory" });
+      if (racket) {
+        await updateRacket(racket.id, { name: racketName, blade: bladeName, notes: notes.trim() || null, ...specFormToUpdate(specs) });
+      } else {
+        await createRacket({
+          name: racketName,
+          blade: bladeName,
+          notes: notes.trim() || undefined,
+          status: "inventory",
+          ...specFormToInput(specs),
+        });
+      }
       onClose();
     });
   }
@@ -231,7 +252,15 @@ export function BladeFormModal({ racket, onClose }: { racket?: Racket; onClose: 
       testId="blade-form-modal"
     >
       <form onSubmit={handleSubmit} className="grid gap-4">
-        <TextField label="底板型号" value={blade} onChange={setBlade} autoComplete="off" testId="blade-form-blade" />
+        <CatalogPicker
+          kind="blade"
+          label="底板型号"
+          hint="可搜索或直接输入"
+          value={blade}
+          onChange={setBlade}
+          placeholder="如 维斯卡利亚、vis、w968"
+          testId="blade-form-blade"
+        />
         <TextField
           label="名称"
           hint="选填，默认同底板型号"
@@ -240,6 +269,7 @@ export function BladeFormModal({ racket, onClose }: { racket?: Racket; onClose: 
           autoComplete="off"
           testId="blade-form-name"
         />
+        <RacketSpecFields value={specs} onChange={setSpecs} testIdPrefix="blade-form" />
         <TextAreaField label="备注" hint="选填" value={notes} onChange={setNotes} testId="blade-form-notes" />
         <ErrorBanner message={action.error} />
         <button type="submit" disabled={action.pending} className={buttonClass.primary} data-testid="blade-form-submit">
@@ -315,6 +345,7 @@ export function ActivateBladeModal({ racket, onClose }: { racket: Racket; onClos
                 choices={["keep", "new", "inventory"]}
                 keepLabel={current ? "保留当前" : "暂不贴"}
                 inventory={inventoryFor(side)}
+                mountDate={date}
                 testIdPrefix={`activate-${side}`}
                 ariaLabel={`${rubberSideName[side]}胶皮来源`}
               />

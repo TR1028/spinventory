@@ -10,7 +10,9 @@
     "dev:worker": "wrangler dev",
     "deploy:worker": "wrangler deploy",
     "db:migrate:local": "wrangler d1 execute spinventory-db --local --file=./worker/schema.sql",
-    "db:migrate:remote": "wrangler d1 execute spinventory-db --remote --file=./worker/schema.sql"
+    "db:migrate:remote": "wrangler d1 execute spinventory-db --remote --file=./worker/schema.sql",
+    "db:migrate:v2:local": "node scripts/migrate-v2.mjs --local",
+    "db:migrate:v2:remote": "node scripts/migrate-v2.mjs --remote"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.0",

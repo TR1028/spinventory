@@ -34,7 +34,15 @@ import {
 } from "../src/db/domain";
 import type { AppSnapshot, MutationResponse } from "../src/db/schema";
 import { authGuard, authRoutes } from "./auth";
-import { ImportTooLargeError, importSnapshot, loadScope, loadSnapshot, persistDelta, type SnapshotScope } from "./db";
+import {
+  ensureSchema,
+  ImportTooLargeError,
+  importSnapshot,
+  loadScope,
+  loadSnapshot,
+  persistDelta,
+  type SnapshotScope,
+} from "./db";
 import { readJsonObject } from "./http";
 import type { AppContext, AppEnv } from "./types";
 
@@ -59,6 +67,11 @@ app.use(
   }),
 );
 app.use("/api/*", authGuard);
+// Adds columns that a database created from an older schema.sql lacks (see worker/migrate_v2.sql).
+app.use("/api/*", async (c, next) => {
+  await ensureSchema(c.env.DB);
+  await next();
+});
 
 app.get("/", (c) => c.json({ name: "spinventory-api", status: "ok" }));
 app.get("/api/health", (c) => c.json({ status: "ok", time: new Date().toISOString() }));

@@ -58,3 +58,21 @@ export function isWithinLastDays(value: string, dayCount: number, asOf = todayIS
   const age = daysBetween(value, asOf);
   return age >= 0 && age < dayCount;
 }
+
+/**
+ * Minutes as an hours input value with up to two decimals (`95` -> `1.58`): precise enough that
+ * saving the value again gives back the same minutes.
+ */
+export function hoursInputValue(minutes: number | undefined) {
+  return minutes === undefined ? "" : String(Math.round((minutes / 60) * 100) / 100);
+}
+
+/** Parses an optional hours input into whole minutes (blank or 0 = unset); throws a Chinese message. */
+export function parseHoursInput(value: string, label: string): number | undefined {
+  const text = value.trim();
+  if (!text) return undefined;
+  const hours = Number(text);
+  if (!Number.isFinite(hours) || hours < 0) throw new Error(`${label}需为不小于 0 的数字`);
+  const minutes = Math.round(hours * 60);
+  return minutes > 0 ? minutes : undefined;
+}

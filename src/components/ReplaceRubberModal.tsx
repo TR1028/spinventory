@@ -2,7 +2,7 @@
 import { Archive, ArrowRightLeft } from "lucide-react";
 import { useMemo, useState, type FormEvent } from "react";
 import { getInventoryRubbers, getMountedRubber } from "../db/domain";
-import { rubberSideName, type Racket, type RubberSide } from "../db/schema";
+import { getRubberMountedDate, rubberSideName, type Racket, type RubberSide } from "../db/schema";
 import { useAppData } from "../db/store";
 import { formatFullDate, todayISO } from "../utils/date";
 import { RubberSourcePicker, createSourceState, resolveRubberSource, type RubberSourceState } from "./RubberSourcePicker";
@@ -46,7 +46,7 @@ export function ReplaceRubberModal({ racket, side, onClose }: ReplaceRubberModal
           type="date"
           value={date}
           onChange={setDate}
-          min={current?.installedAt}
+          min={current ? getRubberMountedDate(current) : undefined}
           required
           testId="replace-date"
         />
@@ -64,6 +64,7 @@ export function ReplaceRubberModal({ racket, side, onClose }: ReplaceRubberModal
           inventory={inventory}
           testIdPrefix="replace"
           ariaLabel="新胶皮来源"
+          mountDate={date}
         />
 
         <ErrorBanner message={action.error} />

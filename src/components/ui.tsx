@@ -188,6 +188,49 @@ export function SegmentedControl<T extends string>({
   );
 }
 
+export type ChipOption<T extends string> = { value: T; label: ReactNode; testId?: string };
+
+/**
+ * Wrapping row of one-tap toggle chips (spec presets, grip types). Tapping the selected chip again
+ * clears the choice (`onChange("")`).
+ */
+export function ChoiceChips<T extends string>({
+  options,
+  value,
+  onChange,
+  ariaLabel,
+  className = "",
+}: {
+  options: readonly ChipOption<T>[];
+  /** Selected option, or `""` for none. */
+  value: T | "";
+  onChange: (value: T | "") => void;
+  ariaLabel: string;
+  className?: string;
+}) {
+  return (
+    <div role="group" aria-label={ariaLabel} className={`flex flex-wrap gap-1.5 ${className}`}>
+      {options.map((option) => {
+        const selected = option.value === value;
+        return (
+          <button
+            key={option.value}
+            type="button"
+            aria-pressed={selected}
+            data-testid={option.testId}
+            onClick={() => onChange(selected ? "" : option.value)}
+            className={`inline-flex min-h-10 items-center rounded-full px-3.5 text-sm font-bold tabular-nums transition active:scale-95 ${
+              selected ? "bg-court text-white shadow-sm" : "bg-white text-ink/70 ring-1 ring-inset ring-ink/15 hover:text-ink"
+            }`}
+          >
+            {option.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 // ---------------------------------------------------------------------------
 // Feedback
 // ---------------------------------------------------------------------------

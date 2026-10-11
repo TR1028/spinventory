@@ -76,6 +76,7 @@ export type {
   CreatePlaySessionInput,
   CreateRacketInput,
   CreateRubberInput,
+  RacketSpecs,
   ReplaceRubberInput,
   RubberFields,
   RubberSource,
@@ -83,6 +84,7 @@ export type {
   UpdatePlaySessionInput,
   UpdateRacketInput,
   UpdateRubberInput,
+  UsedRubberHistory,
 } from "./domain";
 
 // ---------------------------------------------------------------------------

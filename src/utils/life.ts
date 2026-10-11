@@ -1,4 +1,11 @@
-import { getRubberState, type BoostingLog, type PlaySession, type Rubber, type RubberState } from "../db/schema";
+import {
+  getRubberMountedDate,
+  getRubberState,
+  type BoostingLog,
+  type PlaySession,
+  type Rubber,
+  type RubberState,
+} from "../db/schema";
 import { daysBetween, todayISO } from "./date";
 
 export const DEFAULT_LIFE_PARAMETERS = {
@@ -65,36 +72,46 @@ export function getRubberLifeEndDate(rubber: Pick<Rubber, "removedAt">, asOf = t
   return rubber.removedAt && rubber.removedAt < asOf ? rubber.removedAt : asOf;
 }
 
+function lifeStatus(usedPercent: number): RubberLife["status"] {
+  return usedPercent >= 100 ? "replace" : usedPercent >= 80 ? "watch" : "good";
+}
+
 export function calculateRubberLife(rubber: Rubber, sessions: PlaySession[], asOf = todayISO()): RubberLife {
   const limits = getRubberLifeLimits(rubber);
   const state = getRubberState(rubber);
   const installedAt = rubber.installedAt;
+  /** Play time before the rubber was recorded in the app (used sheets). */
+  const initialPlayMinutes = Math.round(positiveOr(rubber.initialPlayMinutes, 0));
 
   if (!installedAt) {
-    // Still in the inventory: nothing has been used yet.
+    // Still in the inventory: the calendar has not started; only pre-recorded play time counts.
+    const playPercent = clampPercent((initialPlayMinutes / limits.playMinutes) * 100);
     return {
       calendarDays: 0,
-      playMinutes: 0,
-      usedPercent: 0,
+      playMinutes: initialPlayMinutes,
+      usedPercent: playPercent,
       calendarPercent: 0,
-      playPercent: 0,
+      playPercent,
       remainingCalendarDays: limits.calendarDays,
-      remainingPlayMinutes: limits.playMinutes,
+      remainingPlayMinutes: Math.max(0, limits.playMinutes - initialPlayMinutes),
       calendarLimitDays: limits.calendarDays,
       playLimitMinutes: limits.playMinutes,
       state,
-      status: "good",
+      status: lifeStatus(playPercent),
     };
   }
 
+  // Sessions count from the day the rubber went onto its current racket (`mountedAt` for a used
+  // sheet moved onto it); its earlier play is already in `initialPlayMinutes`.
+  const sessionsFrom = getRubberMountedDate(rubber) ?? installedAt;
   const relevantSessions = sessions.filter((session) => {
     const sameRacket = !rubber.racketId || session.racketId === rubber.racketId;
-    const afterInstall = session.date >= installedAt;
+    const afterInstall = session.date >= sessionsFrom;
     const beforeRemoval = !rubber.removedAt || session.date <= rubber.removedAt;
     return sameRacket && afterInstall && beforeRemoval;
   });
 
-  const playMinutes = relevantSessions.reduce((total, session) => total + session.durationMinutes, 0);
+  const playMinutes = relevantSessions.reduce((total, session) => total + session.durationMinutes, initialPlayMinutes);
   const calendarDays = daysBetween(installedAt, getRubberLifeEndDate(rubber, asOf));
   const calendarPercent = clampPercent((calendarDays / limits.calendarDays) * 100);
   const playPercent = clampPercent((playMinutes / limits.playMinutes) * 100);
@@ -111,7 +128,7 @@ export function calculateRubberLife(rubber: Rubber, sessions: PlaySession[], asO
     calendarLimitDays: limits.calendarDays,
     playLimitMinutes: limits.playMinutes,
     state,
-    status: usedPercent >= 100 ? "replace" : usedPercent >= 80 ? "watch" : "good",
+    status: lifeStatus(usedPercent),
   };
 }
 

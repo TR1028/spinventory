@@ -4,7 +4,9 @@ import type { BoostingLog, PlaySession, Racket, Rubber, RubberSide } from "../db
 import { rubberSideLabel } from "../db/schema";
 import { formatDate, isWithinLastDays } from "../utils/date";
 import { calculateRubberLife, getBoostingSummary } from "../utils/life";
+import { getRacketPlayMinutes } from "../utils/rackets";
 import { LifeBar } from "./LifeBar";
+import { RacketSpecBadges } from "./RacketSpecs";
 import { ReboostBadge } from "./ui";
 
 type RacketCardProps = {
@@ -82,7 +84,8 @@ export function RacketCard({
   const racketSessions = sessions
     .filter((session) => session.racketId === racket.id)
     .sort((left, right) => right.date.localeCompare(left.date));
-  const totalMinutes = racketSessions.reduce((total, session) => total + session.durationMinutes, 0);
+  // Includes the blade's play time from before it was recorded in the app.
+  const totalMinutes = getRacketPlayMinutes(racket, racketSessions);
   const weekMinutes = racketSessions
     .filter((session) => isWithinLastDays(session.date, 7))
     .reduce((total, session) => total + session.durationMinutes, 0);
@@ -114,6 +117,7 @@ export function RacketCard({
         <div className="min-w-0">
           <h2 className="truncate text-lg font-bold text-ink">{racket.name}</h2>
           <p className="mt-1 truncate text-sm text-ink/56">{racket.blade}</p>
+          <RacketSpecBadges racket={racket} className="mt-2" />
         </div>
         <button
           type="button"
@@ -127,7 +131,7 @@ export function RacketCard({
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-3 border-y border-ink/8 py-3 text-sm">
-        <div className="flex items-center gap-2 text-ink/68">
+        <div className="flex items-center gap-2 text-ink/68" data-testid={`racket-card-total-${racket.id}`}>
           <Clock3 size={16} aria-hidden="true" />
           <span>累计 {Math.round(totalMinutes / 60)} h</span>
         </div>

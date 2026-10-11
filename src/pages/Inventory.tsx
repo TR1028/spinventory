@@ -1,6 +1,7 @@
 import { Link2, Package, PackagePlus, Pencil, Plus, RotateCcw, Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
 import { ActivateBladeModal, BladeFormModal, MountRubberModal, RubberFormModal } from "../components/InventoryDialogs";
+import { RacketSpecBadges } from "../components/RacketSpecs";
 import { describeCustomLife, describeRubberSpecs } from "../components/RubberForm";
 import {
   BackButton,
@@ -94,6 +95,7 @@ function SpareBladeCard({
         <button type="button" onClick={onOpen} className="min-w-0 text-left" aria-label={`查看 ${racket.name} 详情`}>
           <h3 className="truncate text-base font-black text-ink">{racket.name}</h3>
           <p className="mt-1 truncate text-sm text-ink/55">{racket.blade}</p>
+          <RacketSpecBadges racket={racket} className="mt-2" />
         </button>
         <span className="shrink-0 rounded-full bg-ink/5 px-2 py-0.5 text-[11px] font-bold text-ink/55">闲置</span>
       </div>

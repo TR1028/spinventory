@@ -5,6 +5,10 @@
 --
 -- Idempotent (IF NOT EXISTS everywhere), so it is safe to re-run.
 --
+-- Databases created from an older version of this file: `CREATE TABLE IF NOT EXISTS` does not add
+-- new columns to existing tables, so also run worker/migrate_v2.sql once
+-- (pnpm run db:migrate:v2:local / db:migrate:v2:remote; idempotent and data-preserving).
+--
 -- Multi-user isolation: every business table is keyed by (user_id, id). Record ids are generated
 -- on the client, and the demo seed data uses fixed ids that exist in every browser, so a global
 -- `id` primary key would let one account's local-data import collide with another account's rows.
@@ -41,6 +45,11 @@ CREATE TABLE IF NOT EXISTS rackets (
   backhand_rubber_id TEXT,
   sort_order INTEGER,
   notes TEXT,
+  grip_type TEXT, -- 'FL' | 'ST' | 'AN' | 'CS' | 'JP' (v2 migration)
+  blade_weight_grams REAL, -- bare blade weight
+  total_weight_grams REAL, -- assembled racket weight
+  started_at TEXT, -- date the blade was put into service
+  initial_play_minutes INTEGER, -- play time before the blade was recorded
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL,
   PRIMARY KEY (user_id, id)
@@ -54,11 +63,14 @@ CREATE TABLE IF NOT EXISTS rubbers (
   name TEXT NOT NULL,
   hardness TEXT,
   thickness_mm REAL,
+  weight_grams REAL, -- sheet weight (v2 migration)
   installed_at TEXT, -- NULL while in inventory; calendar life starts here
+  mounted_at TEXT, -- used sheets moved onto their racket after installed_at; sessions count from here
   removed_at TEXT, -- set when retired; life stops accumulating
   boosted INTEGER NOT NULL DEFAULT 0,
   custom_calendar_days INTEGER, -- NULL = 120 days
   custom_play_minutes INTEGER, -- NULL = 5400 minutes (90 h)
+  initial_play_minutes INTEGER, -- play time before the sheet was recorded; counts toward play life
   boost_cycle_days INTEGER, -- NULL = 21 days
   notes TEXT,
   created_at TEXT NOT NULL,

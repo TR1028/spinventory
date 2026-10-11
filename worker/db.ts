@@ -8,6 +8,7 @@
 import { compact, createEmptySnapshot, isISODate, LIMITS } from "../src/db/domain";
 import {
   ENTITY_KEYS,
+  isGripType,
   RACKET_STATUSES,
   RUBBER_SIDES,
   type AppDataDelta,
@@ -42,6 +43,11 @@ const TABLES: Record<EntityKey, TableSpec> = {
       { name: "backhand_rubber_id", key: "backhandRubberId" },
       { name: "sort_order", key: "sortOrder" },
       { name: "notes", key: "notes" },
+      { name: "grip_type", key: "gripType" },
+      { name: "blade_weight_grams", key: "bladeWeightGrams" },
+      { name: "total_weight_grams", key: "totalWeightGrams" },
+      { name: "started_at", key: "startedAt" },
+      { name: "initial_play_minutes", key: "initialPlayMinutes" },
       { name: "created_at", key: "createdAt" },
       { name: "updated_at", key: "updatedAt", fallback: "json_extract(value, '$.createdAt')" },
     ],
@@ -56,11 +62,14 @@ const TABLES: Record<EntityKey, TableSpec> = {
       { name: "name", key: "name" },
       { name: "hardness", key: "hardness" },
       { name: "thickness_mm", key: "thicknessMm" },
+      { name: "weight_grams", key: "weightGrams" },
       { name: "installed_at", key: "installedAt" },
+      { name: "mounted_at", key: "mountedAt" },
       { name: "removed_at", key: "removedAt" },
       { name: "boosted", key: "boosted", fallback: "0" },
       { name: "custom_calendar_days", key: "customCalendarDays" },
       { name: "custom_play_minutes", key: "customPlayMinutes" },
+      { name: "initial_play_minutes", key: "initialPlayMinutes" },
       { name: "boost_cycle_days", key: "boostCycleDays" },
       { name: "notes", key: "notes" },
       { name: "created_at", key: "createdAt" },
@@ -155,6 +164,57 @@ function chunk<T>(items: T[], size = RECORDS_PER_STATEMENT) {
 }
 
 // ---------------------------------------------------------------------------
+// Schema upgrades
+// ---------------------------------------------------------------------------
+
+/** Columns added after the first release; keep in sync with `schema.sql` and `migrate_v2.sql`. */
+const ADDED_COLUMNS: { table: string; column: string; type: "TEXT" | "REAL" | "INTEGER" }[] = [
+  { table: "rackets", column: "grip_type", type: "TEXT" },
+  { table: "rackets", column: "blade_weight_grams", type: "REAL" },
+  { table: "rackets", column: "total_weight_grams", type: "REAL" },
+  { table: "rackets", column: "started_at", type: "TEXT" },
+  { table: "rackets", column: "initial_play_minutes", type: "INTEGER" },
+  { table: "rubbers", column: "weight_grams", type: "REAL" },
+  { table: "rubbers", column: "initial_play_minutes", type: "INTEGER" },
+  { table: "rubbers", column: "mounted_at", type: "TEXT" },
+];
+
+let schemaCheck: Promise<void> | undefined;
+
+/**
+ * Safety net behind `worker/migrate_v2.sql`: once per Worker isolate, adds the columns of
+ * {@link ADDED_COLUMNS} that an older database lacks, so a Worker deployed before the migration ran
+ * keeps working instead of failing every query with "no such column". Only nullable columns are
+ * added, which never touches existing rows.
+ */
+export function ensureSchema(db: D1Database) {
+  schemaCheck ??= addMissingColumns(db).catch((error: unknown) => {
+    // Never block requests on the safety net; the migration script is the primary path.
+    console.error("Schema check failed", error);
+  });
+  return schemaCheck;
+}
+
+async function addMissingColumns(db: D1Database) {
+  const existing = new Map<string, Set<string>>();
+  for (const table of new Set(ADDED_COLUMNS.map((item) => item.table))) {
+    const { results } = await db.prepare(`PRAGMA table_info(${table})`).all<{ name: string }>();
+    existing.set(table, new Set(results.map((row) => row.name)));
+  }
+  for (const { table, column, type } of ADDED_COLUMNS) {
+    const columns = existing.get(table);
+    // No columns: the table does not exist yet (schema.sql has not been applied).
+    if (!columns?.size || columns.has(column)) continue;
+    try {
+      await db.prepare(`ALTER TABLE ${table} ADD COLUMN ${column} ${type}`).run();
+    } catch (error) {
+      // Another isolate may have added it concurrently.
+      if (!/duplicate column/i.test(String(error))) throw error;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Row mapping
 // ---------------------------------------------------------------------------
 
@@ -167,6 +227,11 @@ type RacketRow = {
   backhand_rubber_id: string | null;
   sort_order: number | null;
   notes: string | null;
+  grip_type: string | null;
+  blade_weight_grams: number | null;
+  total_weight_grams: number | null;
+  started_at: string | null;
+  initial_play_minutes: number | null;
   created_at: string;
   updated_at: string;
 };
@@ -178,11 +243,14 @@ type RubberRow = {
   name: string;
   hardness: string | null;
   thickness_mm: number | null;
+  weight_grams: number | null;
   installed_at: string | null;
+  mounted_at: string | null;
   removed_at: string | null;
   boosted: number;
   custom_calendar_days: number | null;
   custom_play_minutes: number | null;
+  initial_play_minutes: number | null;
   boost_cycle_days: number | null;
   notes: string | null;
   created_at: string;
@@ -221,6 +289,11 @@ const toRacket = (row: RacketRow): Racket =>
     backhandRubberId: row.backhand_rubber_id,
     sortOrder: row.sort_order,
     notes: row.notes,
+    gripType: isGripType(row.grip_type) ? row.grip_type : undefined,
+    bladeWeightGrams: row.blade_weight_grams,
+    totalWeightGrams: row.total_weight_grams,
+    startedAt: row.started_at,
+    initialPlayMinutes: row.initial_play_minutes,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   });
@@ -233,11 +306,14 @@ const toRubber = (row: RubberRow): Rubber =>
     name: row.name,
     hardness: row.hardness,
     thicknessMm: row.thickness_mm,
+    weightGrams: row.weight_grams,
     installedAt: row.installed_at,
+    mountedAt: row.mounted_at,
     removedAt: row.removed_at,
     boosted: Boolean(row.boosted),
     customCalendarDays: row.custom_calendar_days,
     customPlayMinutes: row.custom_play_minutes,
+    initialPlayMinutes: row.initial_play_minutes,
     boostCycleDays: row.boost_cycle_days,
     notes: row.notes,
     createdAt: row.created_at,
@@ -433,6 +509,11 @@ function sanitizeRacket(value: unknown, now: string): Racket | undefined {
     backhandRubberId: cleanId(raw.backhandRubberId),
     sortOrder,
     notes: cleanText(raw.notes, LIMITS.notesLength),
+    gripType: isGripType(raw.gripType) ? raw.gripType : undefined,
+    bladeWeightGrams: cleanPositive(raw.bladeWeightGrams, LIMITS.maxWeightGrams, false),
+    totalWeightGrams: cleanPositive(raw.totalWeightGrams, LIMITS.maxWeightGrams, false),
+    startedAt: cleanDate(raw.startedAt),
+    initialPlayMinutes: cleanPositive(raw.initialPlayMinutes, LIMITS.maxInitialPlayMinutes, true),
     createdAt,
     updatedAt: cleanTimestamp(raw.updatedAt) ?? createdAt,
   });
@@ -451,11 +532,14 @@ function sanitizeRubber(value: unknown, now: string): Rubber | undefined {
     name,
     hardness: cleanText(raw.hardness, LIMITS.hardnessLength),
     thicknessMm: cleanPositive(raw.thicknessMm, LIMITS.maxThicknessMm, false),
+    weightGrams: cleanPositive(raw.weightGrams, LIMITS.maxWeightGrams, false),
     installedAt: cleanDate(raw.installedAt),
+    mountedAt: cleanDate(raw.mountedAt),
     removedAt: cleanDate(raw.removedAt),
     boosted: raw.boosted === true,
     customCalendarDays: cleanPositive(raw.customCalendarDays, LIMITS.maxCalendarDays, true),
     customPlayMinutes: cleanPositive(raw.customPlayMinutes, LIMITS.maxPlayMinutes, true),
+    initialPlayMinutes: cleanPositive(raw.initialPlayMinutes, LIMITS.maxInitialPlayMinutes, true),
     boostCycleDays: cleanPositive(raw.boostCycleDays, LIMITS.maxBoostCycleDays, true),
     notes: cleanText(raw.notes, LIMITS.notesLength),
     createdAt,

@@ -13,7 +13,9 @@ import {
   Waves,
 } from "lucide-react";
 import { useMemo, useState, type FormEvent, type ReactNode } from "react";
+import { CatalogPicker } from "../components/CatalogPicker";
 import { LifeBar } from "../components/LifeBar";
+import { RacketSpecBadges, RacketSpecFields, createRacketSpecForm, specFormToUpdate, type RacketSpecForm } from "../components/RacketSpecs";
 import { ReplaceRubberModal } from "../components/ReplaceRubberModal";
 import { describeRubberSpecs, formToRubberUpdate, rubberToForm, RubberFormFields } from "../components/RubberForm";
 import {
@@ -33,10 +35,17 @@ import {
   useAsyncAction,
   useSyncedState,
 } from "../components/ui";
-import { getMountedRubber, getRetiredRubbers, getRubberBoostingLogs } from "../db/domain";
+import {
+  BACKFILLED_BOOST_NOTE,
+  ESTIMATED_BOOST_NOTE,
+  getMountedRubber,
+  getRetiredRubbers,
+  getRubberBoostingLogs,
+} from "../db/domain";
 import {
   getRacketRubberId,
   getRacketStatus,
+  getRubberMountedDate,
   RACKET_STATUSES,
   racketStatusLabel,
   RUBBER_SIDES,
@@ -52,6 +61,7 @@ import {
 import { useAppData } from "../db/store";
 import { daysBetween, formatDate, formatFullDate, formatHours, todayISO } from "../utils/date";
 import { calculateRubberLife, getBoostingSummary } from "../utils/life";
+import { getRacketPlayMinutes } from "../utils/rackets";
 
 type RacketDetailProps = {
   racketId: string;
@@ -76,7 +86,10 @@ const statusChipClass: Record<RacketStatus, string> = {
 };
 
 function boostNote(notes?: string) {
-  return notes === INITIAL_BOOST_NOTE ? "初始灌油" : notes;
+  if (notes === INITIAL_BOOST_NOTE) return "初始灌油";
+  if (notes === BACKFILLED_BOOST_NOTE) return "录入前补记";
+  if (notes === ESTIMATED_BOOST_NOTE) return "录入前补记 · 日期估算";
+  return notes;
 }
 
 /** Month + day for this year's dates, with the year for older ones. */
@@ -112,10 +125,16 @@ function HeaderStat({ icon, label, value }: { icon: ReactNode; label: string; va
 // Racket info
 // ---------------------------------------------------------------------------
 
-type RacketForm = { name: string; blade: string; status: RacketStatus; notes: string };
+type RacketForm = { name: string; blade: string; status: RacketStatus; notes: string; specs: RacketSpecForm };
 
 function racketToForm(racket: Racket): RacketForm {
-  return { name: racket.name, blade: racket.blade, status: getRacketStatus(racket), notes: racket.notes ?? "" };
+  return {
+    name: racket.name,
+    blade: racket.blade,
+    status: getRacketStatus(racket),
+    notes: racket.notes ?? "",
+    specs: createRacketSpecForm(racket),
+  };
 }
 
 function RacketInfoForm({ racket }: { racket: Racket }) {
@@ -137,6 +156,7 @@ function RacketInfoForm({ racket }: { racket: Racket }) {
         blade: form.blade,
         status: form.status,
         notes: form.notes.trim() || null,
+        ...specFormToUpdate(form.specs),
       });
       setSaved(true);
     });
@@ -147,7 +167,14 @@ function RacketInfoForm({ racket }: { racket: Racket }) {
       <h2 className="text-base font-black text-ink">球拍信息</h2>
       <form onSubmit={handleSubmit} className="mt-4 grid gap-4 md:grid-cols-3 md:items-start">
         <TextField label="球拍名" value={form.name} onChange={(name) => change({ name })} testId="racket-name-input" />
-        <TextField label="底板" value={form.blade} onChange={(blade) => change({ blade })} testId="racket-blade-input" />
+        <CatalogPicker
+          kind="blade"
+          label="底板"
+          value={form.blade}
+          onChange={(blade) => change({ blade })}
+          placeholder="搜索或输入底板型号"
+          testId="racket-blade-input"
+        />
         <div className="grid gap-2">
           <FieldLabel hint="闲置、退役的球拍收在囤货里">状态</FieldLabel>
           <SegmentedControl
@@ -160,6 +187,9 @@ function RacketInfoForm({ racket }: { racket: Racket }) {
               testId: `racket-status-${status}`,
             }))}
           />
+        </div>
+        <div className="md:col-span-3">
+          <RacketSpecFields value={form.specs} onChange={(specs) => change({ specs })} testIdPrefix="racket" />
         </div>
         <div className="md:col-span-3">
           <TextAreaField label="备注" hint="选填" value={form.notes} onChange={(notes) => change({ notes })} testId="racket-notes-input" />
@@ -530,7 +560,7 @@ function RetireRubberModal({
           type="date"
           value={date}
           onChange={setDate}
-          min={rubber.installedAt}
+          min={getRubberMountedDate(rubber)}
           required
           testId="retire-date"
         />
@@ -845,7 +875,7 @@ export function RacketDetail({ racketId, onBack, onAddSession, onDeleted, onOpen
   }
 
   const status = getRacketStatus(racket);
-  const totalMinutes = sessions.reduce((total, session) => total + session.durationMinutes, 0);
+  const totalMinutes = getRacketPlayMinutes(racket, sessions);
   const dialogRubber = dialog ? getMountedRubber(data, racket, dialog.side) : undefined;
   const closeDialog = () => setDialog(null);
 
@@ -873,6 +903,7 @@ export function RacketDetail({ racketId, onBack, onAddSession, onDeleted, onOpen
           </div>
           <h1 className="mt-2 break-words text-3xl font-black leading-tight">{racket.name}</h1>
           <p className="mt-2 text-sm font-medium text-white/65">{racket.blade}</p>
+          <RacketSpecBadges racket={racket} tone="dark" className="mt-3" />
         </div>
         <div className="mt-5 grid grid-cols-3 gap-2 lg:mt-0 lg:w-[400px] lg:shrink-0 lg:gap-3">
           <HeaderStat icon={<Clock3 size={14} aria-hidden="true" />} label="累计" value={`${Math.round(totalMinutes / 60)} h`} />

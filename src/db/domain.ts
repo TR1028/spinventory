@@ -8,13 +8,16 @@
  */
 import {
   getRacketRubberId,
+  getRubberMountedDate,
   getRubberState,
+  isGripType,
   RACKET_STATUSES,
   RUBBER_SIDES,
   type AppDataDelta,
   type AppSnapshot,
   type BoostingLog,
   type EntityKey,
+  type GripType,
   type PlaySession,
   type Racket,
   type RacketStatus,
@@ -51,11 +54,27 @@ export type RubberFields = {
   name: string;
   hardness?: string;
   thicknessMm?: number;
+  /** Sheet weight in grams. */
+  weightGrams?: number;
   boosted?: boolean;
   customCalendarDays?: number;
   customPlayMinutes?: number;
+  /** Play time before the rubber was recorded in the app, in minutes (counts toward its play life). */
+  initialPlayMinutes?: number;
   boostCycleDays?: number;
   notes?: string;
+};
+
+/** History of a sheet that was already in use when it was recorded ("已在用老胶皮"). */
+export type UsedRubberHistory = {
+  /** `YYYY-MM-DD` the sheet was first glued on; its calendar life starts here. */
+  installedAt: string;
+  /** Boosted sheets: boosts done before recording (default 1), backfilled as boosting logs. */
+  priorBoostCount?: number;
+  /** Boosted sheets: date of the latest of those boosts (defaults to `installedAt`). */
+  lastBoostDate?: string;
+  /** Boosted sheets: layers of each backfilled boost (defaults to `initialBoostLayers`, then 1). */
+  boostLayers?: number;
 };
 
 /** Where a rubber that is being mounted comes from. */
@@ -65,10 +84,23 @@ export type RubberSource =
       rubber: RubberFields;
       /** When the new rubber is boosted, also log its first boost with this many layers. */
       initialBoostLayers?: number;
+      /** Set when the sheet was already in use before it was recorded; omitted for a brand-new sheet. */
+      used?: UsedRubberHistory;
     }
   | { type: "inventory"; rubberId: string };
 
-export type CreateRacketInput = {
+/** Optional blade details: grip, weights and service history. */
+export type RacketSpecs = {
+  gripType?: GripType;
+  bladeWeightGrams?: number;
+  totalWeightGrams?: number;
+  /** `YYYY-MM-DD` the blade was first put into service. */
+  startedAt?: string;
+  /** Play time on the blade before it was recorded in the app, in minutes. */
+  initialPlayMinutes?: number;
+};
+
+export type CreateRacketInput = RacketSpecs & {
   name: string;
   blade: string;
   /** Defaults to `active` when a rubber is mounted, otherwise `inventory` (bare blade). */
@@ -88,6 +120,11 @@ export type UpdateRacketInput = {
   status?: RacketStatus;
   notes?: string | null;
   sortOrder?: number | null;
+  gripType?: GripType | null;
+  bladeWeightGrams?: number | null;
+  totalWeightGrams?: number | null;
+  startedAt?: string | null;
+  initialPlayMinutes?: number | null;
 };
 
 /** Creates an unmounted rubber in the inventory. */
@@ -97,9 +134,11 @@ export type UpdateRubberInput = {
   name?: string;
   hardness?: string | null;
   thicknessMm?: number | null;
+  weightGrams?: number | null;
   boosted?: boolean;
   customCalendarDays?: number | null;
   customPlayMinutes?: number | null;
+  initialPlayMinutes?: number | null;
   boostCycleDays?: number | null;
   notes?: string | null;
   /** Only for mounted or retired rubbers. */
@@ -110,7 +149,10 @@ export type UpdateRubberInput = {
 
 export type ReplaceRubberInput = {
   side: RubberSide;
-  /** Change date: `removedAt` of the outgoing rubber and `installedAt` of the new one (defaults to today). */
+  /**
+   * Change date: `removedAt` of the outgoing rubber and `installedAt` of the new one (for a used
+   * sheet recorded with an earlier `installedAt`, its `mountedAt`). Defaults to today.
+   */
   date?: string;
   source: RubberSource;
 };
@@ -152,7 +194,18 @@ export const LIMITS = {
   maxBoostCycleDays: 365,
   maxLayers: 20,
   maxSessionMinutes: 24 * 60,
+  maxWeightGrams: 1000,
+  /** Pre-recorded play time (10 000 h). */
+  maxInitialPlayMinutes: 600_000,
+  maxPriorBoosts: 100,
 } as const;
+
+/** `notes` of the boosting log created together with a new boosted rubber. */
+export const INITIAL_BOOST_NOTE = "Initial boost";
+/** `notes` of the latest boost backfilled for a used sheet (its real date). */
+export const BACKFILLED_BOOST_NOTE = "Backfilled boost";
+/** `notes` of earlier backfilled boosts, spread evenly between `installedAt` and the latest one. */
+export const ESTIMATED_BOOST_NOTE = "Backfilled boost (estimated date)";
 
 // ---------------------------------------------------------------------------
 // Validation helpers (inputs may be untrusted JSON on the Worker)
@@ -223,6 +276,23 @@ function optionalInteger(value: unknown, label: string) {
   const parsed = toNumber(value);
   if (!Number.isFinite(parsed)) throw new DomainError(`${label}必须是数字`);
   return Math.round(parsed);
+}
+
+/** Pre-recorded play time in minutes: blank or 0 leaves it unset, negatives are rejected. */
+function optionalMinutes(value: unknown, label: string, max: number) {
+  if (isBlank(value)) return undefined;
+  const parsed = toNumber(value);
+  if (!Number.isFinite(parsed)) throw new DomainError(`${label}必须是数字`);
+  if (parsed < 0) throw new DomainError(`${label}不能为负数`);
+  if (parsed > max) throw new DomainError(`${label}不能超过 ${Math.round(max / 60)} 小时`);
+  const rounded = Math.round(parsed);
+  return rounded > 0 ? rounded : undefined;
+}
+
+function optionalGripType(value: unknown): GripType | undefined {
+  if (isBlank(value)) return undefined;
+  if (!isGripType(value)) throw new DomainError("握拍类型无效");
+  return value;
 }
 
 function requireBoolean(value: unknown, label: string): boolean {
@@ -469,31 +539,98 @@ function normalizeRubberFields(input: unknown) {
     name: requireText(fields.name, "胶皮名称"),
     hardness: optionalText(fields.hardness, "硬度", LIMITS.hardnessLength),
     thicknessMm: optionalPositiveNumber(fields.thicknessMm, "厚度", LIMITS.maxThicknessMm),
+    weightGrams: optionalPositiveNumber(fields.weightGrams, "胶皮重量", LIMITS.maxWeightGrams),
     boosted: isBlank(fields.boosted) ? false : requireBoolean(fields.boosted, "灌油状态"),
     customCalendarDays: optionalPositiveInt(fields.customCalendarDays, "日历寿命天数", LIMITS.maxCalendarDays),
     customPlayMinutes: optionalPositiveInt(fields.customPlayMinutes, "打球时长上限", LIMITS.maxPlayMinutes),
+    initialPlayMinutes: optionalMinutes(fields.initialPlayMinutes, "此前已打时长", LIMITS.maxInitialPlayMinutes),
     boostCycleDays: optionalPositiveInt(fields.boostCycleDays, "复灌周期", LIMITS.maxBoostCycleDays),
     notes: optionalText(fields.notes, "备注"),
   });
 }
 
-type MountTarget = { racketId: string; side: RubberSide; date: string };
+const DAY_MS = 86_400_000;
+const isoToUtc = (date: string) => Date.UTC(Number(date.slice(0, 4)), Number(date.slice(5, 7)) - 1, Number(date.slice(8, 10)));
+const utcToIso = (time: number) => new Date(time).toISOString().slice(0, 10);
+
+/** `now` shifted by a few milliseconds, so logs created together keep a stable chronological order. */
+function offsetTimestamp(now: string, milliseconds: number) {
+  const time = Date.parse(now);
+  return Number.isNaN(time) ? now : new Date(time + milliseconds).toISOString();
+}
+
+type UsedRubberPlan = { installedAt: string; boosts: { date: string; layers: number; notes: string }[] };
+
+/**
+ * Validates the history of a used sheet. For boosted sheets, `priorBoostCount` boosts are spread
+ * evenly from `installedAt` (first boost before gluing) to `lastBoostDate` (the only real date).
+ */
+function normalizeUsedHistory(input: unknown, boosted: boolean, fallbackLayers: unknown): UsedRubberPlan | undefined {
+  if (input === undefined || input === null || input === false) return undefined;
+  const used = asObject(input, "老胶皮信息");
+  const installedAt = requireDate(used.installedAt, "投入使用日期");
+  if (!boosted) return { installedAt, boosts: [] };
+
+  const count = optionalPositiveInt(used.priorBoostCount, "历史灌油次数", LIMITS.maxPriorBoosts) ?? 1;
+  const lastBoostDate = optionalDate(used.lastBoostDate, "上次灌油日期") ?? installedAt;
+  if (lastBoostDate < installedAt) throw new DomainError("上次灌油日期不能早于投入使用日期");
+  const layers =
+    optionalPositiveInt(isBlank(used.boostLayers) ? fallbackLayers : used.boostLayers, "灌油层数", LIMITS.maxLayers) ?? 1;
+
+  const start = isoToUtc(installedAt);
+  const spanDays = Math.round((isoToUtc(lastBoostDate) - start) / DAY_MS);
+  const boosts = Array.from({ length: count }, (_, index) =>
+    index === count - 1
+      ? { date: lastBoostDate, layers, notes: BACKFILLED_BOOST_NOTE }
+      : { date: utcToIso(start + Math.round((spanDays * index) / (count - 1)) * DAY_MS), layers, notes: ESTIMATED_BOOST_NOTE },
+  );
+  return { installedAt, boosts };
+}
+
+/**
+ * `trackMount`: the racket may already have history (replace / mount flows). A used sheet recorded
+ * with an earlier `installedAt` then gets `mountedAt = date`, so the racket's earlier sessions are not
+ * counted on top of the sheet's `initialPlayMinutes`.
+ */
+type MountTarget = { racketId: string; side: RubberSide; date: string; trackMount?: boolean };
 
 /** Stages the rubber described by `sourceInput` as mounted on `target`; returns its id. */
 function stageMount(snapshot: AppSnapshot, builder: DeltaBuilder, target: MountTarget, sourceInput: unknown, ctx: DomainContext) {
   const source = asObject(sourceInput, "胶皮来源");
 
   if (source.type === "new") {
-    const rubber: Rubber = {
-      ...normalizeRubberFields(source.rubber),
+    const fields = normalizeRubberFields(source.rubber);
+    const used = normalizeUsedHistory(source.used, fields.boosted, source.initialBoostLayers);
+    if (used && target.trackMount && used.installedAt > target.date) {
+      throw new DomainError("老胶皮的投入使用日期不能晚于贴拍日期");
+    }
+    const rubber: Rubber = compact({
+      ...fields,
       id: ctx.createId("rubber"),
       racketId: target.racketId,
       side: target.side,
-      installedAt: target.date,
+      installedAt: used?.installedAt ?? target.date,
+      mountedAt: used && target.trackMount && used.installedAt < target.date ? target.date : undefined,
       createdAt: ctx.now,
       updatedAt: ctx.now,
-    };
+    });
     builder.put("rubbers", rubber);
+
+    if (used) {
+      // A used sheet's past boosts replace the "initial boost" of a brand-new one.
+      used.boosts.forEach((boost, index) => {
+        builder.put("boostingLogs", {
+          id: ctx.createId("boost"),
+          rubberId: rubber.id,
+          date: boost.date,
+          boostNumber: index + 1,
+          layers: boost.layers,
+          notes: boost.notes,
+          createdAt: offsetTimestamp(ctx.now, index),
+        });
+      });
+      return rubber.id;
+    }
 
     const layers = optionalPositiveInt(source.initialBoostLayers, "灌油层数", LIMITS.maxLayers);
     if (rubber.boosted && layers) {
@@ -503,7 +640,7 @@ function stageMount(snapshot: AppSnapshot, builder: DeltaBuilder, target: MountT
         date: target.date,
         boostNumber: 1,
         layers,
-        notes: "Initial boost",
+        notes: INITIAL_BOOST_NOTE,
         createdAt: ctx.now,
       });
     }
@@ -528,6 +665,11 @@ function nextSortOrder(rackets: Racket[]) {
 // Planners: rackets
 // ---------------------------------------------------------------------------
 
+const parseBladeWeight = (value: unknown) => optionalPositiveNumber(value, "底板重量", LIMITS.maxWeightGrams);
+const parseTotalWeight = (value: unknown) => optionalPositiveNumber(value, "整拍重量", LIMITS.maxWeightGrams);
+const parseStartedAt = (value: unknown) => optionalDate(value, "底板启用日期");
+const parseBladeMinutes = (value: unknown) => optionalMinutes(value, "底板此前已打时长", LIMITS.maxInitialPlayMinutes);
+
 /** Needs: all rackets (sort order) and any inventory rubbers referenced by the sources. */
 export function planCreateRacket(snapshot: AppSnapshot, input: CreateRacketInput, ctx: DomainContext): CreateResult {
   const builder = new DeltaBuilder();
@@ -542,6 +684,11 @@ export function planCreateRacket(snapshot: AppSnapshot, input: CreateRacketInput
     status: isBlank(input.status) ? (hasRubber ? "active" : "inventory") : requireRacketStatus(input.status),
     notes: optionalText(input.notes, "备注"),
     sortOrder: optionalInteger(input.sortOrder, "排序") ?? nextSortOrder(snapshot.rackets),
+    gripType: optionalGripType(input.gripType),
+    bladeWeightGrams: parseBladeWeight(input.bladeWeightGrams),
+    totalWeightGrams: parseTotalWeight(input.totalWeightGrams),
+    startedAt: parseStartedAt(input.startedAt),
+    initialPlayMinutes: parseBladeMinutes(input.initialPlayMinutes),
     createdAt: ctx.now,
     updatedAt: ctx.now,
   });
@@ -570,6 +717,11 @@ export function planUpdateRacket(snapshot: AppSnapshot, id: string, input: Updat
       status: input.status === undefined ? racket.status : requireRacketStatus(input.status),
       notes: patch(racket.notes, input.notes, (value) => optionalText(value, "备注")),
       sortOrder: patch(racket.sortOrder, input.sortOrder, (value) => optionalInteger(value, "排序")),
+      gripType: patch(racket.gripType, input.gripType, optionalGripType),
+      bladeWeightGrams: patch(racket.bladeWeightGrams, input.bladeWeightGrams, parseBladeWeight),
+      totalWeightGrams: patch(racket.totalWeightGrams, input.totalWeightGrams, parseTotalWeight),
+      startedAt: patch(racket.startedAt, input.startedAt, parseStartedAt),
+      initialPlayMinutes: patch(racket.initialPlayMinutes, input.initialPlayMinutes, parseBladeMinutes),
       updatedAt: ctx.now,
     }),
   );
@@ -622,7 +774,12 @@ export function planUpdateRubber(snapshot: AppSnapshot, id: string, input: Updat
     if (state === "inventory") throw new DomainError("囤货中的胶皮无需退役，可以直接删除");
     removedAt = input.removedAt === null ? undefined : requireDate(input.removedAt, "退役日期");
   }
-  if (installedAt && removedAt && removedAt < installedAt) throw new DomainError("退役日期不能早于安装日期");
+  // A used sheet's mount date only matters while it is later than its installation date.
+  const mountedAt = installedAt && rubber.mountedAt && rubber.mountedAt > installedAt ? rubber.mountedAt : undefined;
+  const lifeStart = mountedAt ?? installedAt;
+  if (lifeStart && removedAt && removedAt < lifeStart) {
+    throw new DomainError(mountedAt ? "退役日期不能早于贴上这块球拍的日期" : "退役日期不能早于安装日期");
+  }
 
   const next: Rubber = compact({
     ...rubber,
@@ -631,6 +788,9 @@ export function planUpdateRubber(snapshot: AppSnapshot, id: string, input: Updat
     thicknessMm: patch(rubber.thicknessMm, input.thicknessMm, (value) =>
       optionalPositiveNumber(value, "厚度", LIMITS.maxThicknessMm),
     ),
+    weightGrams: patch(rubber.weightGrams, input.weightGrams, (value) =>
+      optionalPositiveNumber(value, "胶皮重量", LIMITS.maxWeightGrams),
+    ),
     boosted: input.boosted === undefined ? rubber.boosted : requireBoolean(input.boosted, "灌油状态"),
     customCalendarDays: patch(rubber.customCalendarDays, input.customCalendarDays, (value) =>
       optionalPositiveInt(value, "日历寿命天数", LIMITS.maxCalendarDays),
@@ -638,11 +798,15 @@ export function planUpdateRubber(snapshot: AppSnapshot, id: string, input: Updat
     customPlayMinutes: patch(rubber.customPlayMinutes, input.customPlayMinutes, (value) =>
       optionalPositiveInt(value, "打球时长上限", LIMITS.maxPlayMinutes),
     ),
+    initialPlayMinutes: patch(rubber.initialPlayMinutes, input.initialPlayMinutes, (value) =>
+      optionalMinutes(value, "此前已打时长", LIMITS.maxInitialPlayMinutes),
+    ),
     boostCycleDays: patch(rubber.boostCycleDays, input.boostCycleDays, (value) =>
       optionalPositiveInt(value, "复灌周期", LIMITS.maxBoostCycleDays),
     ),
     notes: patch(rubber.notes, input.notes, (value) => optionalText(value, "备注")),
     installedAt,
+    mountedAt,
     removedAt,
     updatedAt: ctx.now,
   });
@@ -687,7 +851,8 @@ export function planReplaceRubber(snapshot: AppSnapshot, racketId: string, input
     (rubber) => !rubber.removedAt && (rubber.id === currentId || (rubber.racketId === racket.id && rubber.side === side)),
   );
   for (const rubber of outgoing) {
-    if (rubber.installedAt && date < rubber.installedAt) throw new DomainError("更换日期不能早于旧胶皮的安装日期");
+    const mountedDate = getRubberMountedDate(rubber);
+    if (mountedDate && date < mountedDate) throw new DomainError("更换日期不能早于旧胶皮的安装日期");
     builder.put("rubbers", {
       ...rubber,
       racketId: rubber.racketId ?? racket.id,
@@ -697,7 +862,7 @@ export function planReplaceRubber(snapshot: AppSnapshot, racketId: string, input
     });
   }
 
-  const rubberId = stageMount(snapshot, builder, { racketId: racket.id, side, date }, input.source, ctx);
+  const rubberId = stageMount(snapshot, builder, { racketId: racket.id, side, date, trackMount: true }, input.source, ctx);
   builder.put("rackets", { ...withSlot(racket, side, rubberId), updatedAt: ctx.now });
   return { delta: builder.build(), id: rubberId };
 }

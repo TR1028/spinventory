@@ -1,8 +1,10 @@
 import { ArrowLeft, Check, Plus } from "lucide-react";
 import { FormEvent, useMemo, useState } from "react";
+import { CatalogPicker } from "../components/CatalogPicker";
+import { RacketSpecFields, createRacketSpecForm, specFormToInput } from "../components/RacketSpecs";
 import { createRubberForm } from "../components/RubberForm";
 import { RubberSourcePicker, createSourceState, resolveRubberSource, type RubberSourceState } from "../components/RubberSourcePicker";
-import { ErrorBanner, Notice, TextAreaField, inputClass, useAsyncAction } from "../components/ui";
+import { ErrorBanner, Notice, TextAreaField, TextField, useAsyncAction } from "../components/ui";
 import { getInventoryRubbers } from "../db/domain";
 import { RUBBER_SIDES, rubberSideName, type RubberSide } from "../db/schema";
 import { useAppData } from "../db/store";
@@ -25,6 +27,7 @@ export function AddRacket({ onBack, onCreated }: AddRacketProps) {
   const [blade, setBlade] = useState("");
   const [installedAt, setInstalledAt] = useState(todayISO());
   const [notes, setNotes] = useState("");
+  const [specs, setSpecs] = useState(() => createRacketSpecForm());
   const [sources, setSources] = useState<Record<RubberSide, RubberSourceState>>(() => ({
     forehand: createSourceState("new", createRubberForm({ boosted: true })),
     backhand: createSourceState("new"),
@@ -41,12 +44,16 @@ export function AddRacket({ onBack, onCreated }: AddRacketProps) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     void action.run(async () => {
-      if (!name.trim() || !blade.trim()) throw new Error("请填写球拍名和底板");
+      const bladeName = blade.trim();
+      if (!bladeName) throw new Error("请填写底板");
+      const specInput = specFormToInput(specs);
       const forehand = resolveRubberSource(sources.forehand, inventoryFor("forehand"), "正手胶皮") ?? undefined;
       const backhand = resolveRubberSource(sources.backhand, inventoryFor("backhand"), "反手胶皮") ?? undefined;
       const racketId = await createRacket({
-        name,
-        blade,
+        ...specInput,
+        // The racket name is optional and defaults to the blade, like spare blades in the inventory.
+        name: name.trim() || bladeName,
+        blade: bladeName,
         installedAt,
         notes: notes.trim() || undefined,
         forehand,
@@ -79,36 +86,41 @@ export function AddRacket({ onBack, onCreated }: AddRacketProps) {
       <form onSubmit={handleSubmit} className="grid gap-5">
         <section className="rounded-lg border border-ink/10 bg-white p-4 shadow-soft">
           <h2 className="text-base font-black text-ink">球拍信息</h2>
-          <div className="mt-4 grid gap-4 md:grid-cols-3">
-            <label className="grid gap-2">
-              <span className="text-sm font-bold text-ink">球拍名</span>
-              <input
-                data-testid="new-racket-name"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                className={inputClass}
-              />
-            </label>
-            <label className="grid gap-2">
-              <span className="text-sm font-bold text-ink">底板</span>
-              <input
-                data-testid="new-racket-blade"
-                value={blade}
-                onChange={(event) => setBlade(event.target.value)}
-                className={inputClass}
-              />
-            </label>
-            <label className="grid gap-2">
-              <span className="text-sm font-bold text-ink">胶皮安装日期</span>
-              <input
-                data-testid="new-racket-installed-at"
-                type="date"
-                value={installedAt}
-                onChange={(event) => setInstalledAt(event.target.value)}
-                className={inputClass}
-              />
-            </label>
-            <div className="md:col-span-3">
+          <div className="mt-4 grid gap-4 md:grid-cols-3 md:items-start">
+            <CatalogPicker
+              kind="blade"
+              label="底板"
+              value={blade}
+              onChange={setBlade}
+              testId="new-racket-blade"
+              placeholder="搜索或直接输入，如 vis / 龙5 / fzd"
+              className="md:col-span-2"
+            />
+            <TextField
+              label="球拍名"
+              hint="选填，默认同底板"
+              value={name}
+              onChange={setName}
+              placeholder={blade.trim() || "如 主力拍"}
+              autoComplete="off"
+              testId="new-racket-name"
+            />
+            <div className="grid gap-3 rounded-lg border border-ink/10 bg-paper p-3 md:col-span-3">
+              <div className="flex items-baseline justify-between gap-3">
+                <h3 className="text-sm font-black text-ink">底板规格与服役</h3>
+                <span className="text-xs font-medium text-ink/45">均为选填</span>
+              </div>
+              <RacketSpecFields value={specs} onChange={setSpecs} testIdPrefix="new-racket" />
+            </div>
+            <TextField
+              label="胶皮安装日期"
+              hint="全新胶皮从这天算起"
+              type="date"
+              value={installedAt}
+              onChange={setInstalledAt}
+              testId="new-racket-installed-at"
+            />
+            <div className="md:col-span-2">
               <TextAreaField label="备注" hint="选填" value={notes} onChange={setNotes} testId="new-racket-notes" />
             </div>
           </div>
