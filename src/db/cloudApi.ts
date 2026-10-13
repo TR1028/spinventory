@@ -115,23 +115,35 @@ export function isCloudConfigured() {
 export class ApiError extends Error {
   /** HTTP status, or 0 when the request never reached the API (offline, DNS, CORS, ...). */
   readonly status: number;
+  /** No response within the time limit: the server may still have applied the request. */
+  readonly timedOut: boolean;
 
-  constructor(message: string, status: number) {
+  constructor(message: string, status: number, timedOut = false) {
     super(message);
     this.name = "ApiError";
     this.status = status;
+    this.timedOut = timedOut;
   }
 }
 
+/** Longest wait for an API response; a hung connection must never leave the UI waiting (「保存中…」). */
+export const REQUEST_TIMEOUT_MS = 15_000;
+/** Uploading all local records can take longer. */
+const IMPORT_TIMEOUT_MS = 45_000;
+const TIMEOUT_MESSAGE = "连接云端超时，请检查网络后重试";
+
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
-type RequestOptions = { method?: HttpMethod; body?: unknown; token?: string; signal?: AbortSignal };
+type RequestOptions = { method?: HttpMethod; body?: unknown; token?: string; signal?: AbortSignal; timeoutMs?: number };
 
 function readErrorMessage(data: unknown) {
   const message = data && typeof data === "object" ? (data as Partial<ApiErrorBody>).error : undefined;
   return typeof message === "string" && message ? message : undefined;
 }
 
-async function request<T>(path: string, { method = "GET", body, token, signal }: RequestOptions = {}): Promise<T> {
+async function request<T>(
+  path: string,
+  { method = "GET", body, token, signal, timeoutMs = REQUEST_TIMEOUT_MS }: RequestOptions = {},
+): Promise<T> {
   const baseUrl = getApiBaseUrl();
   if (!baseUrl && !import.meta.env.DEV) {
     throw new ApiError("尚未配置云端服务地址，请在「云端同步」→「服务器设置」中填写 Worker 地址", 0);
@@ -141,6 +153,17 @@ async function request<T>(path: string, { method = "GET", body, token, signal }:
   if (body !== undefined) headers["Content-Type"] = "application/json";
   if (token) headers.Authorization = `Bearer ${token}`;
 
+  // Aborted by the caller's `signal` or, when no response arrives in time, by the timeout.
+  const controller = new AbortController();
+  let timedOut = false;
+  const timer = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, timeoutMs);
+  const abort = () => controller.abort();
+  if (signal?.aborted) abort();
+  else signal?.addEventListener("abort", abort);
+
   let response: Response;
   let text: string;
   try {
@@ -149,12 +172,16 @@ async function request<T>(path: string, { method = "GET", body, token, signal }:
       headers,
       body: body === undefined ? undefined : JSON.stringify(body),
       cache: "no-store",
-      signal,
+      signal: controller.signal,
     });
     text = await response.text();
   } catch (error) {
     if (signal?.aborted) throw error;
+    if (timedOut) throw new ApiError(TIMEOUT_MESSAGE, 0, true);
     throw new ApiError("无法连接云端服务，请检查网络后重试", 0);
+  } finally {
+    clearTimeout(timer);
+    signal?.removeEventListener("abort", abort);
   }
 
   let data: unknown;
@@ -203,7 +230,8 @@ export function createCloudApi(token: string) {
   return {
     me: (signal?: AbortSignal) => request<MeResponse>("/api/auth/me", { token, signal }),
     snapshot: (signal?: AbortSignal) => request<AppSnapshot>("/api/snapshot", { token, signal }),
-    importLocalData: (snapshot: SyncImportRequest) => send<SyncImportResponse>("POST", "/api/sync/import", snapshot),
+    importLocalData: (snapshot: SyncImportRequest) =>
+      request<SyncImportResponse>("/api/sync/import", { method: "POST", body: snapshot, token, timeoutMs: IMPORT_TIMEOUT_MS }),
 
     createRacket: (input: CreateRacketInput) => mutation("POST", "/api/rackets", input),
     updateRacket: (id: string, input: UpdateRacketInput) => mutation("PUT", item("rackets", id), input),

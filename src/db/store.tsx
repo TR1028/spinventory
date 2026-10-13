@@ -491,8 +491,10 @@ export function AppDataProvider({ children }: { children: ReactNode }) {
         return result.id;
       } catch (error) {
         const stale = error instanceof ApiError && (error.status === 404 || error.status === 409);
+        // No answer in time (client timeout / server deadline): the change may still have been applied.
+        const unsure = error instanceof ApiError && (error.timedOut || error.status === 503);
         // The cloud copy changed elsewhere (e.g. another device): resync so the UI shows the current state.
-        if (!handleAuthFailure(error, session.token) && stale) void loadCloudSnapshot();
+        if (!handleAuthFailure(error, session.token) && (stale || unsure)) void loadCloudSnapshot();
         throw error;
       }
     },

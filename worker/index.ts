@@ -45,7 +45,7 @@ import {
   persistDelta,
   type SnapshotScope,
 } from "./db";
-import { readJsonObject } from "./http";
+import { readJsonObject, TIMED_OUT, withTimeout } from "./http";
 import type { AppContext, AppEnv } from "./types";
 
 const app = new Hono<AppEnv>();
@@ -68,6 +68,22 @@ app.use(
     maxAge: 86_400,
   }),
 );
+/**
+ * Longest an API request may take: past it the API answers 503 (with CORS headers, so the app can
+ * show the message) instead of leaving the client waiting on a hung D1 call. The app gives up on
+ * its own after 15 s (45 s for an import); this also protects older app versions without a
+ * client-side timeout.
+ */
+const REQUEST_DEADLINE_MS = 25_000;
+/** An import uploads and writes up to MAX_IMPORT_RECORDS rows, so it may run longer than the app waits for it. */
+const IMPORT_DEADLINE_MS = 60_000;
+app.use("/api/*", async (c, next) => {
+  const deadline = c.req.path === "/api/sync/import" ? IMPORT_DEADLINE_MS : REQUEST_DEADLINE_MS;
+  if ((await withTimeout(next(), deadline)) === TIMED_OUT) {
+    console.error(`Request exceeded ${deadline} ms: ${c.req.method} ${c.req.path}`);
+    c.res = c.json({ error: "云端服务响应超时，请稍后重试" }, 503);
+  }
+});
 app.use("/api/*", authGuard);
 // Adds columns that a database created from an older schema.sql lacks (see worker/migrate_v2.sql).
 app.use("/api/*", async (c, next) => {

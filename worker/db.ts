@@ -24,6 +24,7 @@ import {
   type RubberSide,
   type SyncImportResponse,
 } from "../src/db/schema";
+import { TIMED_OUT, withTimeout } from "./http";
 
 // ---------------------------------------------------------------------------
 // Table specs
@@ -196,20 +197,40 @@ const ADDED_COLUMNS: { table: string; column: string; type: "TEXT" | "REAL" | "I
   { table: "rubbers", column: "color", type: "TEXT" },
 ];
 
-let schemaCheck: Promise<void> | undefined;
+/** Set once a schema check has completed in this isolate. Only this settled result is shared between requests. */
+let schemaChecked = false;
+/** After a failed or slow check, requests skip the check until this time (epoch ms), then retry it. */
+let schemaRetryAt = 0;
+/** The check gives up after this long and lets the request proceed (it normally takes a few ms). */
+const SCHEMA_CHECK_TIMEOUT_MS = 2_000;
+const SCHEMA_CHECK_RETRY_DELAY_MS = 30_000;
 
 /**
- * Safety net behind `worker/migrate_v2.sql`: once per Worker isolate, adds the columns of
- * {@link ADDED_COLUMNS} that an older database lacks, so a Worker deployed before the migration ran
- * keeps working instead of failing every query with "no such column". Only nullable columns are
- * added, which never touches existing rows.
+ * Safety net behind `worker/migrate_v2.sql`: until it has succeeded once in a Worker isolate, adds
+ * the columns of {@link ADDED_COLUMNS} that an older database lacks, so a Worker deployed before the
+ * migration ran keeps working instead of failing every query with "no such column". Only nullable
+ * columns are added, which never touches existing rows.
+ *
+ * Never share an in-flight check between requests: Workers cancel the I/O of a request whose client
+ * disconnects (e.g. the PWA reloading itself for an update), and a shared promise left pending that
+ * way never settles, so every later request of the isolate awaiting it would hang forever. Each
+ * request therefore runs its own check, and a check that fails or exceeds
+ * {@link SCHEMA_CHECK_TIMEOUT_MS} is abandoned (the request proceeds) and retried later.
  */
-export function ensureSchema(db: D1Database) {
-  schemaCheck ??= addMissingColumns(db).catch((error: unknown) => {
+export async function ensureSchema(db: D1Database) {
+  if (schemaChecked || Date.now() < schemaRetryAt) return;
+  try {
+    if ((await withTimeout(addMissingColumns(db), SCHEMA_CHECK_TIMEOUT_MS)) === TIMED_OUT) {
+      schemaRetryAt = Date.now() + SCHEMA_CHECK_RETRY_DELAY_MS;
+      console.warn(`Schema check still running after ${SCHEMA_CHECK_TIMEOUT_MS} ms; skipped for now`);
+    } else {
+      schemaChecked = true;
+    }
+  } catch (error) {
     // Never block requests on the safety net; the migration script is the primary path.
+    schemaRetryAt = Date.now() + SCHEMA_CHECK_RETRY_DELAY_MS;
     console.error("Schema check failed", error);
-  });
-  return schemaCheck;
+  }
 }
 
 async function addMissingColumns(db: D1Database) {

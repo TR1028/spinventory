@@ -104,18 +104,20 @@ function passwordIterations(env: Bindings) {
 
 type TokenClaims = { sub: string; username: string; iat: number; exp: number };
 
-const hmacKeys = new Map<string, Promise<CryptoKey>>();
+/**
+ * Imported keys by secret. Only resolved keys are cached: a pending promise shared between requests
+ * could be left unsettled by a cancelled request and hang every later one (see `ensureSchema`).
+ */
+const hmacKeys = new Map<string, CryptoKey>();
 
-function getHmacKey(secret: string) {
-  let key = hmacKeys.get(secret);
-  if (!key) {
-    key = crypto.subtle.importKey("raw", encoder.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, [
-      "sign",
-      "verify",
-    ]);
-    key.catch(() => hmacKeys.delete(secret));
-    hmacKeys.set(secret, key);
-  }
+async function getHmacKey(secret: string) {
+  const cached = hmacKeys.get(secret);
+  if (cached) return cached;
+  const key = await crypto.subtle.importKey("raw", encoder.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, [
+    "sign",
+    "verify",
+  ]);
+  hmacKeys.set(secret, key);
   return key;
 }
 
