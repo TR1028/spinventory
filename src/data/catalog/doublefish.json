@@ -1,0 +1,184 @@
+{
+  "id": "doublefish",
+  "name": "双鱼",
+  "en": "Double Fish",
+  "label": "双鱼",
+  "aliases": [
+    "double fish",
+    "doublefish",
+    "shuangyu"
+  ],
+  "rubbers": [
+    {
+      "id": "volant-phoenix",
+      "name": "展翅凤凰 (Volant Phoenix)",
+      "aliases": [
+        "volant phoenix",
+        "展翅凤凰",
+        "双鱼凤凰",
+        "凤凰",
+        "phoenix"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "39",
+        "40",
+        "41"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "volant-phoenix-2",
+      "name": "展翅凤凰2 (Volant Phoenix 2)",
+      "aliases": [
+        "volant phoenix 2",
+        "展翅凤凰2",
+        "凤凰2",
+        "phoenix 2"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "35",
+        "37"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hunting-shadows-213",
+      "name": "猎影213 (Hunting Shadows 213)",
+      "aliases": [
+        "hunting shadows 213",
+        "猎影213",
+        "213",
+        "hs213"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "36-38"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "a-one-provincial",
+      "name": "AONE 省套 (A-One Provincial)",
+      "aliases": [
+        "aone",
+        "a-one",
+        "a1",
+        "双鱼省套"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "39"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "qiji-loop-king",
+      "name": "玘迹弧圈王 (QIJI Loop King)",
+      "aliases": [
+        "qiji",
+        "玘迹",
+        "弧圈王"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "athlon-1",
+      "name": "Athlon 1",
+      "aliases": [
+        "athlon i"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "athlon-2",
+      "name": "Athlon 2",
+      "aliases": [
+        "athlon ii"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "1615",
+      "name": "1615 长胶 (1615)",
+      "aliases": [
+        "1615",
+        "双鱼1615"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5,
+        1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "dragon-1-zlc",
+      "name": "Dragon 1 (ZLC)",
+      "aliases": [
+        "dragon 1",
+        "dragon blade 1"
+      ],
+      "category": "外置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "dragon-2-alc",
+      "name": "Dragon 2 (ALC)",
+      "aliases": [
+        "dragon 2",
+        "dragon blade 2"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    }
+  ]
+}

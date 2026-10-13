@@ -10,6 +10,7 @@ import {
   describeCustomLife,
   describeRubberSpecs,
   formToNewSource,
+  RubberColorDot,
   RubberFormFields,
   RubberLabelPill,
   type RubberFormState,
@@ -178,6 +179,7 @@ export function RubberSourcePicker({
                 />
                 <span className="min-w-0 flex-1">
                   <span className="flex min-w-0 items-center gap-1.5">
+                    <RubberColorDot color={rubber.color} />
                     <span className="truncate text-sm font-bold text-ink">{rubber.name}</span>
                     <RubberLabelPill label={rubber.label} />
                     {count > 1 ? <span className="shrink-0 text-xs font-black text-court">×{count}</span> : null}

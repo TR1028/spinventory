@@ -1,0 +1,103 @@
+{
+  "id": "kokutaku",
+  "name": "Kokutaku",
+  "en": "KOKUTAKU",
+  "label": "Kokutaku",
+  "aliases": [
+    "kokutaku",
+    "樱花",
+    "科库塔库"
+  ],
+  "rubbers": [
+    {
+      "id": "blutenkirsche-868",
+      "name": "Blütenkirsche 868 (樱花868)",
+      "aliases": [
+        "868",
+        "blutenkirsche 868",
+        "blütenkirsche",
+        "樱花868",
+        "kokutaku 868"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tulpe-007",
+      "name": "Tulpe 007 (郁金香007)",
+      "aliases": [
+        "007",
+        "tulpe 007",
+        "kokutaku 007",
+        "郁金香007"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "007-pro-selected",
+      "name": "007 Pro Selected",
+      "aliases": [
+        "007 pro"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tokyo-730",
+      "name": "Tokyo 730 (Neon 730)",
+      "aliases": [
+        "tokyo 730",
+        "neon 730",
+        "730"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "119",
+      "name": "119",
+      "aliases": [
+        "kokutaku 119",
+        "tulpe 119"
+      ],
+      "category": "生胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "tokyo-blade",
+      "name": "Tokyo",
+      "aliases": [
+        "kokutaku tokyo blade"
+      ],
+      "plies": "5+2"
+    }
+  ]
+}

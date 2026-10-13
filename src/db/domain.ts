@@ -12,6 +12,8 @@ import {
   getRubberQuantity,
   getRubberState,
   isGripType,
+  isRubberColor,
+  isThicknessCode,
   RACKET_STATUSES,
   RUBBER_SIDES,
   type AppDataDelta,
@@ -23,8 +25,10 @@ import {
   type Racket,
   type RacketStatus,
   type Rubber,
+  type RubberColor,
   type RubberPeriod,
   type RubberSide,
+  type ThicknessCode,
 } from "./schema";
 
 export class DomainError extends Error {
@@ -59,6 +63,10 @@ export type RubberFields = {
   label?: string;
   hardness?: string;
   thicknessMm?: number;
+  /** Named sponge size (`MAX` / `OX`) instead of `thicknessMm`. */
+  thicknessCode?: ThicknessCode;
+  /** Topsheet colour. */
+  color?: RubberColor;
   /** Sheet weight in grams. */
   weightGrams?: number;
   /** A boosting rubber (灌油胶皮); most rubbers are not. */
@@ -163,6 +171,8 @@ export type UpdateRubberInput = {
   label?: string | null;
   hardness?: string | null;
   thicknessMm?: number | null;
+  thicknessCode?: ThicknessCode | null;
+  color?: RubberColor | null;
   weightGrams?: number | null;
   boosted?: boolean;
   customCalendarDays?: number | null;
@@ -600,13 +610,30 @@ function logsOfRubber(snapshot: AppSnapshot, rubberId: string) {
 const parseStorageAgingPercent = (value: unknown) =>
   optionalPositiveInt(value, "囤货老化速度", LIMITS.maxStorageAgingPercent);
 
+function optionalThicknessCode(value: unknown): ThicknessCode | undefined {
+  if (isBlank(value)) return undefined;
+  const code = typeof value === "string" ? value.trim().toUpperCase() : value;
+  if (!isThicknessCode(code)) throw new DomainError("厚度规格无效（可选 MAX 或 OX）");
+  return code;
+}
+
+function optionalColor(value: unknown): RubberColor | undefined {
+  if (isBlank(value)) return undefined;
+  if (!isRubberColor(value)) throw new DomainError("胶皮颜色无效");
+  return value;
+}
+
 function normalizeRubberFields(input: unknown) {
   const fields = asObject(input, "胶皮信息");
+  const thicknessCode = optionalThicknessCode(fields.thicknessCode);
   return compact({
     name: requireText(fields.name, "胶皮型号"),
     label: optionalText(fields.label, "自定义名称", LIMITS.labelLength),
     hardness: optionalText(fields.hardness, "硬度", LIMITS.hardnessLength),
-    thicknessMm: optionalPositiveNumber(fields.thicknessMm, "厚度", LIMITS.maxThicknessMm),
+    // A named size (MAX / OX) replaces the mm figure.
+    thicknessMm: thicknessCode ? undefined : optionalPositiveNumber(fields.thicknessMm, "厚度", LIMITS.maxThicknessMm),
+    thicknessCode,
+    color: optionalColor(fields.color),
     weightGrams: optionalPositiveNumber(fields.weightGrams, "胶皮重量", LIMITS.maxWeightGrams),
     boosted: isBlank(fields.boosted) ? false : requireBoolean(fields.boosted, "灌油状态"),
     customCalendarDays: optionalPositiveInt(fields.customCalendarDays, "日历寿命天数", LIMITS.maxCalendarDays),
@@ -1041,6 +1068,8 @@ export function planUpdateRubber(snapshot: AppSnapshot, id: string, input: Updat
     thicknessMm: patch(rubber.thicknessMm, input.thicknessMm, (value) =>
       optionalPositiveNumber(value, "厚度", LIMITS.maxThicknessMm),
     ),
+    thicknessCode: patch(rubber.thicknessCode, input.thicknessCode, optionalThicknessCode),
+    color: patch(rubber.color, input.color, optionalColor),
     weightGrams: patch(rubber.weightGrams, input.weightGrams, (value) =>
       optionalPositiveNumber(value, "胶皮重量", LIMITS.maxWeightGrams),
     ),
@@ -1067,6 +1096,8 @@ export function planUpdateRubber(snapshot: AppSnapshot, id: string, input: Updat
     stashedAt,
     updatedAt: ctx.now,
   });
+  // A named size (MAX / OX) replaces the mm figure.
+  if (next.thicknessCode) delete next.thicknessMm;
   builder.put("rubbers", next);
 
   if (!rubber.removedAt && next.removedAt) {

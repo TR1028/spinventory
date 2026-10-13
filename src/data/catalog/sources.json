@@ -1,0 +1,2111 @@
+{
+  "about": "Where the catalog specs were verified (not bundled into the app).",
+  "brands": {
+    "butterfly": {
+      "rubbers": {
+        "dignics-09c": {
+          "note": "Only 1.9 and 2.1 are made (no 1.7)."
+        },
+        "dignics-05": {
+          "note": "Only 1.9 and 2.1 are made (no 1.7)."
+        },
+        "tenergy-05-hard": {
+          "note": "Only 1.9 and 2.1 are made."
+        },
+        "zyre-03": {
+          "note": "Butterfly sells it only with unusually thick 2.5 / 2.7 mm Spring Sponge X (very thin Ricosheet topsheet); not sold in 1.9/2.1."
+        },
+        "glayzer": {
+          "note": "Only 1.9 and 2.1 are made (no 1.7)."
+        },
+        "tackiness-chop": {
+          "note": "Tacky defensive rubber."
+        },
+        "tackiness-chop-2": {
+          "note": "Sizes per butterfly-global; one retailer lists only 1.5/1.7/1.9."
+        },
+        "sriver": {
+          "note": "1.7/1.9/2.1 on butterfly-global; 1.3 listed by Butterfly Europe, 1.5 by Butterfly North America; some European shops also list MAX."
+        },
+        "sriver-fx": {
+          "note": "1.9 and 2.1 confirmed; sources conflict on thinner sizes (1.5/1.7) and a MAX size in some regions."
+        },
+        "sriver-el": {
+          "note": "Some listings also offer MAX or thinner sizes depending on region."
+        },
+        "bryce-speed": {
+          "note": "Sold in 2.1 only."
+        },
+        "bryce-speed-fx": {
+          "note": "Sold in 2.1 only."
+        },
+        "impartial-xb": {
+          "note": "butterfly-global lists 1.7/1.9/2.1; Butterfly North America/Europe also mention a MAX (~2.3) size."
+        },
+        "challenger-attack": {
+          "note": "Some regional distributors also list 1.5."
+        },
+        "feint-long-2": {
+          "note": "OX = no sponge."
+        },
+        "feint-long-3": {
+          "note": "OX = no sponge."
+        },
+        "ilius-b": {
+          "note": "0.5 = extra thin, 1.1 = super thin, 1.3 = thin."
+        },
+        "ilius-s": {
+          "note": "0.5 = extra thin, 1.1 = super thin, 1.3 = thin."
+        },
+        "super-anti": {
+          "note": "Some markets label the two sizes Thin / Thick."
+        }
+      },
+      "blades": {}
+    },
+    "dhs": {
+      "rubbers": {
+        "h3": {
+          "note": "Orange sponge, unboosted commercial version."
+        },
+        "h3-provincial-blue": {
+          "note": "Blue (#22) sponge. 2.15 mm is the most common size; exact degree/thickness combinations vary by batch."
+        },
+        "h3-provincial-orange": {
+          "note": "Sizes/degrees as listed by Chinese retailers only (no international cross-check); not every degree is always in stock. Lower confidence."
+        },
+        "h3-national-blue": {
+          "note": "Blue sponge; tabletennis11 lists separate 39/40/41/42 degree versions. 2.15/2.2 mm confirmed internationally; 2.1 mm per Chinese retailers. Availability varies by batch."
+        },
+        "h3-national-orange": {
+          "note": "Sold irregularly. tabletennis11 lists 39° and 40° in 2.2 mm; Chinese retailers also mention 2.1/2.15 mm and 37–41° (unconfirmed)."
+        },
+        "h3-neo": {
+          "note": "Factory pre-boosted (NEO) commercial version, orange sponge."
+        },
+        "h3-neo-provincial-blue": {
+          "note": "NEO Provincial is sold mainly in 2.1/2.15 mm; 2.2 mm is rarely offered."
+        },
+        "h3-neo-provincial-orange": {
+          "note": "NEO Provincial is sold mainly in 2.1/2.15 mm; 2.2 mm is rarely offered."
+        },
+        "h3-neo-national-blue": {
+          "note": "Sold mainly in 2.1/2.15 mm (2.2 mm generally not offered for NEO National); 41/42 are rarer."
+        },
+        "h3-50": {
+          "note": "H3 topsheet on red #50 cake sponge. Some retailers also mention 2.0 mm or a 39° version (unconfirmed)."
+        },
+        "h8": {
+          "note": "Some retailers also list a harder (41°+) version (unconfirmed)."
+        },
+        "h8-80": {
+          "note": "H8 topsheet on #80 large-pore cake sponge; 2.1 mm (特厚) is the standard size."
+        },
+        "skyline-2": {
+          "note": "A Hong Kong retailer also lists 41° (unconfirmed)."
+        },
+        "skyline-3-60": {
+          "note": "Skyline 3 topsheet on soft #60 sponge."
+        },
+        "gold-arc-8": {
+          "note": "ESN-made tensor rubber. International retailers (e.g. Megaspin) list 2.0 mm and MAX; some Chinese listings label the sizes 2.1/2.2 mm."
+        },
+        "gold-arc-5": {
+          "note": "ESN-made. Retailers list 2.0 mm and MAX; Chinese listings sometimes call the sizes 中厚/2.1 mm."
+        },
+        "tin-arc-3": {
+          "note": "Semi-tacky topsheet on cake sponge."
+        },
+        "tin-arc-5": {
+          "note": "Non-tacky topsheet on macro-cell cake sponge; 35/37 are standard, 33 is less common."
+        }
+      },
+      "blades": {}
+    },
+    "stiga": {
+      "rubbers": {
+        "helix-platinum-xh": {
+          "note": "Sold in one max thickness (2.2 mm; listed as MAX in Japan)."
+        },
+        "helix-platinum-h": {
+          "note": "Sold in one max thickness (2.2 mm; listed as MAX in Japan)."
+        },
+        "helix-platinum-m": {
+          "note": "Sold in one max thickness (2.2 mm; listed as MAX in Japan)."
+        },
+        "helix-platinum-55": {
+          "note": "Sold in one max thickness (2.2 mm; listed as MAX in Japan)."
+        },
+        "helix-hybrid-xh": {
+          "note": "Semi-tacky hybrid (2026). Retailers list a single max thickness (2.2 mm)."
+        },
+        "helix-hybrid-h": {
+          "note": "Semi-tacky hybrid (2026). Retailers list a single max thickness (2.2 mm)."
+        },
+        "helix-hybrid-m": {
+          "note": "Semi-tacky hybrid (2026). Retailers list a single max thickness (2.2 mm)."
+        },
+        "helix-hybrid-55": {
+          "note": "Semi-tacky hybrid (2026). Retailers list a single max thickness (2.2 mm)."
+        },
+        "dna-platinum-xh": {
+          "note": "Thickest size sold as 2.3 mm (max)."
+        },
+        "dna-platinum-h": {
+          "note": "Thickest size sold as 2.3 mm (max)."
+        },
+        "dna-platinum-m": {
+          "note": "Thickest size sold as 2.3 mm (max)."
+        },
+        "dna-platinum-s": {
+          "note": "Thickest size sold as 2.3 mm (max)."
+        },
+        "dna-pro-h": {
+          "note": "1.9 and 2.1 confirmed; some EU shops also list a MAX size (unverified)."
+        },
+        "dna-pro-m": {
+          "note": "1.9 and 2.1 confirmed; some EU shops also list a MAX size (unverified)."
+        },
+        "dna-pro-s": {
+          "note": "1.9 and 2.1 confirmed; some EU shops also list a MAX size (unverified)."
+        },
+        "dna-hybrid-xh": {
+          "note": "Semi-tacky hybrid; sold in one thickness (2.2 mm, listed as MAX in Japan)."
+        },
+        "dna-hybrid-h": {
+          "note": "Semi-tacky hybrid; sold in one thickness (2.2 mm, listed as MAX in Japan)."
+        },
+        "dna-hybrid-m": {
+          "note": "Semi-tacky hybrid; sold in one thickness (2.2 mm, listed as MAX in Japan)."
+        },
+        "dna-dragon-grip": {
+          "note": "Tacky-top tensor rubber; MAX only (about 2.3 mm per Japanese shops)."
+        },
+        "dna-dragon-power": {
+          "note": "Tacky-top tensor rubber (2024); sold as Dragon Power 52.5 / 55 / 57.5; MAX thickness (single source)."
+        },
+        "dna-future-m": {
+          "note": "Thickness options unverified (1.9 / 2.1 reported by minor sellers)."
+        },
+        "mantra-pro-xh": {
+          "note": "Japanese-made. Japanese shops list 特厚 (thickest) only; mm value unverified."
+        },
+        "mantra-pro-h": {
+          "note": "Japanese-made. Japanese shops list 厚 / 特厚; mm values unverified."
+        },
+        "mantra-pro-m": {
+          "note": "Japanese-made. Japanese shops list 中厚 / 厚 / 特厚; mm values unverified. Extra colours (pink/violet/blue) exist in some markets."
+        },
+        "mantra-pro-s": {
+          "note": "Japanese-made. Japanese shops list 中厚 / 厚 / 特厚; mm values and exact hardness (about 43-44) unverified."
+        },
+        "mantra-m": {
+          "note": "Japanese-made; Japanese labels 中厚 1.7 / 厚 1.9 / 特厚(MAX) 2.1. Hardness printed as 48 ±3."
+        },
+        "mantra-h": {
+          "note": "Japanese shops list 中厚 / 厚 / 特厚 (same sizes as Mantra M). Hardness unverified: sources give 52 or 53."
+        },
+        "mantra-s": {
+          "note": "Japanese shops list 中厚 / 厚 / 特厚 (same sizes as Mantra M). Hardness unverified: sources give 43 or 44."
+        },
+        "symmetry": {
+          "note": "Japanese-made short pips. Hardness described only as medium-hard (no degree published)."
+        },
+        "vertical": {
+          "note": "Long pips developed with Masato Shiono; 20/55 = sponge hardness versions. Sold in OX and thin-sponge versions; exact mm unverified."
+        },
+        "horizontal": {
+          "note": "Long pips developed with Masato Shiono; 20/55 = sponge hardness versions. Sold in OX and thin-sponge versions; exact mm unverified."
+        },
+        "airoc-m": {
+          "note": "Japanese-made tensor (blue sponge). Maker rated hardness only as Medium; no degree verified."
+        },
+        "airoc-s": {
+          "note": "Japanese-made tensor (blue sponge). Maker rated hardness only as Soft; no degree verified."
+        },
+        "genesis-m": {
+          "note": "Semi-tacky (Chinese-made topsheet). Thickness and hardness unverified."
+        },
+        "genesis-s": {
+          "note": "Semi-tacky (Chinese-made topsheet). Thickness and hardness unverified."
+        }
+      },
+      "blades": {}
+    },
+    "tibhar": {
+      "rubbers": {
+        "evolution-mx-p": {
+          "note": "Tibhar sizes are ranges 1.7-1.8 / 1.9-2.0 / max (2.1-2.2); tibhar.info also lists a 1.5-1.6 option that is rarely stocked (not included). 47.5 is the long-standing catalogue hardness; tibhar.info now prints 45.7-47.7."
+        },
+        "evolution-mx-p-50": {
+          "note": "Sold in max only (2.1-2.2 mm)."
+        },
+        "evolution-mx-s": {
+          "note": "Hardness as printed on tibhar.info (range); megaspin lists 46.7. Sizes are ranges 1.7-1.8 / 1.9-2.0 / max (2.1-2.2); tibhar.info also lists 1.5-1.6 (rarely stocked, not included)."
+        },
+        "evolution-el-p": {
+          "note": "42.5 is the catalogue value; tibhar.info now prints 42.4-44.4. Sizes are ranges 1.7-1.8 / 1.9-2.0 / max (2.1-2.2); tibhar.info also lists 1.5-1.6 (not included)."
+        },
+        "evolution-fx-p": {
+          "note": "Sizes are ranges 1.7-1.8 / 1.9-2.0 / max (2.1-2.2)."
+        },
+        "evolution-mx-d": {
+          "note": "Hardness as printed on tibhar.info (range); tabletennis11 lists 51.3. Sold as 1.9-2.0 and max (2.1-2.2)."
+        },
+        "evolution-el-s": {
+          "note": "Hardness as printed on tibhar.info (range). Sizes 1.7-1.8 / 1.9-2.0 / max (2.1-2.2); tibhar.info also lists 1.5-1.6 (not included)."
+        },
+        "evolution-fx-s": {
+          "note": "Hardness as printed on tibhar.info (range). Sizes 1.7-1.8 / 1.9-2.0 / max (2.1-2.2); tibhar.info also lists 1.5-1.6 (not included)."
+        },
+        "evolution-el-d": {
+          "note": "Hardness as printed on tibhar.info (range). Sold as 1.9-2.0 and max (2.1-2.2)."
+        },
+        "evolution-fx-d": {
+          "note": "Hardness as printed on tibhar.info (range). Sold as 1.9-2.0 and max (2.1-2.2)."
+        },
+        "hybrid-k3-vip": {
+          "note": "New (2025/26), used by Miyuu Kihara. MAX-only and 59 per two retailers (ppongsuper, prott.vip); not yet confirmed on tibhar.info."
+        },
+        "hybrid-mk": {
+          "note": "Co-developed with Kenta Matsudaira."
+        },
+        "hybrid-mk-fx": {
+          "note": "Some retailers describe the sponge as 44-45."
+        },
+        "hybrid-k1j": {
+          "note": "Specs from Japanese retailers/blog; not confirmed on tibhar.info."
+        },
+        "infinity-mx-p": {
+          "note": "New 2026 line. Sold as Max Pro (2.05 mm) and Max Pro+ (2.15 mm); hardness printed as a range."
+        },
+        "infinity-mx-s": {
+          "note": "New 2026 line. Sold as Max Pro (2.05 mm) and Max Pro+ (2.15 mm); hardness printed as a range."
+        },
+        "quantum-x-pro": {
+          "note": "Coloured sheets may be stocked in fewer thicknesses."
+        },
+        "aurus": {
+          "note": "Some retailers label the 2.1 size as max."
+        },
+        "aurus-prime": {
+          "note": "SSP thin-topsheet rubber; the extra max size is listed by tibhar.info and some retailers."
+        },
+        "aurus-select": {
+          "note": "SSP thin-topsheet rubber."
+        },
+        "genius-sound": {
+          "note": "Hardness and thickness per revspin/retailers; not confirmed on tibhar.info."
+        },
+        "grass-dtecs": {
+          "note": "Sponge hardness not clearly published (one retailer summary cites 47.5)."
+        },
+        "grass-dtecs-gs": {
+          "note": "OX only, supplied with a gluing sheet; no sponge so no hardness."
+        },
+        "speedy-soft": {
+          "note": "Thickness/hardness per tibhar.info search summary."
+        },
+        "speedy-soft-dtecs": {
+          "note": "Thickness per tabletennisstore.us / ttmode; sponge hardness not verified (retailers disagree: 35 vs 32.5)."
+        },
+        "speedy-soft-dtecs-xd": {
+          "note": "Specs from tibhar.info search summaries only."
+        },
+        "super-defense-40": {
+          "note": "Inverted defensive (chopping) rubber, DEF+."
+        },
+        "super-defense-40-soft": {
+          "note": "Softer version of Super Defense 40; specs from a tibhar.info search summary only."
+        }
+      },
+      "blades": {}
+    },
+    "xiom": {
+      "rubbers": {
+        "vega-europe": {
+          "note": "Chinese nickname 蓝V is used for both Vega Europe and Vega China."
+        },
+        "vega-china": {
+          "note": "Tacky topsheet on tensor sponge. XIOM Europe lists MAX only; some retailers also list 2.0."
+        },
+        "vega-europe-df": {
+          "note": "1.8 is stocked by fewer retailers."
+        },
+        "vega-def": {
+          "note": "Inverted rubber for defenders. Hardness 57.5 per revspin/tabletennis-reference (not confirmed on maker site). Retailers disagree on thickness (1.8/2.0/MAX vs 2.0/MAX)."
+        },
+        "vega-lpo": {
+          "note": "Sold only with a 1.0 mm sponge (no OX version)."
+        },
+        "omega-7-hyper": {
+          "note": "Thickness unverified: xiom.shop listings were reported both as 2.1/MAX and as 2.0/MAX (MAX confirmed in both)."
+        },
+        "omega-7-china-guang": {
+          "note": "Tacky (Chinese-style) topsheet on tensor sponge; single 2.1 mm thickness."
+        },
+        "omega-7-china-ying": {
+          "note": "Tacky (Chinese-style) topsheet on tensor sponge; single 2.1 mm thickness."
+        },
+        "omega-8-china": {
+          "note": "Tacky topsheet, factory-tuned sponge."
+        },
+        "omega-8-euro": {
+          "note": "1.9 is stocked by fewer retailers than MAX."
+        },
+        "omega-5-pro": {
+          "note": "Older generation, still listed by XIOM Europe."
+        },
+        "omega-5-tour": {
+          "note": "Older generation, still listed by XIOM Europe."
+        },
+        "omega-5-asia": {
+          "note": "Older generation, still listed by XIOM Europe."
+        },
+        "omega-5-euro": {
+          "note": "Older generation, still listed by XIOM Europe."
+        },
+        "jekyll-hyde-v47-5": {
+          "note": "MAX also sold in magenta."
+        },
+        "jekyll-hyde-x50-0": {
+          "note": "Thickness unverified: retailers list MAX, 2.1/MAX or 1.9/2.1/MAX."
+        },
+        "jekyll-hyde-h52-5": {
+          "note": "Hybrid (semi-tacky) topsheet."
+        },
+        "jekyll-hyde-c52-5": {
+          "note": "Chinese-style tacky topsheet with factory dual tension."
+        },
+        "jekyll-hyde-c55-0": {
+          "note": "Chinese-style tacky topsheet with factory dual tension; MAX is less widely stocked than 2.1."
+        },
+        "jekyll-hyde-c57-5": {
+          "note": "Chinese-style tacky topsheet with factory dual tension."
+        }
+      },
+      "blades": {}
+    },
+    "nittaku": {
+      "rubbers": {
+        "fastarc-g1": {
+          "note": "Nittaku sizes 中/厚/特厚/MAX (mm = usual retailer equivalents). Hardness = German scale printed by Nittaku (Nittaku scale 37.5)."
+        },
+        "fastarc-c1": {
+          "note": "Nittaku sizes 中/厚/特厚, no MAX (mm = usual retailer equivalents). Hardness = German scale printed by Nittaku (Nittaku scale 35.0)."
+        },
+        "fastarc-s1": {
+          "note": "Nittaku sizes 中/厚/特厚, no MAX (mm = usual retailer equivalents). Hardness = German scale printed by Nittaku (Nittaku scale 35.0)."
+        },
+        "fastarc-p1": {
+          "note": "Production ended (stock only). Sizes were 中/厚/特厚. Hardness = German scale (Nittaku scale 37.5)."
+        },
+        "hammond-z2": {
+          "note": "Made in Japan (2022). Sizes 中/厚/特厚/MAX. Hardness on Nittaku's own scale (no German figure printed; Nittaku scale ≈ German −10)."
+        },
+        "hammond-z2-special": {
+          "note": "Softer-sponge version of Hammond Z2. Sizes 厚/特厚/MAX (no 中). Nittaku scale."
+        },
+        "genextion": {
+          "note": "Sizes 厚/特厚 only (no MAX). Hardness = German scale (Nittaku scale 42.5)."
+        },
+        "genextion-v2c": {
+          "note": "Released Apr 2025; slightly tacky (微粘) topsheet. Sizes 厚/特厚. Hardness = German scale (Nittaku scale 42.5)."
+        },
+        "factive": {
+          "note": "Made in Germany; non-tacky tension rubber (G-1's softer sibling). Sizes 中/厚/特厚. Hardness = German scale printed as 35.0（ドイツ基準 45.0）."
+        },
+        "moristo-sp": {
+          "note": "Tension short pips (vertical pips). Sizes 中/厚/特厚/MAX. Hardness = German figure printed in brackets by Nittaku (Nittaku scale 30.0)."
+        },
+        "moristo-sp-ax": {
+          "note": "Horizontal, larger pips (spinnier). Sizes 中/厚/特厚/MAX. Hardness = German scale (Nittaku scale 30.0)."
+        },
+        "do-knuckle": {
+          "note": "Nittaku calls it a knuckle-type short pip (vertical pips, near-long); Revspin lists it as medium pips. Nittaku sizes 一枚/超極薄/極薄/中 = OX/0.5/1.0/1.5 per Paddle Palace / Nittaku Europe (中 sometimes given as 1.4). Nittaku scale."
+        },
+        "super-do-knuckle": {
+          "note": "Horizontal, slightly larger pips than Do Knuckle. Nittaku sizes 一枚/超極薄/極薄/中 (mm = retailer equivalents; 中 sometimes given as 1.4). Nittaku scale."
+        },
+        "moristo-lp": {
+          "note": "Made in Germany; tension long pips, horizontal. Sizes 極薄/薄 only (no OX) – no official mm, so thickness left empty (a retailer gives 極薄 ≈0.9–1.2 mm). Hardness = German scale printed as 40.0（ドイツ基準 50.0）."
+        },
+        "moristo-lp-one": {
+          "note": "OX (no sponge) only."
+        },
+        "flyatt-spin": {
+          "note": "Made in Japan. Sizes 中/厚/特厚. Nittaku scale."
+        },
+        "flyatt-evo": {
+          "note": "Released Apr 2025, made in Japan. Sizes 中/厚 only. Nittaku scale."
+        },
+        "hammond": {
+          "note": "Original IE rubber (2001), still listed. Sizes 薄/中/厚/特厚 – no mm published for 薄, so left empty. Nittaku scale."
+        },
+        "blastac": {
+          "note": "Made in Japan (Apr 2026); carbon-black sponge. Sizes 中/厚/特厚 (mm = usual retailer equivalents). Nittaku scale (a retailer quotes German 45.0)."
+        },
+        "inception": {
+          "note": "Entry-level control rubber. Now only 中 (厚 ended Feb 2025). Hardness = German scale (Nittaku scale 32.5)."
+        },
+        "moristo-df": {
+          "note": "Inverted tension rubber for choppers/defenders. Sizes 薄/中/厚 – no mm published for 薄, so thickness left empty. Hardness = German scale printed as 30.0（ドイツ基準 40.0）."
+        },
+        "sonic-ar": {
+          "note": "Made in Japan; speed short pips, vertical. Sizes 中/厚/特厚/MAX (mm = usual retailer equivalents). Nittaku scale."
+        },
+        "hammond-fa": {
+          "note": "Short pips-out (vertical pips, IE type) of the Hammond family. Nittaku sizes 薄/中/厚/特厚/MAX – no mm published for 薄, so thickness left empty. Nittaku scale."
+        },
+        "best-anti": {
+          "note": "Anti-spin. Sizes 薄/厚 (retailers: 薄 ≈1.2–1.4 mm, 厚 ≈1.7–1.9 mm; no official mm, so thickness left empty). Nittaku scale."
+        }
+      },
+      "blades": {}
+    },
+    "yasaka": {
+      "rubbers": {
+        "rakza-7": {
+          "note": "Yasaka JP prints hardness as a range (German scale); sizes 中厚/厚/特厚 = 1.8/2.0/MAX"
+        },
+        "rakza-7-soft": {
+          "note": "Sizes 中厚/厚/特厚 = 1.8/2.0/MAX"
+        },
+        "rakza-7-hard": {
+          "note": "New in 2026 (JP release March 2026); sold in 厚/特厚 only"
+        },
+        "rakza-9": {
+          "note": "Hardness from Japanese retailers quoting the Yasaka catalogue"
+        },
+        "rakza-xx": {
+          "note": "Sold in 厚 (2.0) and 特厚 (MAX) only"
+        },
+        "rakza-z": {
+          "note": "Tacky topsheet on tensor sponge; sold in 厚 (2.0) and 特厚 (MAX)"
+        },
+        "rakza-z-extra-hard": {
+          "note": "Sold in 特厚 (MAX) only"
+        },
+        "rising-dragon-2": {
+          "note": "Tacky tension rubber (2024). JP sizes 中/厚/特厚; 中 listed as 1.5 mm by Nishohi"
+        },
+        "shining-dragon-2": {
+          "note": "Tacky tension rubber (2024). JP sizes 中/厚/特厚; 中 listed as 1.5 mm by Nishohi"
+        },
+        "rising-dragon": {
+          "note": "Original 2015 version, discontinued and replaced by Rising Dragon II (2024); sold in 厚/特厚"
+        },
+        "shining-dragon": {
+          "note": "Original 2016 version, discontinued and replaced by Shining Dragon II (2024); sizes and hardness of the original not verified"
+        },
+        "mark-v": {
+          "note": "Thickness per Yasaka Europe (Nishohi); some retailers also list thinner 1.0/1.3 mm (not verified)"
+        },
+        "anti-power": {
+          "note": "JP sizes 薄/中/厚/特厚"
+        },
+        "phantom-0012-infinity": {
+          "note": "Sold as OX (no sponge) only"
+        }
+      },
+      "blades": {}
+    },
+    "victas": {
+      "rubbers": {
+        "v15-extra": {
+          "note": "Some older English retailer listings mention 1.8; current maker/retailer listings show 2.0 and MAX only."
+        },
+        "v15-sticky": {
+          "note": "Semi-tacky topsheet tensor rubber, released Oct 2024."
+        },
+        "v15-sticky-soft": {
+          "note": "Softer-sponge version of V>15 Sticky (Nov 2024)."
+        },
+        "v22-double-extra": {
+          "note": "Only sold in 2.0 and MAX."
+        },
+        "vjc07-sticky-extra": {
+          "note": "Chinese-made tacky topsheet on Japanese sponge."
+        },
+        "triple-double-extra": {
+          "note": "Chinese-made tacky rubber, blue sponge."
+        },
+        "triple-extra": {
+          "note": "Chinese-made tacky rubber."
+        },
+        "triple-regular": {
+          "note": "Chinese-made tacky rubber."
+        },
+        "xegna": {
+          "note": "Chinese-made tacky rubber (2026)."
+        },
+        "xegna-spin": {
+          "note": "Chinese-made tacky rubber (2026)."
+        },
+        "vs401": {
+          "note": "Semi-tacky defensive rubber; no MAX."
+        },
+        "ventus-extra": {
+          "note": "VICTAS successor of TSP Super Ventus."
+        },
+        "ventus-stiff": {
+          "note": "VICTAS successor of TSP Ventus Speed."
+        },
+        "ventus-limber": {
+          "note": "VICTAS successor of TSP Ventus Spin."
+        },
+        "ventus-regular-alpha": {
+          "note": "High-elastic (non-tensor) rubber; renewal of VENTUS Regular (successor of TSP Ventus Basic)."
+        },
+        "swat-spin": {
+          "note": "Entry-level spin tensor rubber (2025)."
+        },
+        "swat-power-spin": {
+          "note": "Released late 2025."
+        },
+        "vo103": {
+          "note": "1.6 listed on victas.com; some Japanese retailers list only 1.8/2.0/MAX."
+        },
+        "spectol-s1": {
+          "note": "Successor of the classic TSP Spectol (non-tensor)."
+        },
+        "spinpips-d1": {
+          "note": "Successor of TSP Super Spinpips."
+        },
+        "spinpips-d3": {
+          "note": "Defensive (chop) version; successor of TSP Super Spinpips Chop Sponge 2."
+        },
+        "curl-p1v": {
+          "note": "Successor of TSP Curl P1-R."
+        },
+        "curl-p2v": {
+          "note": "Maker classifies it as variation pips-out (変化系表ソフト), the widest/shortest pips of the Curl series; no OX."
+        },
+        "curl-p3alpha-v": {
+          "note": "Successor of TSP Curl P3αR."
+        },
+        "curl-p4v": {
+          "note": "Very soft sponge version for defenders."
+        }
+      },
+      "blades": {}
+    },
+    "donic": {
+      "rubbers": {
+        "bluefire-m1": {
+          "note": "Some listings show only 2.0/max; 1.8 still listed by donic.com (DE) and megaspin."
+        },
+        "bluefire-jp-01-turbo": {
+          "note": "Same nominal hardness as JP 01; differs in sponge structure/topsheet."
+        },
+        "bluefire-big-slam": {
+          "note": "Donic rates the sponge 'soft' (~40° per tabletennis-reference/revspin, not confirmed by Donic); 1.6 mm size per tabletennis-reference."
+        },
+        "bluegrip-j1": {
+          "note": "Tacky Chinese-style topsheet on tension sponge; developed with Zhang Jike (张继科)."
+        },
+        "bluestorm-z1": {
+          "note": "Thin topsheet; sizes labelled 1.9 / 2.1 / max+ (some shops call them 1.8 / 2.0 / max)."
+        },
+        "bluestorm-z1-turbo": {
+          "note": "Thickest size sold as max+."
+        },
+        "bluestorm-z2": {
+          "note": "Thickest size sold as max+; 1.9/2.1 sizes inferred from the series listing (paddlepalace)."
+        },
+        "bluestorm-big-slam": {
+          "note": "Thickest size sold as max+."
+        },
+        "acuda-s2": {
+          "note": "One low-quality source claims 47.5; paddlepalace/greenpaddle give 42.5."
+        },
+        "acuda-s3": {
+          "note": "Hardness per megaspin; thickness options not separately confirmed for S3."
+        },
+        "acuda-s1-turbo": {
+          "note": "Donic rates the sponge 'hard'; sources disagree on the degree (45 vs ~49), left empty."
+        },
+        "acuda-blue-p1": {
+          "note": "Hardness per revspin (Donic: medium+)."
+        },
+        "acuda-blue-p1-turbo": {
+          "note": "Donic rates 'medium+'; retailers quote 47.5-50, no single published degree found."
+        },
+        "acuda-blue-p2": {
+          "note": "Hardness per revspin (Donic: medium-)."
+        },
+        "acuda-blue-p3": {
+          "note": "Hardness per revspin (Donic: soft)."
+        },
+        "coppa-e1": {
+          "note": "New Coppa E series (2026); specs from a single donic.com page."
+        },
+        "coppa-e2": {
+          "note": "New Coppa E series (2026); specs from a single donic.com page."
+        },
+        "coppa-e3": {
+          "note": "New Coppa E series (2026); specs from a single donic.com page."
+        },
+        "desto-f1": {
+          "note": "Donic only rates the sponge 'medium+' (no degree published)."
+        },
+        "desto-f3": {
+          "note": "Donic only rates the sponge 'soft+' (no degree published)."
+        },
+        "desto-next": {
+          "note": "Entry/progression rubber with pink AirGO-FX sponge; successor to Desto First."
+        },
+        "vario": {
+          "note": "Donic only rates the sponge 'medium+' (no degree published)."
+        },
+        "vario-big-slam": {
+          "note": "Hardness per revspin."
+        },
+        "slice-40-cd": {
+          "note": "Defensive (chop) inverted rubber, not long pips; hardness not published."
+        },
+        "piranja-formula-tec": {
+          "note": "Long pips; OX and 1.2 mm are the sizes stocked by paddlepalace/tabletennisstore.us; hardness not published."
+        },
+        "baxster-f1-a": {
+          "note": "Short pips with Formula Donic tension; Donic rates sponge 'medium' (no degree); thickness list from topspintt/donic.com, may be incomplete."
+        }
+      },
+      "blades": {}
+    },
+    "andro": {
+      "rubbers": {
+        "rasanter-r47": {
+          "note": "Thickest size is sold as ULTRAMAX (2.3 mm sponge); andro does not offer 2.1 mm.",
+          "sources": [
+            "https://www.andro.de",
+            "https://www.tabletennis11.com"
+          ]
+        },
+        "rasanter-r50": {
+          "note": "Thickest size is sold as ULTRAMAX (2.3 mm sponge).",
+          "sources": [
+            "https://www.megaspin.net",
+            "https://www.andro.de"
+          ]
+        },
+        "rasanter-r48": {
+          "note": "Thickest size is sold as ULTRAMAX (2.3 mm sponge). Green/blue topsheets per Paddle Palace.",
+          "sources": [
+            "https://www.nishohi.com",
+            "https://www.megaspin.net",
+            "https://www.paddlepalace.com"
+          ]
+        },
+        "rasanter-r53": {
+          "note": "Thickest size is sold as ULTRAMAX (2.3 mm sponge). 1.7 mm is listed by Megaspin and German shops but rarely stocked.",
+          "sources": [
+            "https://www.megaspin.net",
+            "https://www.contra.de"
+          ]
+        },
+        "rasanter-r42": {
+          "note": "Thickest size is sold as ULTRAMAX (2.3 mm sponge).",
+          "sources": [
+            "https://www.tabletennisstore.us"
+          ]
+        },
+        "rasanter-r45": {
+          "note": "Thickest size is sold as ULTRAMAX (2.3 mm sponge).",
+          "sources": [
+            "https://www.megaspin.net"
+          ]
+        },
+        "rasanter-r37": {
+          "note": "Thickest size is sold as ULTRAMAX (2.3 mm sponge).",
+          "sources": [
+            "https://www.megaspin.net",
+            "https://www.tabletennis11.com"
+          ]
+        },
+        "rasanter-c53": {
+          "note": "Slightly tacky counter-spin topsheet. Only 2.0 and ULTRAMAX (2.3 mm sponge); no 1.7 mm.",
+          "sources": [
+            "https://www.nishohi.com",
+            "https://www.megaspin.net"
+          ]
+        },
+        "rasanter-c48": {
+          "note": "Slightly tacky counter-spin topsheet. Only 2.0 and ULTRAMAX (2.3 mm sponge).",
+          "sources": [
+            "https://www.megaspin.net",
+            "https://www.nishohi.com"
+          ]
+        },
+        "rasanter-c45": {
+          "note": "Slightly tacky counter-spin topsheet. Only 2.0 and ULTRAMAX (2.3 mm sponge).",
+          "sources": [
+            "https://www.nishohi.com"
+          ]
+        },
+        "rasanter-v47": {
+          "note": "Speed-oriented V version. Thickest size is sold as ULTRAMAX (2.3 mm sponge).",
+          "sources": [
+            "https://www.tabletennisstore.us",
+            "https://www.andro.de",
+            "https://www.paddlepalace.com"
+          ]
+        },
+        "rasanter-v42": {
+          "note": "Speed-oriented V version. Thickest size is sold as ULTRAMAX (2.3 mm sponge).",
+          "sources": [
+            "https://www.spinnier.com",
+            "https://www.paddlepalace.com"
+          ]
+        },
+        "chintac-57s": {
+          "note": "New 2026/27 tacky (Chinese-style) topsheet on tensor sponge. Sold in 2.0 and MAX.",
+          "sources": [
+            "https://www.tabletennis11.com",
+            "https://www.pingpongshop.eu"
+          ]
+        },
+        "chintac-52s": {
+          "note": "New 2026/27 tacky (Chinese-style) topsheet on tensor sponge. Sold in 2.0 and MAX.",
+          "sources": [
+            "https://www.tabletennis11.com",
+            "https://www.tteamtabletennis.com"
+          ]
+        },
+        "nuzn-55": {
+          "note": "Hybrid (slightly tacky) topsheet, launched 2024. Sold in 2.0 and MAX.",
+          "sources": [
+            "https://www.paddlepalace.com",
+            "https://www.megaspin.net"
+          ]
+        },
+        "nuzn-50": {
+          "note": "Hybrid (slightly tacky) topsheet, launched 2024. Sold in 2.0 and MAX.",
+          "sources": [
+            "https://www.tabletennis11.com",
+            "https://www.nishohi.com"
+          ]
+        },
+        "nuzn-48": {
+          "note": "Added 2025. Unlike NUZN 50/55, sold in 1.9 and 2.1 mm.",
+          "sources": [
+            "https://www.megaspin.net"
+          ]
+        },
+        "nuzn-45": {
+          "note": "Added 2025. Sold in 1.9 and 2.1 mm.",
+          "sources": [
+            "https://www.tabletennis11.com",
+            "https://www.schoeler-micke.de"
+          ]
+        },
+        "hy-q-48": {
+          "note": "Hybrid (slightly tacky) topsheet.",
+          "sources": [
+            "https://www.paddlepalace.com",
+            "https://www.racket-company.com",
+            "https://www.tabletennis11.com"
+          ]
+        },
+        "hy-q-42": {
+          "note": "Hybrid (slightly tacky) topsheet.",
+          "sources": [
+            "https://www.megaspin.net",
+            "https://www.tabletennis11.com"
+          ]
+        },
+        "hexer-powergrip": {
+          "sources": [
+            "https://www.tabletennis11.com",
+            "https://www.tt-test.de"
+          ]
+        },
+        "hexer-powergrip-sfx": {
+          "sources": [
+            "https://www.megaspin.net",
+            "https://www.tt-spin.com"
+          ]
+        },
+        "hexer-grip": {
+          "sources": [
+            "https://www.megaspin.net"
+          ]
+        },
+        "hexer-grip-sfx": {
+          "sources": [
+            "https://www.ttmode.com"
+          ]
+        },
+        "hexer-powersponge": {
+          "note": "Softest Hexer. 40° per contra/tt-xpert; one other site quotes 37.5°.",
+          "sources": [
+            "https://www.contra.de",
+            "https://www.tt-xpert.de"
+          ]
+        },
+        "hexer-hd": {
+          "note": "Hardness not verified from maker/reputable retailer (often quoted ~47.5°; contra lists only 'medium+').",
+          "sources": [
+            "https://www.contra.de",
+            "https://www.tischtennis-db.de"
+          ]
+        },
+        "hexer-duro": {
+          "note": "Hardness not verified from maker (forums quote 42.5°; andro describes it as medium).",
+          "sources": [
+            "https://www.affordablett.com.au",
+            "https://www.andro.de"
+          ]
+        },
+        "hexer": {
+          "note": "Original Hexer (older model, limited availability). Thickness per retailers; hardness not verified (often quoted ~47.5°).",
+          "sources": [
+            "https://revspin.net"
+          ]
+        },
+        "hexer-plus": {
+          "note": "Older model. Sources disagree on sizes (andro-bg: 1.7/1.9/2.1; others: 1.9/2.1); hardness not verified.",
+          "sources": [
+            "https://andro-bg.com",
+            "https://revspin.net"
+          ]
+        },
+        "gtt-45": {
+          "note": "Entry-level tensor. 1.6 mm listed by ttmode; tabletennis11 lists 1.8/2.0/Max.",
+          "sources": [
+            "https://www.tabletennis11.com",
+            "https://www.ttmode.com"
+          ]
+        },
+        "gtt-40": {
+          "note": "Entry-level tensor. 1.6 mm listed by ttmode; andro-bg lists 1.8/2.0.",
+          "sources": [
+            "https://www.ttmode.com",
+            "https://andro-bg.com",
+            "https://www.contra.de"
+          ]
+        },
+        "hexer-pips-force": {
+          "note": "Short pips with 0/90° pimple alignment. Numeric hardness not verified (medium; quoted 42-45°).",
+          "sources": [
+            "https://www.tabletennisstore.us",
+            "https://www.tabletennis11.com"
+          ]
+        },
+        "hexer-pips": {
+          "note": "Short pips, softer sponge than Hexer Pips Force.",
+          "sources": [
+            "https://www.ttmode.com",
+            "https://www.megaspin.net"
+          ]
+        },
+        "blowfish-plus": {
+          "note": "Hardness not verified from maker (retailers quote ~45°, medium).",
+          "sources": [
+            "https://www.paddlepalace.com",
+            "https://www.megaspin.net"
+          ]
+        },
+        "blowfish": {
+          "note": "Soft sponge; numeric hardness not verified.",
+          "sources": [
+            "https://www.megaspin.net",
+            "https://www.paddlepalace.com"
+          ]
+        },
+        "rasant-chaos": {
+          "note": "Long pips. Sizes per andro.de; some shops list 1.0 mm instead of 1.2. Hardness not published.",
+          "sources": [
+            "https://www.andro.de",
+            "https://revspin.net"
+          ]
+        },
+        "plaxon-525": {
+          "note": "Discontinued. Thickness options not verified (US/UK shops list 1.7/2.0/max or 2.0/max). Hardness 52.5° (= model number; revspin, tt-news).",
+          "sources": [
+            "https://revspin.net",
+            "https://www.tabletennisstore.us",
+            "https://www.tt-news.de"
+          ]
+        },
+        "plaxon-450": {
+          "note": "Discontinued. Thickness options not verified. Hardness 45° (= model number).",
+          "sources": [
+            "https://revspin.net",
+            "https://www.tabletennisstore.us"
+          ]
+        },
+        "plaxon-400": {
+          "note": "Discontinued. Thickness options not verified (retailers mention 1.7/1.9/2.1 or MAX). Hardness 40°.",
+          "sources": [
+            "https://www.tabletennisstore.us",
+            "https://revspin.net"
+          ]
+        },
+        "plaxon-350": {
+          "note": "Discontinued. Thickness options not verified. Hardness 35° (= model number).",
+          "sources": [
+            "https://revspin.net"
+          ]
+        }
+      },
+      "blades": {
+        "synteliac-vco-off": {
+          "sources": [
+            "https://www.andro.de",
+            "https://www.nishohi.com"
+          ]
+        },
+        "synteliac-vci-off": {
+          "sources": [
+            "https://www.andro.de",
+            "https://www.megaspin.net"
+          ]
+        },
+        "synteliac-vci-off-gauzy-original": {
+          "sources": [
+            "https://www.andro.de",
+            "https://www.tabletennis11.com"
+          ]
+        },
+        "synteliac-zco-off-s": {
+          "sources": [
+            "https://www.nishohi.com",
+            "https://ttgearlab.com"
+          ]
+        },
+        "synteliac-zci-off": {
+          "sources": [
+            "https://ttgearlab.com",
+            "https://www.andro.de"
+          ]
+        },
+        "achanta-ci-off": {
+          "sources": [
+            "https://www.megaspin.net",
+            "https://www.ttmode.com"
+          ]
+        },
+        "achanta-legacy-off": {
+          "sources": [
+            "https://revspin.net",
+            "https://www.andro.de"
+          ]
+        },
+        "wosik-legacy-off": {
+          "sources": [
+            "https://www.megaspin.net",
+            "https://www.tabletennis11.com"
+          ]
+        },
+        "heister-legacy-off": {
+          "sources": [
+            "https://www.andro.de",
+            "https://www.tabletennis11.com"
+          ]
+        },
+        "eloi-legacy-off-s": {
+          "sources": [
+            "https://www.megaspin.net",
+            "https://www.dandoy-sports.com"
+          ]
+        },
+        "gauzy-sl-off": {
+          "sources": [
+            "https://www.tabletennisstore.us",
+            "https://revspin.net"
+          ]
+        },
+        "gauzy-hl-co-off": {
+          "sources": [
+            "https://www.tabletennis11.com",
+            "https://www.tabletennisdaily.com"
+          ]
+        },
+        "gauzy-bl7-off": {
+          "sources": [
+            "https://revspin.net",
+            "https://www.tabletennis11.com"
+          ]
+        },
+        "gauzy-bl5-all": {
+          "sources": [
+            "https://www.megaspin.net"
+          ]
+        },
+        "treiber-co-off-s": {
+          "sources": [
+            "https://www.paddlepalace.com",
+            "https://ttgearlab.com"
+          ]
+        },
+        "treiber-co-all-s": {
+          "sources": [
+            "https://www.paddlepalace.com",
+            "https://www.megaspin.net"
+          ]
+        },
+        "treiber-ci-off": {
+          "sources": [
+            "https://revspin.net",
+            "https://www.nishohi.com"
+          ]
+        },
+        "treiber-fo-off-s": {
+          "sources": [
+            "https://revspin.net",
+            "https://www.nishohi.com"
+          ]
+        },
+        "treiber-fi-off": {
+          "sources": [
+            "https://www.megaspin.net",
+            "https://www.andro.de"
+          ]
+        },
+        "treiber-k-off": {
+          "sources": [
+            "https://revspin.net",
+            "https://www.mytabletennis.net"
+          ]
+        },
+        "treiber-z-off": {
+          "sources": [
+            "https://revspin.net",
+            "https://www.mytabletennis.net"
+          ]
+        },
+        "treiber-g-off": {
+          "sources": [
+            "https://revspin.net",
+            "https://www.mytabletennis.net"
+          ]
+        },
+        "treiber-h-off": {
+          "sources": [
+            "https://revspin.net",
+            "https://www.mytabletennis.net"
+          ]
+        },
+        "tp-ligna-co-off": {
+          "sources": [
+            "https://ttgearlab.com",
+            "https://www.tabletennis11.com"
+          ]
+        },
+        "tp-ligna-ci-off": {
+          "sources": [
+            "https://www.megaspin.net",
+            "https://revspin.net"
+          ]
+        },
+        "tp-ligna-off": {
+          "sources": [
+            "https://revspin.net"
+          ]
+        },
+        "timber-7-off-s": {
+          "sources": [
+            "https://ttgearlab.com",
+            "https://www.tabletennis11.com"
+          ]
+        },
+        "timber-7-off": {
+          "sources": [
+            "https://www.tabletennis11.com",
+            "https://www.megaspin.net"
+          ]
+        },
+        "timber-5-off": {
+          "sources": [
+            "https://www.megaspin.net"
+          ]
+        },
+        "timber-5-all-s": {
+          "sources": [
+            "https://www.paddlepalace.com",
+            "https://revspin.net"
+          ]
+        },
+        "timber-5-def": {
+          "sources": [
+            "https://www.paddlepalace.com",
+            "https://www.tabletennis11.com"
+          ]
+        },
+        "novacell-off": {
+          "sources": [
+            "https://www.andro.de"
+          ]
+        },
+        "novacell-off-s": {
+          "sources": [
+            "https://www.paddlepalace.com",
+            "https://revspin.net"
+          ]
+        },
+        "novacell-all-s": {
+          "sources": [
+            "https://www.ttmode.com",
+            "https://www.andro.de"
+          ]
+        }
+      }
+    },
+    "joola": {
+      "rubbers": {
+        "dynaryz-cmd": {
+          "note": "joola.se lists 42.5°; one JOOLA regional site (joola.fr) shows 43°."
+        },
+        "dynaryz-zgr": {
+          "note": "Semi-tacky (Hyper Traction) topsheet. joola.com gives 57°; some retailers list 57.5°. Thickest size labelled Max/Max+."
+        },
+        "dynaryz-zgx": {
+          "note": "Semi-tacky (Hyper Traction) topsheet."
+        },
+        "dynaryz-inferno": {
+          "note": "Thickest size labelled Max+."
+        },
+        "trinity-charged": {
+          "note": "Calderano signature rubber (his forehand choice); some summaries round to 57°."
+        },
+        "trinity-dynamic": {
+          "note": "Calderano signature rubber (his backhand choice)."
+        },
+        "tronix-zgr": {
+          "note": "JOOLA rates the sponge only as 'Hard+'; retailers quote ~56° (unconfirmed). Semi-tacky topsheet."
+        },
+        "tronix-acc": {
+          "note": "Hardness from retailers (tokspin, ppongsuper)."
+        },
+        "tronix-cmd": {
+          "note": "Hardness from retailers (ppongsuper, tt-shop)."
+        },
+        "rhyzen-zgr": {
+          "note": "JOOLA rates the sponge only as 'Hard+' (no degree figure published); community estimates ~54-55°. Semi-tacky topsheet."
+        },
+        "rhyzen-zgx": {
+          "note": "No maker degree figure found ('Hard+'); a retailer quotes 55°. Thickest size labelled Max/Max+."
+        },
+        "rhyzen-fire": {
+          "note": "JOOLA rates it 'Medium+'; retailer degree figures conflict (45° vs 47.5°)."
+        },
+        "rhyzen-ice": {
+          "note": "JOOLA rates it 'Soft+'; retailer degree figures conflict (40° vs 42.5°)."
+        },
+        "rhyzen-cmd": {
+          "note": "JOOLA rates it 'Medium'; degree figures quoted online conflict (42.5° vs 45°)."
+        },
+        "golden-tango": {
+          "note": "Tacky Chinese-style topsheet on a German tensor sponge (factory tuned). Hardness from retailers/reviews."
+        },
+        "golden-tango-ps": {
+          "note": "Softer-sponge version of Golden Tango. Hardness from retailers/reviews."
+        },
+        "rhyzm": {
+          "note": "Discontinued; replaced by Rhyzen/Dynaryz."
+        },
+        "rhyzm-p": {
+          "note": "Discontinued. Thickness options not verified."
+        },
+        "rhyzm-tech": {
+          "note": "Discontinued."
+        },
+        "maxxx-500": {
+          "note": "Discontinued. Hardness per model number (50°); thickness options not verified."
+        },
+        "maxxx-450": {
+          "note": "Discontinued. Hardness per model number (45°); thickness options not verified."
+        },
+        "express-ultra": {
+          "note": "JOOLA rates the sponge 'soft' without a degree figure. Older stock also listed in 1.8 mm."
+        },
+        "cwx": {
+          "note": "Long pips developed with Chen Weixing."
+        }
+      },
+      "blades": {}
+    },
+    "gewo": {
+      "rubbers": {
+        "nexxus-el-pro-38": {
+          "note": "GEWO sells the thickest as 'max' (retailers quote ~2.2-2.3 mm)."
+        },
+        "nexxus-el-pro-50-hard": {
+          "note": "Only 2.1 and max."
+        },
+        "nexxus-el-pro-53-hard": {
+          "note": "Only 2.1 and max."
+        },
+        "nexxus-xt-pro-50-hard": {
+          "note": "Thickness not confirmed (probably 2.1/max like the other Hard versions)."
+        },
+        "nexxus-el-pro-45-superselect": {
+          "note": "Pro-selected version. Thickness options not confirmed (retailer summaries say 2.1/max)."
+        },
+        "nexxus-el-pro-48-superselect": {
+          "note": "Pro-selected version. Thickness options not confirmed (retailer summaries say 2.1/max)."
+        },
+        "nexxus-el-pro-50-superselect": {
+          "note": "Pro-selected version. Thickness options not confirmed (retailer summaries say 2.1/max)."
+        },
+        "nexxus-el-pro-53-superselect": {
+          "note": "Pro-selected version. Thickness options not confirmed (retailer summaries say 2.1/max)."
+        },
+        "codexx-el-pro-52": {
+          "note": "Semi-tacky hybrid topsheet. Thickness options not confirmed (2.0 / 2.2 / max mentioned by retailers)."
+        },
+        "codexx-ef-pro-54": {
+          "note": "Semi-tacky hybrid topsheet."
+        },
+        "codexx-pro-53-superselect": {
+          "note": "Semi-tacky hybrid topsheet. Thickness options not confirmed."
+        },
+        "codexx-pro-55-superselect": {
+          "note": "Semi-tacky hybrid topsheet. Thickness options not confirmed (max/2.2 mentioned)."
+        },
+        "hype-kr-pro-47-5": {
+          "note": "Developed with Yoo Nam-kyu; listed in 2.1 (max) only."
+        },
+        "neoflexx-eft-40": {
+          "note": "Thickness options not confirmed for this hardness (series is sold in 1.7/1.9/2.1)."
+        }
+      },
+      "blades": {}
+    },
+    "friendship": {
+      "rubbers": {
+        "563": {
+          "note": "Chinese sellers call it 生胶, international retailers list it as medium pips. Sponge sizes not verified."
+        },
+        "755": {
+          "note": "Sold as OX and with thin sponge (0.5–1.0 mm reported); exact sizes not verified."
+        },
+        "799": {
+          "note": "Short pips; sold as OX and with sponge — sizes not verified."
+        },
+        "802": {
+          "note": "Short pips (正胶). Thickness/hardness not verified."
+        },
+        "837": {
+          "note": "Sold as OX and with thin sponge (0.5–1.0 mm reported); exact sizes not verified."
+        },
+        "battle-2": {
+          "note": "2.1 mm and 38/39/40° are the consistently listed options; some sellers also mention 2.15/2.2 mm and 37°/41° (unverified). Playable unboosted; some advanced players boost it."
+        },
+        "battle-2-provincial": {
+          "note": "Black usually with blue sponge, red with orange sponge."
+        },
+        "battle-2-national": {
+          "note": "Thickness/hardness not verified (2.1 mm, 38–39° reported)."
+        },
+        "battle-3": {
+          "note": "Sold in standard, 省套 and 紫电 versions; 2.1 mm and 38–40.5° reported but not verified."
+        },
+        "focus-3": {
+          "note": "Non-tacky. Sources conflict: Chinese stores list 40/42/44° in 2.2 mm (MAX); international retailers list the Focus III Snipe as 2.1 mm / 42° (some 1.8 mm, 44/46°). Left unverified."
+        },
+        "729-08-es": {
+          "note": "Thickness/hardness not verified (2.1 mm reported; hardness labels vary between sources). Also sold as a 省套 version."
+        },
+        "super-fx": {
+          "note": "Classic tacky rubber; thickness/hardness options not verified."
+        },
+        "729-2": {
+          "note": "Budget classic; thickness/hardness not verified."
+        },
+        "tianyi": {
+          "note": "Light backhand rubber; one seller lists 2.0 mm and 40°/42° (single source, unverified)."
+        },
+        "802-40": {
+          "note": "Spinny short pips (弧圈型正胶). Thickness/hardness options vary by seller (OX to 2.2 mm, 35°–42° reported); not verified."
+        }
+      },
+      "blades": {}
+    },
+    "yinhe": {
+      "rubbers": {
+        "955": {
+          "note": "Sold as OX and with thin sponge (0.7 mm reported); exact sizes not verified."
+        },
+        "mercury-2": {
+          "note": "Model No. 9021. Mostly sold in MAX (~2.1–2.15 mm); hardness offered as soft/medium(/hard) labels rather than degrees — exact options not verified."
+        },
+        "jupiter-3": {
+          "note": "Asia and Europe versions reported. Chinese sellers list 38/39/40° and 2.1 mm/MAX, but options not verified."
+        },
+        "big-dipper": {
+          "note": "Tacky topsheet on factory-tuned sponge. Sold mainly in Max (~2.2 mm); thickness options not verified. Pro versions (37°) reported."
+        },
+        "moon": {
+          "note": "Non-tacky backhand rubber (Max Tense sponge); related versions such as Moon Speed exist. Thickness/hardness options not verified."
+        },
+        "sun": {
+          "note": "Thickness/hardness options not verified (soft/medium/hard versions reported)."
+        },
+        "mars-2": {
+          "note": "Thickness/hardness options not verified."
+        },
+        "saturn": {
+          "note": "Pro / S1 versions reported; thickness/hardness options not verified."
+        },
+        "uranus": {
+          "note": "Short pips (正胶); sold as 天王星PRO (No.90463) and 天王星铂力. A seller lists 2.15 mm with S/M hardness (single source, unverified)."
+        },
+        "pluto": {
+          "note": "Short pips (生胶), No.9043. A seller lists 1.5/1.8 mm sponge (single source); options not verified."
+        },
+        "neptune": {
+          "note": "Long pips. Sponge options not verified."
+        }
+      },
+      "blades": {}
+    },
+    "sanwei": {
+      "rubbers": {
+        "target-national": {
+          "note": "Tacky topsheet on blue cake sponge. Reported as MAX (~2.15 mm) with 39/39.5/40° (38.5–40° in some listings); options not verified."
+        },
+        "target-national-player": {
+          "note": "Maker offers 39° (forehand) and 37° (backhand) versions; thickness (2.1 mm/MAX reported) not verified."
+        },
+        "target-provincial": {
+          "note": "Provincial-team version (blue sponge). Thickness/hardness options not verified."
+        },
+        "target": {
+          "note": "Regular retail version (current generation sold as 标靶3). Thickness/hardness options not verified."
+        },
+        "t88-1": {
+          "note": "Semi-tacky fast-attack rubber; 2.1 mm/MAX and ~37° reported, options not verified."
+        },
+        "t88-3": {
+          "note": "All-round training rubber (black sheet usually blue sponge, red sheet orange sponge); 2.1 mm/MAX reported, hardness not published as degrees in sources found."
+        },
+        "ghost": {
+          "note": "Offensive short pips. Sponge options not verified."
+        },
+        "code": {
+          "note": "Long pips, mainly sold as OX; sponge versions not verified."
+        }
+      },
+      "blades": {}
+    },
+    "loki": {
+      "rubbers": {
+        "rxton-1": {
+          "note": "Sold mainly in 2.1 mm/MAX; some sellers mention thinner sheets (unconfirmed). Hardness quoted 37-40 depending on version (some listings: ~39 black / 36-37 red); no single maker figure found.",
+          "sources": [
+            "https://revspin.net/rubber/loki/",
+            "https://smashtabletennis.ca"
+          ]
+        },
+        "rxton-1-pro": {
+          "note": "Exists (revspin list); sellers quote ~39 and 1.8/2.1 mm, not confirmed from maker.",
+          "sources": [
+            "https://revspin.net/rubber/loki/"
+          ]
+        },
+        "rxton-3": {
+          "note": "tokspin lists 39 (NEGH sponge); pink/blue-sponge editions also exist.",
+          "sources": [
+            "https://tokspin.com",
+            "https://revspin.net/rubber/loki/"
+          ]
+        },
+        "rxton-3-pro": {
+          "note": "Hardness 40 per tabletennishub; thickness (2.0 or 2.1?) not confirmed.",
+          "sources": [
+            "https://tabletennishub.net"
+          ]
+        },
+        "rxton-5": {
+          "note": "tokspin lists 41 (LOXA sponge), 2.1 mm.",
+          "sources": [
+            "https://tokspin.com"
+          ]
+        },
+        "rxton-5-pro": {
+          "note": "Blue sponge; hardness options not confirmed.",
+          "sources": [
+            "https://revspin.net/rubber/loki/",
+            "https://www.aliexpress.com"
+          ]
+        },
+        "rxton-5-neo": {
+          "note": "Hardness options as listed by LOKI store on AliExpress (inorganic blue sponge).",
+          "sources": [
+            "https://www.aliexpress.com"
+          ]
+        },
+        "rxton-7": {
+          "note": "Kunlun Sponge III.",
+          "sources": [
+            "https://www.chtt.se",
+            "https://www.taobao.com"
+          ]
+        },
+        "rxton-9": {
+          "note": "39 / 40.5 reported by tokspin and Chinese sellers.",
+          "sources": [
+            "https://tokspin.com",
+            "https://www.aliexpress.com"
+          ]
+        },
+        "rxton-9-provincial": {
+          "note": "Version-specific hardness options not confirmed.",
+          "sources": [
+            "https://revspin.net/rubber/loki/"
+          ]
+        },
+        "rxton-9-national": {
+          "note": "Version-specific hardness options not confirmed (sellers quote 39-40.5).",
+          "sources": [
+            "https://revspin.net/rubber/loki/",
+            "https://tabletennishub.net"
+          ]
+        },
+        "arthur-china": {
+          "note": "Tacky, factory-tuned (Kunlun sponge, marketed as no boosting needed). Standard version 40; some sellers also list 41 (unconfirmed). A purple/green 'Arthur-C (THOR)' colour version also exists.",
+          "sources": [
+            "https://www.bilibili.com",
+            "https://tokspin.com",
+            "https://revspin.net/rubber/loki/"
+          ]
+        },
+        "arthur-asia": {
+          "note": "Black carbon cake sponge, described as 'very hard' (~50 on some seller charts); no maker degree found.",
+          "sources": [
+            "https://revspin.net/rubber/loki/",
+            "https://www.aliexpress.com"
+          ]
+        },
+        "arthur-europe": {
+          "note": "Hardness not confirmed.",
+          "sources": [
+            "https://revspin.net/rubber/loki/"
+          ]
+        },
+        "arthur-europe-diamond": {
+          "note": "Thickness/hardness not confirmed.",
+          "sources": [
+            "https://revspin.net/rubber/loki/"
+          ]
+        },
+        "telson-germany": {
+          "note": "Non-tacky tensor-type; hardness labelled 45 / 47.5 (sometimes written 450 / 475).",
+          "sources": [
+            "https://tokspin.com",
+            "https://www.chtt.se"
+          ]
+        },
+        "telson-china": {
+          "note": "Hardness options per tokspin; a Chinese shop lists only 52.5 / 55 (labelled 525 / 550).",
+          "sources": [
+            "https://tokspin.com",
+            "https://www.ttshop.cn"
+          ]
+        },
+        "telson-100": {
+          "note": "Non-tacky; thickness/hardness not confirmed.",
+          "sources": [
+            "https://revspin.net/rubber/loki/"
+          ]
+        }
+      },
+      "blades": {
+        "kirin-k5": {
+          "sources": [
+            "https://revspin.net"
+          ]
+        },
+        "kirin-k3": {
+          "sources": [
+            "https://revspin.net"
+          ]
+        },
+        "kirin-k5-pro-outer": {
+          "sources": [
+            "https://www.aliexpress.com",
+            "https://revspin.net"
+          ]
+        },
+        "kirin-k5-pro-inner": {
+          "sources": [
+            "https://www.aliexpress.com",
+            "https://revspin.net"
+          ]
+        },
+        "w81-outer-alc": {
+          "sources": [
+            "https://tokspin.com",
+            "https://www.aliexpress.com"
+          ]
+        },
+        "w81-inner-alc": {
+          "sources": [
+            "https://tokspin.com"
+          ]
+        },
+        "rxton-9-pro-blade": {
+          "sources": [
+            "https://revspin.net"
+          ]
+        },
+        "arthur-asia-alc": {
+          "sources": [
+            "https://revspin.net"
+          ]
+        },
+        "arthur-euro-alc": {
+          "sources": [
+            "https://revspin.net"
+          ]
+        }
+      }
+    },
+    "palio": {
+      "rubbers": {
+        "ak47-red": {
+          "note": "Non-tacky cake-sponge rubber; Palio prints hardness as a range. Red = hardest of the AK47 series.",
+          "sources": [
+            "https://tokspin.com",
+            "https://www.lazada.com.ph",
+            "https://tabletennisbazaar.com"
+          ]
+        },
+        "ak47-yellow": {
+          "note": "Medium version of the AK47 series.",
+          "sources": [
+            "https://tabletennisbazaar.com",
+            "https://www.lazada.com.ph"
+          ]
+        },
+        "ak47-blue": {
+          "note": "Softest AK47 version.",
+          "sources": [
+            "https://revspin.net",
+            "https://www.lazada.com.ph"
+          ]
+        },
+        "hadou": {
+          "note": "Tacky Chinese-style rubber; hardness ranges as listed by sellers (AliExpress/Lazada). Hadou 40+ and Biotech versions also exist.",
+          "sources": [
+            "https://tokspin.com",
+            "https://www.aliexpress.com",
+            "https://www.lazada.com.ph"
+          ]
+        },
+        "cj8000": {
+          "note": "Long-running budget rubber in several sub-versions (Biotech, Speed/Spin...). 36-38 and 42-44 confirmed; a middle option (38/39-41) is also reported but not confirmed. Thinner sheets may exist.",
+          "sources": [
+            "https://revspin.net",
+            "https://tokspin.com",
+            "https://pingpongsg.com"
+          ]
+        },
+        "ck531a": {
+          "note": "Long pips; sponge versions are labelled roughly 0.6-0.8 mm and 0.9-1.1 mm by sellers.",
+          "sources": [
+            "https://tokspin.com",
+            "https://www.aliexpress.com",
+            "https://ttnpp.com"
+          ]
+        },
+        "macro-era": {
+          "note": "German-made (ESN) tensor rubber; thickness options and current availability not confirmed.",
+          "sources": [
+            "https://revspin.net"
+          ]
+        },
+        "conqueror": {
+          "note": "Thickness/hardness not confirmed.",
+          "sources": [
+            "https://tokspin.com",
+            "https://revspin.net"
+          ]
+        }
+      },
+      "blades": {
+        "energy-03": {
+          "sources": [
+            "https://revspin.net",
+            "https://www.chtt.se"
+          ]
+        },
+        "tct": {
+          "sources": [
+            "https://www.chtt.se",
+            "https://tokspin.com"
+          ]
+        }
+      }
+    },
+    "sword": {
+      "rubbers": {
+        "ares": {
+          "note": "Sword labels hardness descriptively (中软 Mid-Soft / 中硬 Mid-Hard), no degree figure. Thickness listed as 2.1 mm (AliExpress) / MAX (Chinese shops).",
+          "sources": [
+            "https://www.aliexpress.com",
+            "https://www.swordtt.com",
+            "https://revspin.net"
+          ]
+        },
+        "maze": {
+          "note": "High-tack rubber; hardness labelled 中软 / 中硬 (some listings quote ~46-48 degrees).",
+          "sources": [
+            "https://tokspin.com",
+            "https://www.swordtt.com",
+            "https://revspin.net"
+          ]
+        },
+        "break": {
+          "note": "Semi-tacky, factory-tuned. Conflicting listings (中软/中硬, ~42 per revspin, or 42-48 degree options; 2.1/MAX) - not confirmed.",
+          "sources": [
+            "https://www.swordtt.com",
+            "https://revspin.net"
+          ]
+        },
+        "break-pro": {
+          "note": "Blue sponge. Chinese listings show 中软 / 中硬; revspin text mentions ~46 degrees - not confirmed.",
+          "sources": [
+            "https://www.swordtt.com",
+            "https://revspin.net"
+          ]
+        },
+        "paladin-2": {
+          "note": "Non-tacky; colour topsheets available. Thickness not confirmed.",
+          "sources": [
+            "https://www.jd.com",
+            "https://www.swordtt.com"
+          ]
+        },
+        "remix": {
+          "note": "Non-tacky backhand-oriented rubber; thickness not confirmed.",
+          "sources": [
+            "https://www.jd.com",
+            "https://www.swordtt.com"
+          ]
+        },
+        "2000f": {
+          "note": "Long-running budget series with several sub-models (Back-Off, NN, Wind...); specs not confirmed.",
+          "sources": [
+            "https://revspin.net"
+          ]
+        },
+        "scylla": {
+          "note": "Long pips, sold as OX and with thin sponge; exact sizes not confirmed. Versions: Scylla Pro, Scylla 3.",
+          "sources": [
+            "https://revspin.net",
+            "https://www.swordtt.com"
+          ]
+        },
+        "venom": {
+          "note": "Long pips, OX and thin-sponge versions; exact sizes not confirmed.",
+          "sources": [
+            "https://www.swordtt.com"
+          ]
+        }
+      },
+      "blades": {
+        "vsea": {
+          "sources": [
+            "https://tokspin.com",
+            "https://www.jd.com"
+          ]
+        },
+        "subdue": {
+          "sources": [
+            "https://tokspin.com"
+          ]
+        },
+        "black-gold-pro": {
+          "sources": [
+            "https://tokspin.com",
+            "https://eacheng.net"
+          ]
+        }
+      }
+    },
+    "kokutaku": {
+      "rubbers": {
+        "119": {
+          "note": "Short pips; sellers list 2.2 mm (and thinner) with ~35-40 degree sponge - not confirmed.",
+          "sources": [
+            "https://revspin.net",
+            "https://tabletennishub.net"
+          ]
+        },
+        "blutenkirsche-868": {
+          "note": "Semi-tacky budget rubber with several sponge versions (standard, blue sponge, 40+, Tokyo super tacky). Sellers list 2.15 or 2.2 mm and ~40-44 (standard) / ~38 (blue sponge); no consistent maker figure found.",
+          "sources": [
+            "https://revspin.net",
+            "https://www.chtt.se",
+            "https://tokspin.com"
+          ]
+        },
+        "tulpe-007": {
+          "note": "Tacky rubber; versions include Japanese soft sponge (quoted as 35 or 38 degrees), 40+ and Pro Selected (blue sponge). Thickness/hardness not confirmed.",
+          "sources": [
+            "https://revspin.net",
+            "https://www.chtt.se"
+          ]
+        },
+        "007-pro-selected": {
+          "note": "Blue-sponge version of 007; specs not confirmed.",
+          "sources": [
+            "https://revspin.net"
+          ]
+        },
+        "tokyo-730": {
+          "note": "Soft, tensor-like rubber with neon sponge; sellers list MAX and 1.8 mm - not confirmed. ITTF approval status questioned for some versions.",
+          "sources": [
+            "https://revspin.net",
+            "https://tokspin.com"
+          ]
+        }
+      },
+      "blades": {
+        "tokyo-blade": {
+          "sources": [
+            "https://tokspin.com",
+            "https://shopee.com.my"
+          ]
+        }
+      }
+    },
+    "doublefish": {
+      "rubbers": {
+        "1615": {
+          "note": "Classic long pips; some sellers also list ~1.2 mm sponge. Sponge hardness not published.",
+          "sources": [
+            "https://tokspin.com",
+            "https://revspin.net",
+            "https://www.jd.com"
+          ]
+        },
+        "volant-phoenix": {
+          "note": "Tacky internal-energy version; 39/40/41 per JD/Taobao and Lazada listings.",
+          "sources": [
+            "https://www.jd.com",
+            "https://www.lazada.com.ph",
+            "https://mytabletennisclub.ca"
+          ]
+        },
+        "volant-phoenix-2": {
+          "note": "Softer / less tacky second version; hardness options per Taobao and Lazada listings.",
+          "sources": [
+            "https://www.taobao.com",
+            "https://www.lazada.com.ph"
+          ]
+        },
+        "hunting-shadows-213": {
+          "note": "Non-tacky internal-energy rubber with cake sponge.",
+          "sources": [
+            "https://revspin.net",
+            "https://www.doublefish.com"
+          ]
+        },
+        "a-one-provincial": {
+          "note": "Tacky provincial-style rubber; JD listing shows 39 (black and blue sponge versions); other hardness versions and thickness not confirmed.",
+          "sources": [
+            "https://www.jd.com",
+            "https://revspin.net"
+          ]
+        },
+        "qiji-loop-king": {
+          "note": "Cake-sponge loop rubber; a shop describes it as 37-39 degree medium-hard - exact versions not confirmed.",
+          "sources": [
+            "https://www.ttshop.cn",
+            "https://revspin.net"
+          ]
+        },
+        "athlon-1": {
+          "note": "Blue-sponge offensive rubber; sellers quote 39-40 (up to 45) and 2.1/2.2 mm - not confirmed.",
+          "sources": [
+            "https://revspin.net",
+            "https://www.aliexpress.com"
+          ]
+        },
+        "athlon-2": {
+          "note": "Specs not confirmed (forum mentions ~45, 2.2 mm).",
+          "sources": [
+            "https://revspin.net"
+          ]
+        }
+      },
+      "blades": {
+        "dragon-1-zlc": {
+          "sources": [
+            "https://tabletennisdaily.com",
+            "https://www.aliexpress.com"
+          ]
+        },
+        "dragon-2-alc": {
+          "sources": [
+            "https://tabletennisdaily.com"
+          ]
+        }
+      }
+    },
+    "juic": {
+      "rubbers": {
+        "999-elite": {
+          "note": "Tacky topsheet, Japanese sponge. JP sizes 中/中厚/厚/極厚 (1.5/1.8/2.0/MAX per Paddle Palace) plus 薄 (thin, mm not published)"
+        },
+        "999-elite-charisma": {
+          "note": "999 Elite topsheet on Charisma tension sponge; JP sizes 中厚/厚/極厚"
+        },
+        "neo-galaxia": {
+          "note": "Made in Japan tension rubber (Dec 2023); JP sizes 厚/極厚 (some shops also list 中)"
+        },
+        "pro-galaxia": {
+          "note": "Released June 2025; sizes 厚 (2.0) / 極厚 (MAX)"
+        },
+        "nano-spin-2-charisma": {
+          "note": "JP sizes 中厚/厚/極厚"
+        },
+        "driva-smash-ultima": {
+          "note": "JP sizes 中/中厚/厚/極厚 plus 薄 (thin, mm not published)"
+        },
+        "offense-ultima": {
+          "note": "Speed short pips on Ultima tension sponge; JP sizes 中/中厚/厚/極厚 plus 薄 (thin, mm not published)"
+        },
+        "patisuma-v": {
+          "note": "Vertical short pips. JP sizes OX/極薄/薄/中/中厚/厚 (thickest is 厚); 極薄 and 薄 mm not published"
+        },
+        "leggy-defense": {
+          "note": "JP sizes OX/薄/中 with soft sponge; 薄 mm not published, 中 ≈1.5 mm per JUIC size convention"
+        }
+      },
+      "blades": {}
+    },
+    "armstrong": {
+      "rubbers": {
+        "attack-8": {
+          "note": "Half-long pips (1.2 mm pip height), sold with M (narrow) or L (wide) pips. Maker labels sizes 超極薄≈0.5 / 極薄≈1.0 / 薄≈1.2 / 中≈1.5 / 厚≈1.8 / 特厚≈2.1 mm (approximate). 40° is the standard sponge; 48° and 53° hard-sponge versions exist (a 41/43° 'Super-I' version is also reported). Not every size exists for every sponge version."
+        },
+        "attack-8-exx": {
+          "note": "Energy-built-in (tension-type) sponge version. Sizes labelled 超極/極薄/薄/中/厚/特厚 (approx. mm); an OX version is mentioned by some retailers but not verified."
+        },
+        "attack-8-nt": {
+          "note": "New NT sponge; M and L pip versions. Sizes labelled 超極/極薄/薄/中/厚/特厚 (approx. mm per Armstrong size chart)."
+        },
+        "hikari-sr7": {
+          "note": "Sold in several sponge versions (e.g. 'SR7 42' = 42°, a 45° chopper version, PZC-SP 25° soft sponge); sizes are labelled 薄/中/厚/特厚 by total thickness. Per-version sponge mm and hardness list not verified."
+        }
+      },
+      "blades": {}
+    },
+    "darker": {
+      "rubbers": {
+        "crea": {
+          "note": "Spin-type short pips with a Chinese blue sponge; a harder 'CREA Hard' version is also sold. Thickness options and sponge hardness not verified (one retailer lists 2.0)."
+        },
+        "giro": {
+          "note": "Long pips with thin, maximum-length pips. Thickness options and sponge hardness not verified."
+        }
+      },
+      "blades": {}
+    },
+    "dr-neubauer": {
+      "rubbers": {
+        "killer": {
+          "note": "Short pips with half-long-like disruption; MAX ≈ 2.2 mm. Sponge hardness not published by maker."
+        },
+        "killer-pro": {
+          "note": "MAX ≈ 2.2 mm. Sponge hardness not published by maker."
+        },
+        "killer-pro-evo": {
+          "note": "Blue fast sponge; MAX ≈ 2.2 mm. Maker gives no hardness figure (retailers say medium-soft)."
+        },
+        "killer-extreme": {
+          "note": "MAX ≈ 2.2 mm. Sponge hardness not published by maker."
+        },
+        "killer-soft": {
+          "note": "Softer-sponge Killer; MAX ≈ 2.2 mm. Hardness not published."
+        },
+        "explosion": {
+          "note": "Thickness unverified: sources disagree (OX/1.2–2.2 mm vs 1.5–MAX). Hardness not published."
+        },
+        "pistol": {
+          "note": "Hardness not published."
+        },
+        "aggressor": {
+          "note": "Half-long pips. Hardness not published."
+        },
+        "aggressor-evo": {
+          "note": "Half-long pips. Hardness not published."
+        },
+        "aggressor-pro": {
+          "note": "Thickness unverified (1.8/2.0 mm widely stocked; thinner sizes listed by some retailers). Hardness not published."
+        },
+        "diamant": {
+          "note": "Half-long pips, soft sponge. Hardness figure not published."
+        },
+        "ko": {
+          "note": "Half-long pips. Hardness not published."
+        },
+        "ko-pro": {
+          "note": "Half-long pips. Hardness not published."
+        },
+        "ko-extreme": {
+          "note": "Half-long pips. Hardness not published."
+        },
+        "desperado": {
+          "note": "Long pips with friction. A 1.3 mm version is also reported by one source. Hardness not published."
+        },
+        "desperado-2": {
+          "note": "Long pips with friction. Hardness not published."
+        },
+        "desperado-reloaded": {
+          "note": "0.5 mm = special slow blue dampening sponge version. Hardness not published."
+        },
+        "boomerang-classic": {
+          "note": "Long pips with friction (successor of the banned frictionless Boomerang). Hardness not published."
+        },
+        "monster-classic": {
+          "note": "Long pips with friction. Hardness not published."
+        },
+        "fighter": {
+          "note": "1.2 mm = slow dampening sponge. Hardness not published."
+        },
+        "viper": {
+          "note": "Hardness not published."
+        },
+        "abs": {
+          "note": "Frictionless anti with slow ABS dampening sponge. Hardness not published."
+        },
+        "abs-2": {
+          "note": "Single source for sizes. Hardness not published."
+        },
+        "abs-2-evo": {
+          "note": "Hardness not published."
+        },
+        "abs-3": {
+          "note": "Blue dampening sponge; single source for sizes. Hardness not published."
+        },
+        "abs-3-pro": {
+          "note": "Red dampening sponge; single source for sizes. Hardness not published."
+        },
+        "anti-special": {
+          "note": "Hardness not published."
+        },
+        "gorilla": {
+          "note": "Current version on ABS sponge; older versions came in other sizes. Hardness not published."
+        },
+        "grizzly": {
+          "note": "ABS dampening sponge. Hardness not published."
+        },
+        "bison": {
+          "note": "Frictionless anti; a Bison+ version also exists (not listed separately, unverified). Hardness not published."
+        },
+        "buffalo": {
+          "note": "Single source for sizes. Hardness not published."
+        },
+        "rhino": {
+          "note": "Single source for sizes. Hardness not published."
+        },
+        "tarantula": {
+          "note": "Hardness not published."
+        },
+        "dominance-spin": {
+          "note": "Inverted, slightly tacky topsheet. Sizes from a single source; one source reports 38° sponge (unverified)."
+        },
+        "dominance-speed": {
+          "note": "Inverted, non-tacky. Sizes from a single source; hardness unverified (a Hard version is also reported)."
+        }
+      },
+      "blades": {}
+    },
+    "sauer-troger": {
+      "rubbers": {
+        "hellfire-x": {
+          "note": "Some distributors list the thickest sponge as 1.0 mm. Hardness not published."
+        },
+        "hellfire": {
+          "note": "Original version, replaced by Hellfire X (2020). Sizes not verified."
+        },
+        "schmerz": {
+          "note": "Older listings also show 1.0 mm. Hardness not published."
+        },
+        "monkey": {
+          "note": "0.6 mm = dampening sponge. Hardness not published."
+        },
+        "easy-p": {
+          "note": "Sponge sizes from a single retailer. Hardness not published."
+        },
+        "hipster": {
+          "note": "Half-long pips. Some retailers list 1.8 mm. Hardness not published."
+        },
+        "zargus": {
+          "note": "Hardness not published."
+        },
+        "hass": {
+          "note": "Thickness unverified: 1.5/1.8 mm agreed, thickest reported as 2.0 or 2.1 mm. Hardness not published (described as medium)."
+        },
+        "super-stop": {
+          "note": "Sizes from a single retailer. Hardness not published."
+        },
+        "blackout": {
+          "note": "Anti with ultra-soft damping sponge; sizes not verified."
+        },
+        "secret-flow": {
+          "note": "Defensive inverted (SC sponge); thickest sold as 2.1 or MAX depending on retailer. ~45° reported by a review, not by maker."
+        },
+        "icon": {
+          "note": "Offensive inverted; 50° per contra.de. Thickness options not verified."
+        }
+      },
+      "blades": {}
+    },
+    "materialspezialist": {
+      "rubbers": {
+        "elimination": {
+          "note": "Extra-long pips. Hardness not published."
+        },
+        "kamikaze": {
+          "note": "Sizes not verified. Green edition exists."
+        },
+        "hallucination": {
+          "note": "Sizes not verified."
+        },
+        "wildfire": {
+          "note": "Half-long pips with low-friction anti-top compound. Hardness not published."
+        },
+        "firestorm": {
+          "note": "Offensive short pips with tensioned sponge; sizes from a single retailer (Soft / Green Storm editions not listed). Hardness not published."
+        },
+        "spinparasite": {
+          "note": "Frictionless anti; sizes from a single retailer. Hardness not published."
+        },
+        "diabolic": {
+          "note": "Frictionless anti; sizes not verified (1.0/1.3/1.6 mm reported for Diabolic Special)."
+        },
+        "transformer": {
+          "note": "Thickest (1.5 mm) is the slowest. Hardness not published."
+        },
+        "stoerkraft": {
+          "note": "Thickest is the slowest. Hardness not published."
+        },
+        "mega-block": {
+          "note": "Thickest (2.0 mm) is the slowest. Hardness not published."
+        }
+      },
+      "blades": {}
+    },
+    "reactor": {
+      "rubbers": {
+        "corbor": {
+          "note": "Tacky inverted. Commonly sold as 2.0 / 2.2 (MAX) and described as ~45–47° by reviews, but no maker spec found — left unverified."
+        },
+        "ckylin": {
+          "note": "Inverted, blue sponge; retailers mention MAX and ~42°/~47° versions — no maker spec found, unverified."
+        },
+        "tornado": {
+          "note": "Tacky inverted (incl. Tornado V5); MAX and ~47° mentioned by retailers/forums — no maker spec found, unverified."
+        }
+      },
+      "blades": {}
+    }
+  }
+}

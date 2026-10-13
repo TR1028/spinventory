@@ -1,0 +1,1173 @@
+{
+  "id": "victas",
+  "name": "维克塔斯",
+  "en": "VICTAS",
+  "label": "Victas",
+  "aliases": [
+    "tsp",
+    "victas",
+    "大和"
+  ],
+  "rubbers": [
+    {
+      "id": "v15-extra",
+      "name": "V>15 Extra",
+      "aliases": [
+        "v15",
+        "v>15",
+        "v15e"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "v15-stiff",
+      "name": "V>15 Stiff",
+      "aliases": [
+        "v15s"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "v15-limber",
+      "name": "V>15 Limber",
+      "aliases": [
+        "v15l"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "v15-sticky",
+      "name": "V>15 Sticky",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "v15-sticky-soft",
+      "name": "V>15 Sticky Soft",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "v20-double-extra",
+      "name": "V>20 Double Extra",
+      "aliases": [
+        "v20",
+        "v>20",
+        "v20de"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "v20-extra",
+      "name": "V>20 Extra",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "v22-double-extra",
+      "name": "V>22 Double Extra",
+      "aliases": [
+        "v22",
+        "v>22",
+        "v22de"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "v11-extra",
+      "name": "V>11 Extra",
+      "aliases": [
+        "v11",
+        "v>11"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "v01-stiff",
+      "name": "V>01 Stiff",
+      "aliases": [
+        "v01"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "v01-limber",
+      "name": "V>01 Limber",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vj07-regular",
+      "name": "VJ>07 Regular",
+      "aliases": [
+        "vj07",
+        "vj>07"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vj07-stiff",
+      "name": "VJ>07 Stiff",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vj07-limber",
+      "name": "VJ>07 Limber",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vjc07-sticky-extra",
+      "name": "VJC>07 Sticky Extra",
+      "aliases": [
+        "vjc07",
+        "vjc>07",
+        "vjc07 sticky"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "triple-double-extra",
+      "name": "TRIPLE Double Extra",
+      "aliases": [
+        "triple",
+        "triple de"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "57.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "triple-extra",
+      "name": "TRIPLE Extra",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "triple-regular",
+      "name": "TRIPLE Regular",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "xegna",
+      "name": "XEGNA",
+      "aliases": [
+        "ゼグナ"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "xegna-spin",
+      "name": "XEGNA SPIN",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vs401",
+      "name": "VS>401",
+      "aliases": [
+        "401"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2
+      ],
+      "hardness": [
+        "57.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vs402-double-extra",
+      "name": "VS>402 Double Extra",
+      "aliases": [
+        "vs402",
+        "vs>402",
+        "402 double extra"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vs402-limber",
+      "name": "VS>402 Limber",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "ventus-extra",
+      "name": "VENTUS Extra",
+      "aliases": [
+        "super ventus"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "ventus-stiff",
+      "name": "VENTUS Stiff",
+      "aliases": [
+        "ventus speed"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "ventus-limber",
+      "name": "VENTUS Limber",
+      "aliases": [
+        "ventus spin"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "ventus-regular-alpha",
+      "name": "VENTUS Regular α",
+      "aliases": [
+        "ventus regular",
+        "ventus regular alpha",
+        "ventus basic"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black",
+        "blue",
+        "pink"
+      ]
+    },
+    {
+      "id": "swat-spin",
+      "name": "SWAT Spin",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "swat-power-spin",
+      "name": "SWAT Power Spin",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vo101",
+      "name": "VO>101",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1.6,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "37.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vo102",
+      "name": "VO>102",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "37.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vo103",
+      "name": "VO>103",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1.6,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "spectol-s1",
+      "name": "SPECTOL S1",
+      "aliases": [
+        "spectol",
+        "s1"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.3,
+        1.6,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black",
+        "blue"
+      ]
+    },
+    {
+      "id": "spectol-s2",
+      "name": "SPECTOL S2",
+      "aliases": [
+        "s2"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.6,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "37.5"
+      ],
+      "colors": [
+        "red",
+        "black",
+        "blue"
+      ]
+    },
+    {
+      "id": "spectol-s3",
+      "name": "SPECTOL S3",
+      "aliases": [
+        "s3"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.6,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "37.5"
+      ],
+      "colors": [
+        "red",
+        "black",
+        "blue"
+      ]
+    },
+    {
+      "id": "spinpips-d1",
+      "name": "SPINPIPS D1",
+      "aliases": [
+        "spinpips",
+        "super spinpips"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.3,
+        1.6,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "spinpips-d2",
+      "name": "SPINPIPS D2",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1.6,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "37.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "spinpips-d3",
+      "name": "SPINPIPS D3",
+      "aliases": [
+        "chop sponge"
+      ],
+      "category": "生胶",
+      "thickness": [
+        0.5,
+        1,
+        1.5,
+        2
+      ],
+      "hardness": [
+        "25"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "curl-p1v",
+      "name": "CURL P1V",
+      "aliases": [
+        "p1v",
+        "curl p1r",
+        "p1r",
+        "curl"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5,
+        1,
+        1.5
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "curl-p2v",
+      "name": "CURL P2V",
+      "aliases": [
+        "p2v",
+        "curl p2"
+      ],
+      "category": "中颗粒",
+      "thickness": [
+        0.5,
+        1,
+        1.5
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "curl-p3alpha-v",
+      "name": "CURL P3αV",
+      "aliases": [
+        "curl p3av",
+        "curl p3 alpha",
+        "p3αv",
+        "p3av",
+        "curl p3αr"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5,
+        1,
+        1.5
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "curl-p4v",
+      "name": "CURL P4V",
+      "aliases": [
+        "p4v",
+        "curl p-4"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5,
+        1,
+        1.5
+      ],
+      "hardness": [
+        "20"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "curl-p5v",
+      "name": "CURL P5V",
+      "aliases": [
+        "p5v",
+        "curl p-h"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5,
+        1,
+        1.5
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "koki-niwa-wood",
+      "name": "Koki Niwa Wood (丹羽孝希 纯木)",
+      "aliases": [
+        "koki niwa wood",
+        "niwa wood",
+        "丹羽孝希",
+        "丹羽"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "koki-niwa-zc",
+      "name": "Koki Niwa ZC (丹羽孝希 ZC)",
+      "aliases": [
+        "koki niwa zc",
+        "niwa zc",
+        "丹羽zc"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "koki-niwa-zc-inner",
+      "name": "Koki Niwa ZC Inner (丹羽孝希 ZC 内置)",
+      "aliases": [
+        "koki niwa zc inner",
+        "niwa zc inner",
+        "丹羽zc内置"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "liam-pitchford",
+      "name": "Liam Pitchford (皮奇福德)",
+      "aliases": [
+        "liam pitchford",
+        "pitchford",
+        "皮奇福德"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "zx-gear-out",
+      "name": "ZX-GEAR OUT",
+      "aliases": [
+        "zx-gear outer"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "zx-gear-in",
+      "name": "ZX-GEAR IN",
+      "aliases": [
+        "zx-gear inner"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "zx-gear-fiber",
+      "name": "ZX-GEAR FIBER",
+      "aliases": [],
+      "category": "内置其他纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "fire-fall-ac",
+      "name": "Fire Fall AC (火焰瀑布 AC)",
+      "aliases": [
+        "fire fall ac",
+        "firefall ac",
+        "火焰瀑布ac"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "fire-fall-fc",
+      "name": "Fire Fall FC (火焰瀑布 FC)",
+      "aliases": [
+        "fire fall fc",
+        "firefall fc",
+        "火焰瀑布fc"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "fire-fall-sc",
+      "name": "Fire Fall SC (火焰瀑布 SC)",
+      "aliases": [
+        "fire fall sc",
+        "firefall sc",
+        "火焰瀑布sc"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "fire-fall-vc",
+      "name": "Fire Fall VC (火焰瀑布 VC)",
+      "aliases": [
+        "fire fall vc",
+        "firefall vc",
+        "火焰瀑布vc"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "fire-fall-lc",
+      "name": "Fire Fall LC (火焰瀑布 LC)",
+      "aliases": [
+        "fire fall lc",
+        "firefall lc",
+        "火焰瀑布lc"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "fire-fall-hc",
+      "name": "Fire Fall HC (火焰瀑布 HC)",
+      "aliases": [
+        "fire fall hc",
+        "firefall hc",
+        "火焰瀑布hc"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "magnass",
+      "name": "MAGNASS",
+      "aliases": [
+        "マグナス"
+      ]
+    },
+    {
+      "id": "quartet-lfc",
+      "name": "Quartet LFC",
+      "aliases": [
+        "カルテット lfc"
+      ],
+      "plies": "5+4"
+    },
+    {
+      "id": "quartet-afc",
+      "name": "Quartet AFC",
+      "aliases": [
+        "カルテット afc"
+      ],
+      "plies": "5+4"
+    },
+    {
+      "id": "quartet-vfc",
+      "name": "Quartet VFC",
+      "aliases": [
+        "カルテット vfc"
+      ],
+      "plies": "5+4"
+    },
+    {
+      "id": "swat",
+      "name": "SWAT",
+      "aliases": [
+        "tsp swat"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "swat-power",
+      "name": "SWAT Power",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "swat-speed",
+      "name": "SWAT Speed",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "swat-carbon",
+      "name": "SWAT Carbon",
+      "aliases": [],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "swat-5pw",
+      "name": "SWAT 5PW",
+      "aliases": [
+        "swat 5"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "black-balsa-v3",
+      "name": "Black Balsa V3.0",
+      "aliases": [
+        "black balsa 3.0",
+        "black balsa v3"
+      ],
+      "category": "外置其他纤维",
+      "plies": "3+2"
+    },
+    {
+      "id": "black-balsa-v5",
+      "name": "Black Balsa V5.0",
+      "aliases": [
+        "black balsa 5.0",
+        "black balsa v5"
+      ],
+      "category": "外置其他纤维",
+      "plies": "3+2"
+    },
+    {
+      "id": "black-balsa-v7",
+      "name": "Black Balsa V7.0",
+      "aliases": [
+        "black balsa 7.0",
+        "black balsa v7"
+      ],
+      "category": "外置其他纤维",
+      "plies": "3+2"
+    },
+    {
+      "id": "koji-matsushita",
+      "name": "Koji Matsushita (松下浩二)",
+      "aliases": [
+        "koji matsushita",
+        "matsushita",
+        "松下浩二",
+        "松下"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "koji-matsushita-offensive",
+      "name": "Koji Matsushita Offensive (松下浩二 进攻型)",
+      "aliases": [
+        "koji matsushita offensive",
+        "matsushita offensive"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "koji-matsushita-special",
+      "name": "Koji Matsushita Special (松下浩二 Special)",
+      "aliases": [
+        "koji matsushita special",
+        "matsushita special"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "koji-matsushita-zc",
+      "name": "Koji Matsushita ZC (松下浩二 ZC)",
+      "aliases": [
+        "koji matsushita zc",
+        "matsushita zc"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "athenes-wood",
+      "name": "ATHENES Wood",
+      "aliases": [
+        "athenes"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "athenes-attack",
+      "name": "ATHENES Attack",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "athenes-carbon",
+      "name": "ATHENES Carbon",
+      "aliases": [],
+      "category": "外置碳素",
+      "plies": "5+2"
+    }
+  ]
+}

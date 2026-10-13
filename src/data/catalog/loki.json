@@ -1,0 +1,434 @@
+{
+  "id": "loki",
+  "name": "雷神",
+  "en": "LOKI",
+  "label": "雷神",
+  "aliases": [
+    "loki",
+    "leishen"
+  ],
+  "rubbers": [
+    {
+      "id": "rxton-1",
+      "name": "锐龙1 (RXTON 1)",
+      "aliases": [
+        "rxton 1",
+        "rxton i",
+        "rxton1",
+        "锐龙1",
+        "ruilong 1"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rxton-1-pro",
+      "name": "锐龙1 PRO (RXTON 1 Pro)",
+      "aliases": [
+        "rxton 1 pro",
+        "锐龙1pro"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rxton-3",
+      "name": "锐龙3 (RXTON 3)",
+      "aliases": [
+        "rxton 3",
+        "rxton iii",
+        "rxton3",
+        "锐龙3"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "39"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rxton-3-pro",
+      "name": "锐龙3 PRO (RXTON 3 Pro)",
+      "aliases": [
+        "rxton 3 pro",
+        "锐龙3pro"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rxton-5",
+      "name": "锐龙5 (RXTON 5)",
+      "aliases": [
+        "rxton 5",
+        "rxton v",
+        "rxton5",
+        "锐龙5"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "41"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rxton-5-pro",
+      "name": "锐龙5 PRO (RXTON 5 Pro)",
+      "aliases": [
+        "rxton 5 pro",
+        "锐龙5pro"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rxton-5-neo",
+      "name": "锐龙5 NEO (RXTON 5 Neo)",
+      "aliases": [
+        "rxton 5 neo",
+        "锐龙5neo"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "39",
+        "40",
+        "40.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rxton-7",
+      "name": "锐龙7 (RXTON 7)",
+      "aliases": [
+        "rxton 7",
+        "rxton vii",
+        "rxton7",
+        "锐龙7"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "37",
+        "39",
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rxton-9",
+      "name": "锐龙9 (RXTON 9)",
+      "aliases": [
+        "rxton 9",
+        "rxton ix",
+        "rxton9",
+        "锐龙9"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "39",
+        "40.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rxton-9-provincial",
+      "name": "锐龙9 省套 (RXTON 9 Provincial)",
+      "aliases": [
+        "rxton 9 provincial",
+        "锐龙9省套"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rxton-9-national",
+      "name": "锐龙9 国套蓝海绵 (RXTON 9 National Blue Sponge)",
+      "aliases": [
+        "rxton 9 national",
+        "锐龙9国套"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "arthur-china",
+      "name": "亚瑟中国 (ARTHUR China)",
+      "aliases": [
+        "arthur china",
+        "亚瑟中国",
+        "亚瑟"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "arthur-asia",
+      "name": "亚瑟亚洲 (ARTHUR Asia)",
+      "aliases": [
+        "arthur asia",
+        "亚瑟亚洲"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "arthur-europe",
+      "name": "亚瑟欧洲 (ARTHUR Europe)",
+      "aliases": [
+        "arthur europe",
+        "亚瑟欧洲"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "arthur-europe-diamond",
+      "name": "亚瑟欧洲钻石版 (ARTHUR Europe Diamond)",
+      "aliases": [
+        "arthur europe diamond",
+        "亚瑟欧洲钻石"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "telson-germany",
+      "name": "毒刺德国 (TELSON Germany)",
+      "aliases": [
+        "telson germany",
+        "毒刺德国",
+        "stinger germany",
+        "毒刺"
+      ],
+      "category": "反胶",
+      "thickness": [
+        "MAX"
+      ],
+      "hardness": [
+        "45",
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "telson-china",
+      "name": "毒刺中国 (TELSON China)",
+      "aliases": [
+        "telson china",
+        "毒刺中国",
+        "stinger china"
+      ],
+      "category": "反胶",
+      "thickness": [
+        "MAX"
+      ],
+      "hardness": [
+        "52.5",
+        "55",
+        "57.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "telson-100",
+      "name": "毒刺100 (TELSON 100)",
+      "aliases": [
+        "telson 100",
+        "毒刺100",
+        "stinger 100"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "kirin-k5",
+      "name": "麒麟K5 (Kirin K5)",
+      "aliases": [
+        "kirin k5",
+        "k5",
+        "麒麟k5"
+      ]
+    },
+    {
+      "id": "kirin-k3",
+      "name": "麒麟K3 (Kirin K3)",
+      "aliases": [
+        "kirin k3",
+        "k3",
+        "麒麟k3"
+      ]
+    },
+    {
+      "id": "kirin-k5-pro-outer",
+      "name": "麒麟K5 PRO 外置 (Kirin K5 Pro Outer)",
+      "aliases": [
+        "k5 pro outer",
+        "k5pro外置"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "kirin-k5-pro-inner",
+      "name": "麒麟K5 PRO 内置 (Kirin K5 Pro Inner)",
+      "aliases": [
+        "k5 pro inner",
+        "k5pro内置"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "w81-outer-alc",
+      "name": "W81 外置芳碳 (W81 Outer ALC)",
+      "aliases": [
+        "w81",
+        "w81 outer"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "w81-inner-alc",
+      "name": "W81 内置芳碳 (W81 Inner ALC)",
+      "aliases": [
+        "w81 inner"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "rxton-9-pro-blade",
+      "name": "锐龙9 PRO 底板 (RXTON 9 Pro)",
+      "aliases": [
+        "rxton 9 pro blade",
+        "锐龙9pro底板"
+      ],
+      "category": "外置其他纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "arthur-asia-alc",
+      "name": "亚瑟亚洲 ALC (Arthur Asia ALC)",
+      "aliases": [
+        "arthur asia alc"
+      ]
+    },
+    {
+      "id": "arthur-euro-alc",
+      "name": "亚瑟欧洲 ALC (Arthur Euro ALC)",
+      "aliases": [
+        "arthur euro alc",
+        "arthur europe alc"
+      ]
+    }
+  ]
+}

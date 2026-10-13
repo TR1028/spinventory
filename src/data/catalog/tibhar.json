@@ -1,0 +1,982 @@
+{
+  "id": "tibhar",
+  "name": "挺拔",
+  "en": "TIBHAR",
+  "label": "Tibhar",
+  "aliases": [
+    "tibhar"
+  ],
+  "rubbers": [
+    {
+      "id": "evolution-mx-p",
+      "name": "Evolution MX-P",
+      "aliases": [
+        "mxp",
+        "mx-p",
+        "挺拔mxp",
+        "变革mxp"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "evolution-mx-p-50",
+      "name": "Evolution MX-P 50°",
+      "aliases": [
+        "mxp50",
+        "mx-p 50",
+        "mxp 50",
+        "挺拔mxp50"
+      ],
+      "category": "反胶",
+      "thickness": [
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "evolution-mx-s",
+      "name": "Evolution MX-S",
+      "aliases": [
+        "mxs",
+        "mx-s",
+        "挺拔mxs"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45.7-47.7"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "evolution-el-p",
+      "name": "Evolution EL-P",
+      "aliases": [
+        "elp",
+        "el-p",
+        "挺拔elp"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "evolution-fx-p",
+      "name": "Evolution FX-P",
+      "aliases": [
+        "fxp",
+        "fx-p",
+        "挺拔fxp"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "evolution-mx-d",
+      "name": "Evolution MX-D",
+      "aliases": [
+        "mxd",
+        "mx-d",
+        "挺拔mxd"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "50.3-52.3"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "evolution-el-s",
+      "name": "Evolution EL-S",
+      "aliases": [
+        "els",
+        "el-s"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "43.8-45.8"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "evolution-fx-s",
+      "name": "Evolution FX-S",
+      "aliases": [
+        "fxs",
+        "fx-s"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "41-43"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "evolution-el-d",
+      "name": "Evolution EL-D",
+      "aliases": [
+        "eld",
+        "el-d"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45-47"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "evolution-fx-d",
+      "name": "Evolution FX-D",
+      "aliases": [
+        "fxd",
+        "fx-d"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "43-45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hybrid-k3",
+      "name": "Hybrid K3",
+      "aliases": [
+        "k3",
+        "挺拔k3"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "53"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hybrid-k3-pro",
+      "name": "Hybrid K3 Pro",
+      "aliases": [
+        "k3 pro",
+        "k3pro"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hybrid-k3-fx",
+      "name": "Hybrid K3 FX",
+      "aliases": [
+        "k3 fx",
+        "k3fx"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "48"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hybrid-k3-vip",
+      "name": "Hybrid K3 VIP",
+      "aliases": [
+        "k3 vip",
+        "k3vip"
+      ],
+      "category": "反胶",
+      "thickness": [
+        "MAX"
+      ],
+      "hardness": [
+        "59"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hybrid-mk",
+      "name": "Hybrid MK",
+      "aliases": [
+        "挺拔mk"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "48"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hybrid-mk-pro",
+      "name": "Hybrid MK Pro",
+      "aliases": [
+        "mk pro",
+        "mkpro"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "51"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hybrid-mk-fx",
+      "name": "Hybrid MK FX",
+      "aliases": [
+        "mk fx",
+        "mkfx"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hybrid-k1j",
+      "name": "Hybrid K1J",
+      "aliases": [
+        "k1j"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "infinity-mx-p",
+      "name": "Infinity MX-P",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2.05,
+        2.15
+      ],
+      "hardness": [
+        "50.35-50.95"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "infinity-mx-s",
+      "name": "Infinity MX-S",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2.05,
+        2.15
+      ],
+      "hardness": [
+        "52.35-52.95"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "quantum-x-pro",
+      "name": "Quantum X Pro",
+      "aliases": [
+        "qxp",
+        "量子xpro"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black",
+        "blue",
+        "green",
+        "pink",
+        "purple"
+      ]
+    },
+    {
+      "id": "quantum-x-pro-soft",
+      "name": "Quantum X Pro Soft",
+      "aliases": [
+        "qxp soft"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "aurus",
+      "name": "Aurus",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "aurus-soft",
+      "name": "Aurus Soft",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "aurus-sound",
+      "name": "Aurus Sound",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "aurus-prime",
+      "name": "Aurus Prime",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "aurus-select",
+      "name": "Aurus Select",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "genius",
+      "name": "Genius",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "genius-optimum",
+      "name": "Genius+ Optimum",
+      "aliases": [
+        "genius plus optimum"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "genius-optimum-sound",
+      "name": "Genius+ Optimum Sound",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "37.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "genius-sound",
+      "name": "Genius Sound",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "37.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "grass-dtecs",
+      "name": "Grass D.TecS",
+      "aliases": [
+        "grass"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5,
+        0.9,
+        1.2,
+        1.6
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "grass-dtecs-gs",
+      "name": "Grass D.TecS GS",
+      "aliases": [
+        "grass gs"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "speedy-soft",
+      "name": "Speedy Soft",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1,
+        1.5,
+        2
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "speedy-soft-dtecs",
+      "name": "Speedy Soft D.TecS",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1.5,
+        2
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "speedy-soft-dtecs-xd",
+      "name": "Speedy Soft D.TecS XD",
+      "aliases": [
+        "speedy soft xd"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vari-spin-dtecs",
+      "name": "Vari Spin D.TecS",
+      "aliases": [
+        "vari spin"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "32.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "super-defense-40",
+      "name": "Super Defense 40",
+      "aliases": [
+        "super defense",
+        "sd40"
+      ],
+      "category": "反胶",
+      "thickness": [
+        0.5,
+        0.9,
+        1.3,
+        1.5,
+        1.7,
+        1.9
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "super-defense-40-soft",
+      "name": "Super Defense 40 Soft",
+      "aliases": [
+        "super defense soft",
+        "sd40 soft"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.3,
+        1.6
+      ],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "samsonov-force-pro-black-edition",
+      "name": "Samsonov Force Pro Black Edition (黑萨)",
+      "aliases": [
+        "sfpbe",
+        "黑萨",
+        "samsonov force pro black",
+        "萨姆索诺夫黑"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "samsonov-force-pro",
+      "name": "Samsonov Force Pro",
+      "aliases": [
+        "sfp",
+        "萨姆索诺夫"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "stratus-power-wood",
+      "name": "Stratus Power Wood",
+      "aliases": [
+        "spw",
+        "stratus"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "felix-lebrun-hyper-carbon",
+      "name": "Felix Lebrun Hyper Carbon (小勒布伦)",
+      "aliases": [
+        "felix lebrun",
+        "lebrun hyper carbon",
+        "flhc",
+        "小勒布伦",
+        "勒布伦"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "alexis-lebrun-krypto-carbon",
+      "name": "Alexis Lebrun Krypto Carbon (大勒布伦)",
+      "aliases": [
+        "alexis lebrun",
+        "krypto carbon",
+        "大勒布伦"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "shang-kun-hybrid-ac",
+      "name": "Shang Kun Hybrid AC (尚坤 AC)",
+      "aliases": [
+        "shang kun",
+        "shang kun ac",
+        "尚坤",
+        "尚坤ac"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "shang-kun-hybrid-zc",
+      "name": "Shang Kun Hybrid ZC (尚坤 ZC)",
+      "aliases": [
+        "shang kun zc",
+        "尚坤zc"
+      ],
+      "category": "内置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "mk-carbon",
+      "name": "MK Carbon (松平健太)",
+      "aliases": [
+        "mk carbon",
+        "kenta matsudaira",
+        "松平健太"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "samsonov-alpha",
+      "name": "Samsonov Alpha",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "samsonov-premium-contact",
+      "name": "Samsonov Premium Contact",
+      "aliases": [
+        "premium contact"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "stratus-power-defense",
+      "name": "Stratus Power Defense",
+      "aliases": [
+        "stratus defense"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "dynamic-jc",
+      "name": "Dynamic JC (约尔吉奇)",
+      "aliases": [
+        "dynamic jc",
+        "jorgic carbon",
+        "darko jorgic",
+        "约尔吉奇"
+      ],
+      "category": "内置其他纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "dynamic-j7",
+      "name": "Dynamic J7",
+      "aliases": [
+        "jorgic 7"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "darko-jorgic-infinity-carbon",
+      "name": "Darko Jorgic Infinity Carbon",
+      "aliases": [
+        "jorgic infinity",
+        "infinity carbon"
+      ]
+    },
+    {
+      "id": "drinkhall-power-spin-carbon",
+      "name": "Drinkhall Power Spin Carbon",
+      "aliases": [
+        "drinkhall",
+        "power spin carbon"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "stratus-carbon",
+      "name": "Stratus Carbon",
+      "aliases": [
+        "stratus samsonov carbon"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "samsonov-carbon",
+      "name": "Samsonov Carbon",
+      "aliases": [],
+      "plies": "5+2"
+    },
+    {
+      "id": "felix-lebrun-all",
+      "name": "Felix Lebrun ALL",
+      "aliases": [
+        "lebrun all"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "felix-lebrun-off-minus",
+      "name": "Felix Lebrun OFF-",
+      "aliases": [
+        "lebrun off-"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "iv-s",
+      "name": "IV-S",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "iv-l",
+      "name": "IV-L",
+      "aliases": [],
+      "category": "纯木"
+    }
+  ]
+}

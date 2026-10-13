@@ -1,0 +1,701 @@
+{
+  "id": "joola",
+  "name": "优拉",
+  "en": "JOOLA",
+  "label": "JOOLA",
+  "aliases": [
+    "youla",
+    "尤拉"
+  ],
+  "rubbers": [
+    {
+      "id": "dynaryz-agr",
+      "name": "Dynaryz AGR",
+      "aliases": [
+        "agr",
+        "dynaryz"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dynaryz-acc",
+      "name": "Dynaryz ACC",
+      "aliases": [
+        "acc"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dynaryz-cmd",
+      "name": "Dynaryz CMD",
+      "aliases": [
+        "cmd"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dynaryz-zgr",
+      "name": "Dynaryz ZGR",
+      "aliases": [
+        "zgr"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "57"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dynaryz-zgx",
+      "name": "Dynaryz ZGX",
+      "aliases": [
+        "zgx"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dynaryz-inferno",
+      "name": "Dynaryz Inferno",
+      "aliases": [
+        "inferno"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "trinity-charged",
+      "name": "Hugo Calderano Trinity Charged",
+      "aliases": [
+        "trinity charged",
+        "trinity",
+        "calderano",
+        "卡尔德拉诺"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "57.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "trinity-dynamic",
+      "name": "Hugo Calderano Trinity Dynamic",
+      "aliases": [
+        "trinity dynamic",
+        "calderano",
+        "卡尔德拉诺"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tronix-zgr",
+      "name": "Tronix ZGR",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tronix-acc",
+      "name": "Tronix ACC",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tronix-cmd",
+      "name": "Tronix CMD",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rhyzer-43",
+      "name": "Rhyzer 43",
+      "aliases": [
+        "rhyzer"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "43"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rhyzer-48",
+      "name": "Rhyzer 48",
+      "aliases": [
+        "rhyzer"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "48"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rhyzer-pro-45",
+      "name": "Rhyzer Pro 45",
+      "aliases": [
+        "rhyzer pro"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rhyzer-pro-50",
+      "name": "Rhyzer Pro 50",
+      "aliases": [
+        "rhyzer pro"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rhyzen-zgr",
+      "name": "Rhyzen ZGR",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rhyzen-zgx",
+      "name": "Rhyzen ZGX",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rhyzen-fire",
+      "name": "Rhyzen Fire",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rhyzen-ice",
+      "name": "Rhyzen Ice",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rhyzen-cmd",
+      "name": "Rhyzen CMD",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "golden-tango",
+      "name": "Golden Tango",
+      "aliases": [
+        "gt"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "54"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "golden-tango-ps",
+      "name": "Golden Tango PS",
+      "aliases": [
+        "gt ps"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rhyzm",
+      "name": "Rhyzm",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "48"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "rhyzm-p",
+      "name": "Rhyzm-P",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "rhyzm-tech",
+      "name": "Rhyzm-Tech",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "maxxx-500",
+      "name": "Maxxx 500",
+      "aliases": [
+        "maxxx"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "maxxx-450",
+      "name": "Maxxx 450",
+      "aliases": [
+        "maxxx"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "express-ultra",
+      "name": "Express Ultra",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "cwx",
+      "name": "CWX (Chen Weixing)",
+      "aliases": [
+        "cwx",
+        "chen weixing",
+        "陈卫星"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5,
+        0.9
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "vyzaryz-trinity",
+      "name": "Vyzaryz Trinity",
+      "aliases": [
+        "trinity"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "vyzaryz-hybrid",
+      "name": "Vyzaryz Hybrid",
+      "aliases": [],
+      "category": "外置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "vyzaryz-freeze",
+      "name": "Vyzaryz Freeze",
+      "aliases": [
+        "freeze"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "vyzaryz-freeze-hrd",
+      "name": "Vyzaryz Freeze HRD",
+      "aliases": [
+        "freeze hrd"
+      ]
+    },
+    {
+      "id": "calderano-ary-c",
+      "name": "Hugo Calderano ARY-c",
+      "aliases": [
+        "calderano ary-c",
+        "calderano",
+        "卡尔德拉诺"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "calderano-ary-x",
+      "name": "Hugo Calderano ARY-x",
+      "aliases": [
+        "calderano ary-x",
+        "calderano",
+        "卡尔德拉诺"
+      ],
+      "category": "外置其他纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "calderano-klc-inner",
+      "name": "Hugo Calderano KL-c Inner",
+      "aliases": [
+        "calderano klc inner",
+        "calderano inner"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "calderano-klc-outer",
+      "name": "Hugo Calderano KL-c Outer",
+      "aliases": [
+        "calderano klc outer",
+        "calderano outer"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "calderano-aw-7",
+      "name": "Hugo Calderano AW-7",
+      "aliases": [
+        "calderano aw7",
+        "aw-7"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "zhou-qihao-hyper-ary-c-90",
+      "name": "Zhou Qihao Hyper ARY-c 90 (周启豪)",
+      "aliases": [
+        "zhou qihao",
+        "周启豪",
+        "hyper ary-c 90"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "zhou-qihao-hyper-ary-c-45",
+      "name": "Zhou Qihao Hyper ARY-c 45 (周启豪)",
+      "aliases": [
+        "zhou qihao",
+        "周启豪",
+        "hyper ary-c 45"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "tezzo-guardian",
+      "name": "Tezzo Guardian",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "tezzo-paladin",
+      "name": "Tezzo Paladin",
+      "aliases": [],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "tezzo-warrior",
+      "name": "Tezzo Warrior",
+      "aliases": [],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "tezzo-spartan",
+      "name": "Tezzo Spartan",
+      "aliases": [],
+      "category": "外置芳碳"
+    },
+    {
+      "id": "zelebro-pbo-c",
+      "name": "Zelebro PBO-c",
+      "aliases": [
+        "zelebro"
+      ],
+      "category": "外置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "nobilis-pbo-c",
+      "name": "Nobilis PBO-c",
+      "aliases": [
+        "nobilis"
+      ],
+      "category": "外置超级纤维",
+      "plies": "3+2"
+    },
+    {
+      "id": "rossi-emotion",
+      "name": "Rossi Emotion",
+      "aliases": [
+        "rosskopf emotion",
+        "rossi"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "chen-weixing",
+      "name": "Chen Weixing (陈卫星)",
+      "aliases": [
+        "chen weixing",
+        "cwx",
+        "陈卫星"
+      ]
+    }
+  ]
+}

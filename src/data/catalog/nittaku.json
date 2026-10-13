@@ -1,0 +1,684 @@
+{
+  "id": "nittaku",
+  "name": "尼塔库",
+  "en": "Nittaku",
+  "label": "Nittaku",
+  "aliases": [
+    "ニッタク",
+    "日本卓球",
+    "nittaku"
+  ],
+  "rubbers": [
+    {
+      "id": "fastarc-g1",
+      "name": "Fastarc G-1",
+      "aliases": [
+        "g1",
+        "g-1",
+        "ファスタークg-1"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "fastarc-c1",
+      "name": "Fastarc C-1",
+      "aliases": [
+        "c1",
+        "c-1",
+        "ファスタークc-1"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "fastarc-s1",
+      "name": "Fastarc S-1",
+      "aliases": [
+        "s1",
+        "s-1",
+        "ファスタークs-1"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "fastarc-p1",
+      "name": "Fastarc P-1",
+      "aliases": [
+        "p1",
+        "p-1",
+        "ファスタークp-1"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "hammond-z2",
+      "name": "Hammond Z2",
+      "aliases": [
+        "z2",
+        "ハモンドz2",
+        "哈蒙德z2"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hammond-z2-special",
+      "name": "Hammond Z2 Special (特注)",
+      "aliases": [
+        "z2特注",
+        "hammond z2 tokuchu",
+        "ハモンドz2特注",
+        "z2 special"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "genextion",
+      "name": "Genextion",
+      "aliases": [
+        "ジェネクション"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "genextion-v2c",
+      "name": "Genextion V2C",
+      "aliases": [
+        "v2c",
+        "ジェネクションv2c"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "factive",
+      "name": "Factive",
+      "aliases": [
+        "ファクティブ"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "moristo-sp",
+      "name": "Moristo SP",
+      "aliases": [
+        "moristo",
+        "モリストsp",
+        "尼塔库生胶"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "moristo-sp-ax",
+      "name": "Moristo SP AX",
+      "aliases": [
+        "moristo ax",
+        "sp ax",
+        "モリストsp ax"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "do-knuckle",
+      "name": "Do Knuckle",
+      "aliases": [
+        "ドナックル"
+      ],
+      "category": "中颗粒",
+      "thickness": [
+        "OX",
+        0.5,
+        1,
+        1.5
+      ],
+      "hardness": [
+        "32.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "super-do-knuckle",
+      "name": "Super Do Knuckle",
+      "aliases": [
+        "スーパードナックル"
+      ],
+      "category": "中颗粒",
+      "thickness": [
+        "OX",
+        0.5,
+        1,
+        1.5
+      ],
+      "hardness": [
+        "32.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "moristo-lp",
+      "name": "Moristo LP",
+      "aliases": [
+        "モリストlp"
+      ],
+      "category": "长胶",
+      "thickness": [],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "moristo-lp-one",
+      "name": "Moristo LP One",
+      "aliases": [
+        "lp one",
+        "モリストlpワン"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "flyatt-spin",
+      "name": "Flyatt Spin",
+      "aliases": [
+        "フライアットスピン"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2
+      ],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "flyatt-evo",
+      "name": "Flyatt EVO",
+      "aliases": [
+        "フライアットevo"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8
+      ],
+      "hardness": [
+        "30"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hammond",
+      "name": "Hammond",
+      "aliases": [
+        "ハモンド",
+        "哈蒙德"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "30"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "blastac",
+      "name": "Blastac",
+      "aliases": [
+        "ブラスタック"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2
+      ],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "inception",
+      "name": "Inception",
+      "aliases": [
+        "インセプション"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "moristo-df",
+      "name": "Moristo DF",
+      "aliases": [
+        "モリストdf"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "sonic-ar",
+      "name": "Sonic AR",
+      "aliases": [
+        "ソニックar"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "32.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hammond-fa",
+      "name": "Hammond FA",
+      "aliases": [
+        "ハモンドfa"
+      ],
+      "category": "生胶",
+      "thickness": [],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "best-anti",
+      "name": "Best Anti",
+      "aliases": [
+        "ベストアンチ"
+      ],
+      "category": "防弧圈",
+      "thickness": [],
+      "hardness": [
+        "20"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "acoustic",
+      "name": "Acoustic (木吉他)",
+      "aliases": [
+        "acoustic",
+        "木吉他",
+        "吉他",
+        "アコースティック"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "acoustic-carbon",
+      "name": "Acoustic Carbon (碳吉他)",
+      "aliases": [
+        "acoustic carbon",
+        "碳吉他",
+        "外置碳吉他",
+        "アコースティックカーボン"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "acoustic-carbon-inner",
+      "name": "Acoustic Carbon Inner (内置碳吉他)",
+      "aliases": [
+        "acoustic carbon inner",
+        "aci",
+        "内置碳吉他",
+        "内碳吉他",
+        "アコースティックカーボンインナー"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "violin",
+      "name": "Violin (小提琴)",
+      "aliases": [
+        "violin",
+        "小提琴",
+        "バイオリン"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "violin-carbon",
+      "name": "Violin Carbon (碳小提琴)",
+      "aliases": [
+        "violin carbon",
+        "碳小提琴",
+        "バイオリンカーボン"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "septear",
+      "name": "Septear",
+      "aliases": [
+        "セプティアー",
+        "七层桧"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "septear-feel",
+      "name": "Septear Feel",
+      "aliases": [
+        "セプティアーフィール"
+      ],
+      "category": "外置碳素",
+      "plies": "7+2"
+    },
+    {
+      "id": "septear-feel-inner",
+      "name": "Septear Feel Inner",
+      "aliases": [
+        "セプティアーフィールインナー"
+      ],
+      "category": "内置碳素",
+      "plies": "7+2"
+    },
+    {
+      "id": "ludeack",
+      "name": "Ludeack",
+      "aliases": [
+        "ルデアック"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "hina-hayata-h2",
+      "name": "Hina Hayata H2 (早田希娜 H2)",
+      "aliases": [
+        "hina hayata h2",
+        "早田希娜",
+        "早田",
+        "hayata h2"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "hina-hayata-e2",
+      "name": "Hina Hayata E2 (早田希娜 E2)",
+      "aliases": [
+        "hina hayata e2",
+        "hayata e2",
+        "早田e2"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "hina-hayata-t2",
+      "name": "Hina Hayata T2 (早田希娜 T2)",
+      "aliases": [
+        "hina hayata t2",
+        "hayata t2",
+        "早田t2"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "mima-ito-carbon",
+      "name": "Mima Ito Carbon (伊藤美诚碳)",
+      "aliases": [
+        "mima ito carbon",
+        "伊藤美诚",
+        "伊藤美誠カーボン"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "flyatt-carbon-pro",
+      "name": "Flyatt Carbon Pro",
+      "aliases": [
+        "フライアットカーボンプロ"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "tenaly-acoustic",
+      "name": "Tenaly Acoustic",
+      "aliases": [
+        "テナリーアコースティック"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "tenaly-acoustic-carbon-inner",
+      "name": "Tenaly Acoustic Carbon Inner",
+      "aliases": [
+        "テナリーアコースティックカーボンインナー"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "basaltec-inner",
+      "name": "Basaltec Inner (内置玄武岩)",
+      "aliases": [
+        "basaltec inner",
+        "玄武岩",
+        "バサルテックインナー"
+      ],
+      "category": "内置其他纤维",
+      "plies": "5+2",
+      "discontinued": true
+    },
+    {
+      "id": "basaltec-outer",
+      "name": "Basaltec Outer (外置玄武岩)",
+      "aliases": [
+        "basaltec outer",
+        "バサルテックアウター"
+      ],
+      "category": "外置其他纤维",
+      "discontinued": true
+    }
+  ]
+}

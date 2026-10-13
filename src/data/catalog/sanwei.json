@@ -1,0 +1,223 @@
+{
+  "id": "sanwei",
+  "name": "三维",
+  "en": "Sanwei",
+  "label": "三维",
+  "aliases": [
+    "sanwei",
+    "sanwei sport",
+    "三维乒乓"
+  ],
+  "rubbers": [
+    {
+      "id": "target-national",
+      "name": "国标靶 (Target National)",
+      "aliases": [
+        "国标靶",
+        "标靶国套",
+        "target national",
+        "target national blue"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "target-national-player",
+      "name": "国标靶 球员版 (Target National Player Edition)",
+      "aliases": [
+        "国标靶球员版",
+        "target national player",
+        "target national player edition"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "37",
+        "39"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "target-provincial",
+      "name": "省标靶 (Target Provincial)",
+      "aliases": [
+        "省标靶",
+        "标靶省套",
+        "target provincial"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "target",
+      "name": "标靶 (Target)",
+      "aliases": [
+        "标靶",
+        "标靶3",
+        "普标",
+        "target",
+        "target 3"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "t88-1",
+      "name": "T88-I",
+      "aliases": [
+        "t88-1",
+        "t88 1",
+        "t881",
+        "t88-1s"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "t88-3",
+      "name": "T88-III",
+      "aliases": [
+        "t88-3",
+        "t88 3",
+        "t883"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "ghost",
+      "name": "幽灵 (Ghost)",
+      "aliases": [
+        "幽灵",
+        "ghost",
+        "三维幽灵"
+      ],
+      "category": "生胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "code",
+      "name": "密码 (Code)",
+      "aliases": [
+        "密码",
+        "密码长胶",
+        "code",
+        "code ox"
+      ],
+      "category": "长胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "fextra-7",
+      "name": "Fextra 7",
+      "aliases": [
+        "fextra"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "hc-5",
+      "name": "HC.5 (桧碳)",
+      "aliases": [
+        "hc5",
+        "hc.5",
+        "hc-5",
+        "hc-5s",
+        "桧碳"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "m8",
+      "name": "M8",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "f3-pro",
+      "name": "F3 Pro",
+      "aliases": [
+        "f3"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "froster",
+      "name": "Froster",
+      "aliases": [],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "surge-nitro",
+      "name": "Surge Nitro",
+      "aliases": [
+        "nitro"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "surge-prism",
+      "name": "Surge Prism",
+      "aliases": [
+        "prism"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "surge-breeze",
+      "name": "Surge Breeze",
+      "aliases": [
+        "breeze"
+      ],
+      "category": "外置其他纤维",
+      "plies": "5+2"
+    }
+  ]
+}

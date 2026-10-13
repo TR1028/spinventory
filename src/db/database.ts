@@ -52,6 +52,7 @@ export class RacketLifeDatabase extends Dexie {
 
     // v4: rubber custom name (`label`), inventory stock count (`quantity`) and timeline (`history` of
     // racket stints / storage, `stashedAt`, `storageAgingPercent`). Plain optional properties again.
+    // v5 fields (`thicknessCode`, `color`) are plain optional properties too, so v4 stays current.
     this.version(4).stores({
       rackets: "&id, name, status, createdAt",
       rubbers: "&id, racketId, [racketId+side], installedAt, removedAt",

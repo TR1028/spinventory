@@ -1,0 +1,248 @@
+{
+  "id": "sauer-troger",
+  "name": "索尔特罗格",
+  "en": "Sauer & Tröger",
+  "label": "Sauer & Tröger",
+  "aliases": [
+    "s&t",
+    "sauer",
+    "troger",
+    "tröger",
+    "troeger",
+    "sauer troger",
+    "sauer & troeger"
+  ],
+  "rubbers": [
+    {
+      "id": "hellfire-x",
+      "name": "Hellfire X (地狱火X)",
+      "aliases": [
+        "地狱火x",
+        "地狱火",
+        "hellfire x",
+        "hellfire"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5,
+        1.2
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black",
+        "green",
+        "blue",
+        "purple"
+      ]
+    },
+    {
+      "id": "hellfire",
+      "name": "Hellfire (地狱火 一代)",
+      "aliases": [
+        "地狱火一代",
+        "hellfire classic"
+      ],
+      "category": "长胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "schmerz",
+      "name": "Schmerz",
+      "aliases": [],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "monkey",
+      "name": "Monkey",
+      "aliases": [],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.6
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "easy-p",
+      "name": "Easy P",
+      "aliases": [],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5,
+        1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hipster",
+      "name": "Hipster",
+      "aliases": [],
+      "category": "中颗粒",
+      "thickness": [
+        1.1,
+        1.5,
+        1.9
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "zargus",
+      "name": "Zargus",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1.3,
+        1.5,
+        1.8
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hass",
+      "name": "Hass",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "super-stop",
+      "name": "Super Stop",
+      "aliases": [],
+      "category": "防弧圈",
+      "thickness": [
+        1.5,
+        1.9
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "blackout",
+      "name": "Blackout",
+      "aliases": [],
+      "category": "防弧圈",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "secret-flow",
+      "name": "Secret Flow",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1,
+        1.5,
+        1.8,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "icon",
+      "name": "Icon",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "zeus",
+      "name": "Zeus",
+      "aliases": [],
+      "plies": "3+2"
+    },
+    {
+      "id": "zhero",
+      "name": "Zhero",
+      "aliases": [],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "kasalla",
+      "name": "Kasalla",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "firestarter",
+      "name": "Firestarter",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "unicorn",
+      "name": "Unicorn",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "banana",
+      "name": "Banana",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    }
+  ]
+}

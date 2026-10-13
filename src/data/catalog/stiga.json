@@ -1,0 +1,978 @@
+{
+  "id": "stiga",
+  "name": "斯帝卡",
+  "en": "STIGA",
+  "label": "Stiga",
+  "aliases": [
+    "斯蒂卡",
+    "斯迪卡",
+    "stiga"
+  ],
+  "rubbers": [
+    {
+      "id": "helix-platinum-xh",
+      "name": "Helix Platinum XH",
+      "aliases": [
+        "helix xh"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "helix-platinum-h",
+      "name": "Helix Platinum H",
+      "aliases": [
+        "helix h"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "helix-platinum-m",
+      "name": "Helix Platinum M",
+      "aliases": [
+        "helix m"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "helix-platinum-55",
+      "name": "Helix Platinum 55",
+      "aliases": [
+        "helix 55"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "helix-hybrid-xh",
+      "name": "Helix Hybrid XH",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "helix-hybrid-h",
+      "name": "Helix Hybrid H",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "helix-hybrid-m",
+      "name": "Helix Hybrid M",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "helix-hybrid-55",
+      "name": "Helix Hybrid 55",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dna-platinum-xh",
+      "name": "DNA Platinum XH (白金XH)",
+      "aliases": [
+        "dna platinum xh",
+        "dna白金xh",
+        "白金xh",
+        "dna xh"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        2.3
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dna-platinum-h",
+      "name": "DNA Platinum H (白金H)",
+      "aliases": [
+        "dna platinum h",
+        "dna白金h",
+        "白金h"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        2.3
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dna-platinum-m",
+      "name": "DNA Platinum M (白金M)",
+      "aliases": [
+        "dna platinum m",
+        "dna白金m",
+        "白金m"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        2.3
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dna-platinum-s",
+      "name": "DNA Platinum S (白金S)",
+      "aliases": [
+        "dna platinum s",
+        "dna白金s",
+        "白金s"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        2.3
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dna-pro-h",
+      "name": "DNA Pro H",
+      "aliases": [
+        "dna h"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dna-pro-m",
+      "name": "DNA Pro M",
+      "aliases": [
+        "dna m"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dna-pro-s",
+      "name": "DNA Pro S",
+      "aliases": [
+        "dna s"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dna-hybrid-xh",
+      "name": "DNA Hybrid XH",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dna-hybrid-h",
+      "name": "DNA Hybrid H",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dna-hybrid-m",
+      "name": "DNA Hybrid M",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dna-dragon-grip",
+      "name": "DNA Dragon Grip (DNA赤龙)",
+      "aliases": [
+        "dragon grip",
+        "dna dragon grip",
+        "赤龙",
+        "dna赤龙"
+      ],
+      "category": "反胶",
+      "thickness": [
+        "MAX"
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dna-dragon-power",
+      "name": "DNA Dragon Power",
+      "aliases": [
+        "dragon power",
+        "金龙"
+      ],
+      "category": "反胶",
+      "thickness": [
+        "MAX"
+      ],
+      "hardness": [
+        "52.5",
+        "55",
+        "57.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dna-future-m",
+      "name": "DNA Future M",
+      "aliases": [
+        "dna future"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "mantra-pro-xh",
+      "name": "Mantra Pro XH (咒语Pro XH)",
+      "aliases": [
+        "mantra pro xh",
+        "咒语pro xh",
+        "咒语xh"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "53"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "mantra-pro-h",
+      "name": "Mantra Pro H (咒语Pro H)",
+      "aliases": [
+        "mantra pro h",
+        "咒语pro h"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "mantra-pro-m",
+      "name": "Mantra Pro M (咒语Pro M)",
+      "aliases": [
+        "mantra pro m",
+        "咒语pro m"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "47"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "mantra-pro-s",
+      "name": "Mantra Pro S (咒语Pro S)",
+      "aliases": [
+        "mantra pro s",
+        "咒语pro s"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "mantra-m",
+      "name": "Mantra M (咒语M)",
+      "aliases": [
+        "mantra m",
+        "咒语m",
+        "咒语"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "48"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "mantra-h",
+      "name": "Mantra H (咒语H)",
+      "aliases": [
+        "mantra h",
+        "咒语h"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "mantra-s",
+      "name": "Mantra S (咒语S)",
+      "aliases": [
+        "mantra s",
+        "咒语s"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "symmetry",
+      "name": "Symmetry",
+      "aliases": [
+        "stiga symmetry"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vertical",
+      "name": "Vertical (Vertical 20 / Vertical 55)",
+      "aliases": [
+        "vertical 20",
+        "vertical 55",
+        "stiga vertical"
+      ],
+      "category": "长胶",
+      "thickness": [],
+      "hardness": [
+        "20",
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "horizontal",
+      "name": "Horizontal (Horizontal 20 / Horizontal 55)",
+      "aliases": [
+        "horizontal 20",
+        "horizontal 55",
+        "stiga horizontal"
+      ],
+      "category": "长胶",
+      "thickness": [],
+      "hardness": [
+        "20",
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "airoc-m",
+      "name": "Airoc M",
+      "aliases": [
+        "airoc"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "airoc-s",
+      "name": "Airoc S",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "genesis-m",
+      "name": "Genesis M (创世纪M)",
+      "aliases": [
+        "genesis m",
+        "创世纪m",
+        "创世纪"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "genesis-s",
+      "name": "Genesis S (创世纪S)",
+      "aliases": [
+        "genesis s",
+        "创世纪s"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    }
+  ],
+  "blades": [
+    {
+      "id": "cybershape-carbon",
+      "name": "Cybershape Carbon (六边形碳素)",
+      "aliases": [
+        "cybershape",
+        "cybershape carbon",
+        "cs carbon",
+        "六边形",
+        "六角碳",
+        "赛博碳素",
+        "莫雷加德",
+        "莫雷高德"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "cybershape-carbon-cwt",
+      "name": "Cybershape Carbon CWT",
+      "aliases": [
+        "cs carbon cwt",
+        "六边形碳素cwt"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "cybershape-carbon-cwt-truls",
+      "name": "Cybershape Carbon CWT Truls Edition (莫雷加德签名版)",
+      "aliases": [
+        "truls edition",
+        "cybershape truls",
+        "莫雷加德签名",
+        "truls"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "cybershape-wood",
+      "name": "Cybershape Wood (六边形纯木)",
+      "aliases": [
+        "cybershape wood",
+        "六边形纯木",
+        "六角纯木"
+      ],
+      "category": "纯木"
+    },
+    {
+      "id": "cybershape-wood-cwt",
+      "name": "Cybershape Wood CWT",
+      "aliases": [
+        "六边形纯木cwt"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "allround-classic-cybershape",
+      "name": "Allround Classic Cybershape",
+      "aliases": [
+        "ac cybershape"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "destiny-carbon",
+      "name": "Destiny Carbon",
+      "aliases": [
+        "destiny"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "destiny-carbon-cybershape",
+      "name": "Destiny Carbon Cybershape",
+      "aliases": [
+        "destiny cybershape"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "i1-hybrid-carbon",
+      "name": "I1 Hybrid Carbon",
+      "aliases": [
+        "i1"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "i1-hybrid-carbon-cybershape",
+      "name": "I1 Hybrid Carbon Cybershape",
+      "aliases": [
+        "i1 cybershape"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "dynasty-carbon",
+      "name": "Dynasty Carbon (王朝碳素)",
+      "aliases": [
+        "dynasty",
+        "dynasty carbon",
+        "王朝",
+        "王朝碳素",
+        "许昕"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "carbonado-45",
+      "name": "Carbonado 45 (卡博纳多45)",
+      "aliases": [
+        "carbonado 45",
+        "cbd45",
+        "卡博纳多45"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "carbonado-90",
+      "name": "Carbonado 90 (卡博纳多90)",
+      "aliases": [
+        "carbonado 90",
+        "cbd90",
+        "卡博纳多90"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "carbonado-145",
+      "name": "Carbonado 145 (卡博纳多145)",
+      "aliases": [
+        "carbonado 145",
+        "cbd145",
+        "卡博纳多145"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "carbonado-190",
+      "name": "Carbonado 190 (卡博纳多190)",
+      "aliases": [
+        "carbonado 190",
+        "cbd190",
+        "卡博纳多190"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "carbonado-245",
+      "name": "Carbonado 245 (卡博纳多245)",
+      "aliases": [
+        "carbonado 245",
+        "cbd245",
+        "卡博纳多245"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "carbonado-290",
+      "name": "Carbonado 290 (卡博纳多290)",
+      "aliases": [
+        "carbonado 290",
+        "cbd290",
+        "卡博纳多290"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "inspira-ccf",
+      "name": "Inspira CCF",
+      "aliases": [
+        "inspira"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "clipper-wood",
+      "name": "Clipper Wood WRB (CL)",
+      "aliases": [
+        "clipper",
+        "clipper wood",
+        "cl",
+        "斯帝卡cl",
+        "clipper wrb"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "clipper-cr",
+      "name": "Clipper CR WRB (CR)",
+      "aliases": [
+        "clipper cr",
+        "cr wrb",
+        "cr",
+        "斯帝卡cr"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "offensive-classic",
+      "name": "Offensive Classic (OC)",
+      "aliases": [
+        "oc",
+        "offensive classic",
+        "斯帝卡oc"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "allround-classic",
+      "name": "Allround Classic (AC)",
+      "aliases": [
+        "allround classic",
+        "ac",
+        "斯帝卡ac"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "allround-evolution",
+      "name": "Allround Evolution",
+      "aliases": [
+        "ae"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "infinity-vps-v",
+      "name": "Infinity VPS V (钻石5)",
+      "aliases": [
+        "infinity",
+        "infinity vps",
+        "vps5",
+        "vps 5",
+        "钻石5",
+        "钻石"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "intensity-nct",
+      "name": "Intensity NCT",
+      "aliases": [
+        "intensity"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "eternity-vps-v",
+      "name": "Eternity VPS V",
+      "aliases": [
+        "eternity",
+        "eternity vps"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "ebenholz-nct-v",
+      "name": "Ebenholz NCT V (黑檀5)",
+      "aliases": [
+        "ebenholz",
+        "ebenholz v",
+        "ebenholz 5",
+        "黑檀5",
+        "黑檀"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "ebenholz-nct-vii",
+      "name": "Ebenholz NCT VII (黑檀7)",
+      "aliases": [
+        "ebenholz vii",
+        "ebenholz 7",
+        "黑檀7"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "rosewood-nct-v",
+      "name": "Rosewood NCT V (玫瑰5)",
+      "aliases": [
+        "rosewood",
+        "rosewood v",
+        "rosewood 5",
+        "玫瑰5",
+        "玫瑰"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "rosewood-nct-vii",
+      "name": "Rosewood NCT VII (玫瑰7)",
+      "aliases": [
+        "rosewood vii",
+        "rosewood 7",
+        "玫瑰7"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    }
+  ]
+}

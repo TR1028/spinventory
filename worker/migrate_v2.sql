@@ -38,3 +38,7 @@ ALTER TABLE rubbers ADD COLUMN quantity INTEGER;
 ALTER TABLE rubbers ADD COLUMN history TEXT;
 ALTER TABLE rubbers ADD COLUMN stashed_at TEXT;
 ALTER TABLE rubbers ADD COLUMN storage_aging_percent INTEGER;
+
+-- v5 · Rubbers: named sponge size (MAX / OX) and topsheet colour.
+ALTER TABLE rubbers ADD COLUMN thickness_code TEXT;
+ALTER TABLE rubbers ADD COLUMN color TEXT;

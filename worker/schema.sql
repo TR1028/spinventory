@@ -65,6 +65,8 @@ CREATE TABLE IF NOT EXISTS rubbers (
   quantity INTEGER, -- inventory stock: identical brand-new sheets in this record; NULL = 1 (v4 migration)
   hardness TEXT,
   thickness_mm REAL,
+  thickness_code TEXT, -- named size instead of thickness_mm: 'MAX' | 'OX' (v5 migration)
+  color TEXT, -- topsheet colour: black | red | blue | green | pink | purple (v5 migration)
   weight_grams REAL, -- sheet weight (v2 migration)
   installed_at TEXT, -- first glued on; calendar life starts here. NULL for brand-new inventory sheets
   mounted_at TEXT, -- used sheets moved onto their racket after installed_at; sessions count from here

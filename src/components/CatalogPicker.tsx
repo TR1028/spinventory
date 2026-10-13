@@ -5,7 +5,7 @@
  * ↑ / ↓ / Enter / Esc work from the keyboard. The catalog only makes suggestions: whatever is typed
  * stays the value, so gear missing from the catalog can always be entered by hand.
  */
-import { Check, Search, X } from "lucide-react";
+import { Check, ChevronRight, Search, X } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import {
   catalogBrands,
@@ -14,12 +14,38 @@ import {
   normalizeSearchText,
   searchCatalog,
   type BrandId,
+  type CatalogEntry,
   type CatalogEntryOf,
+  type CatalogGroup,
   type CatalogKind,
 } from "../data/catalog";
 import { FieldLabel, inputClass } from "./ui";
 
 type BrandFilter = BrandId | "all";
+
+/** Blank query over all brands: the first few entries of each brand (its pill lists the rest). */
+const PREVIEW_PER_BRAND = 4;
+/** Most options rendered for a search; more words narrow it down. */
+const MAX_OPTIONS = 150;
+
+type VisibleGroup<T extends CatalogEntry> = CatalogGroup<T> & { total: number };
+
+/** Keeps the dropdown small with hundreds of catalog entries; `hidden` counts the matches left out. */
+function limitGroups<T extends CatalogEntry>(groups: CatalogGroup<T>[], browsing: boolean): { groups: VisibleGroup<T>[]; hidden: number } {
+  if (browsing) {
+    return { groups: groups.map((group) => ({ ...group, entries: group.entries.slice(0, PREVIEW_PER_BRAND), total: group.entries.length })), hidden: 0 };
+  }
+  const visible: VisibleGroup<T>[] = [];
+  let left = MAX_OPTIONS;
+  let hidden = 0;
+  for (const group of groups) {
+    const entries = group.entries.slice(0, left);
+    left -= entries.length;
+    hidden += group.entries.length - entries.length;
+    if (entries.length) visible.push({ ...group, entries, total: group.entries.length });
+  }
+  return { groups: visible, hidden };
+}
 
 type CatalogPickerProps<K extends CatalogKind> = {
   kind: K;
@@ -65,7 +91,11 @@ export function CatalogPicker<K extends CatalogKind>({
   const [activeIndex, setActiveIndex] = useState(-1);
 
   const brands = useMemo(() => catalogBrands(kind), [kind]);
-  const groups = useMemo(() => searchCatalog(kind, query, brand === "all" ? undefined : brand), [kind, query, brand]);
+  const browsing = brand === "all" && query.trim() === "";
+  const { groups, hidden } = useMemo(
+    () => limitGroups(searchCatalog(kind, query, brand === "all" ? undefined : brand), browsing),
+    [kind, query, brand, browsing],
+  );
   const options = useMemo(() => groups.flatMap((group) => group.entries), [groups]);
   const optionIndex = useMemo(() => new Map(options.map((entry, index) => [entry.id, index])), [options]);
 
@@ -274,13 +304,31 @@ export function CatalogPicker<K extends CatalogKind>({
                       </div>
                     );
                   })}
+                  {browsing && group.total > group.entries.length ? (
+                    <button
+                      type="button"
+                      tabIndex={-1}
+                      onClick={() => selectBrand(group.brand.id)}
+                      data-testid={`${testId}-brand-more-${group.brand.id}`}
+                      className="flex min-h-10 w-full items-center gap-1 px-3 py-2 text-left text-xs font-bold text-court transition hover:bg-court/5"
+                    >
+                      查看{group.brand.name}全部 {group.total} 款
+                      <ChevronRight size={14} aria-hidden="true" />
+                    </button>
+                  ) : null}
                 </div>
               );
             })}
           </div>
 
           {options.length ? (
-            <p className="border-t border-ink/10 px-3 py-1.5 text-[11px] font-medium text-ink/45">找不到型号？直接输入名称即可保存。</p>
+            <p className="border-t border-ink/10 px-3 py-1.5 text-[11px] font-medium text-ink/45" data-testid={`${testId}-footer`}>
+              {hidden
+                ? `还有 ${hidden} 款匹配，输入更多关键词或选品牌缩小范围。`
+                : browsing
+                  ? "输入型号搜索，或选品牌浏览；找不到也可以直接输入名称。"
+                  : "找不到型号？直接输入名称即可保存。"}
+            </p>
           ) : (
             <p className="px-3 py-4 text-xs font-medium leading-5 text-ink/55">
               「{brandName}」里没有匹配的型号。可以切换品牌，或直接使用输入的名称。

@@ -1,0 +1,64 @@
+{
+  "id": "reactor",
+  "name": "锐科特",
+  "en": "Reactor",
+  "label": "Reactor",
+  "aliases": [
+    "reactor"
+  ],
+  "rubbers": [
+    {
+      "id": "corbor",
+      "name": "Corbor (卡博尔)",
+      "aliases": [
+        "卡博尔",
+        "corbor"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "ckylin",
+      "name": "Ckylin",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tornado",
+      "name": "Tornado",
+      "aliases": [
+        "tornado v5"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "dj200",
+      "name": "DJ200 (地杰)",
+      "aliases": [
+        "dj200",
+        "地杰"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    }
+  ]
+}

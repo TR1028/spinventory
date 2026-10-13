@@ -1,0 +1,688 @@
+{
+  "id": "dr-neubauer",
+  "name": "纽鲍尔",
+  "en": "Dr. Neubauer",
+  "label": "Dr. Neubauer",
+  "aliases": [
+    "neubauer",
+    "dr neubauer",
+    "dr.neubauer",
+    "牛博士",
+    "纽鲍尔博士"
+  ],
+  "rubbers": [
+    {
+      "id": "killer",
+      "name": "Killer (杀手)",
+      "aliases": [
+        "杀手",
+        "killer"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "killer-pro",
+      "name": "Killer Pro (杀手Pro)",
+      "aliases": [
+        "杀手pro",
+        "killer pro"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.3,
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "killer-pro-evo",
+      "name": "Killer Pro Evo (杀手Pro Evo)",
+      "aliases": [
+        "杀手evo",
+        "killer evo",
+        "killer pro evo"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.3,
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "killer-extreme",
+      "name": "Killer Extreme (杀手Extreme)",
+      "aliases": [
+        "杀手extreme",
+        "killer extreme"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.3,
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "killer-soft",
+      "name": "Killer Soft (杀手Soft)",
+      "aliases": [
+        "杀手soft",
+        "killer soft"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.3,
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "explosion",
+      "name": "Explosion",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "pistol",
+      "name": "Pistol",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1,
+        1.6,
+        2
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "aggressor",
+      "name": "Aggressor",
+      "aliases": [],
+      "category": "中颗粒",
+      "thickness": [
+        "OX",
+        0.6,
+        1,
+        1.3,
+        1.5,
+        1.8,
+        2
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "aggressor-evo",
+      "name": "Aggressor Evo",
+      "aliases": [],
+      "category": "中颗粒",
+      "thickness": [
+        1.3,
+        1.5,
+        1.8,
+        2
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "aggressor-pro",
+      "name": "Aggressor Pro",
+      "aliases": [],
+      "category": "中颗粒",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "diamant",
+      "name": "Diamant (钻石)",
+      "aliases": [
+        "diamant",
+        "diamond"
+      ],
+      "category": "中颗粒",
+      "thickness": [
+        1.2,
+        1.5,
+        1.8,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "ko",
+      "name": "K.O.",
+      "aliases": [],
+      "category": "中颗粒",
+      "thickness": [
+        1.5,
+        1.8,
+        2
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "ko-pro",
+      "name": "K.O. Pro",
+      "aliases": [],
+      "category": "中颗粒",
+      "thickness": [
+        0.6,
+        1.3,
+        1.5,
+        1.8,
+        2
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "ko-extreme",
+      "name": "K.O. Extreme",
+      "aliases": [],
+      "category": "中颗粒",
+      "thickness": [
+        "OX",
+        1.3,
+        1.5,
+        1.8,
+        2
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "desperado",
+      "name": "Desperado",
+      "aliases": [],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.6,
+        1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "desperado-2",
+      "name": "Desperado 2",
+      "aliases": [
+        "desperado ii"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.6,
+        1,
+        1.3
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "desperado-reloaded",
+      "name": "Desperado Reloaded",
+      "aliases": [],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5,
+        0.6,
+        1,
+        1.3
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "boomerang-classic",
+      "name": "Boomerang Classic",
+      "aliases": [
+        "boomerang",
+        "回旋镖"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.6,
+        1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "monster-classic",
+      "name": "Monster Classic",
+      "aliases": [
+        "monster"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        1,
+        1.6,
+        2
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "fighter",
+      "name": "Fighter",
+      "aliases": [],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        1.2
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "viper",
+      "name": "Viper",
+      "aliases": [],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.6,
+        1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "abs",
+      "name": "A-B-S",
+      "aliases": [],
+      "category": "防弧圈",
+      "thickness": [
+        1.2,
+        1.5,
+        1.8
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "abs-2",
+      "name": "A-B-S 2",
+      "aliases": [],
+      "category": "防弧圈",
+      "thickness": [
+        2.1,
+        2.3,
+        2.5
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "abs-2-evo",
+      "name": "A-B-S 2 Evo",
+      "aliases": [],
+      "category": "防弧圈",
+      "thickness": [
+        1.8,
+        2.1,
+        2.3,
+        2.5
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "abs-3",
+      "name": "A-B-S 3",
+      "aliases": [],
+      "category": "防弧圈",
+      "thickness": [
+        1.5,
+        2
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "abs-3-pro",
+      "name": "A-B-S 3 Pro",
+      "aliases": [],
+      "category": "防弧圈",
+      "thickness": [
+        1.3,
+        1.7
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "anti-special",
+      "name": "Anti Special",
+      "aliases": [],
+      "category": "防弧圈",
+      "thickness": [
+        1.2,
+        1.5,
+        1.8
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "gorilla",
+      "name": "Gorilla (大猩猩)",
+      "aliases": [
+        "gorilla",
+        "大猩猩"
+      ],
+      "category": "防弧圈",
+      "thickness": [
+        1.2,
+        1.5,
+        1.8
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "grizzly",
+      "name": "Grizzly (灰熊)",
+      "aliases": [
+        "grizzly",
+        "灰熊"
+      ],
+      "category": "防弧圈",
+      "thickness": [
+        1.2,
+        1.5,
+        1.8
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bison",
+      "name": "Bison (野牛)",
+      "aliases": [
+        "bison",
+        "野牛"
+      ],
+      "category": "防弧圈",
+      "thickness": [
+        1.2,
+        1.5,
+        1.8
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "buffalo",
+      "name": "Buffalo",
+      "aliases": [],
+      "category": "防弧圈",
+      "thickness": [
+        1.2,
+        1.5,
+        1.8
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rhino",
+      "name": "Rhino (犀牛)",
+      "aliases": [
+        "rhino",
+        "犀牛"
+      ],
+      "category": "防弧圈",
+      "thickness": [
+        1.2,
+        1.5,
+        1.8
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tarantula",
+      "name": "Tarantula (狼蛛)",
+      "aliases": [
+        "tarantula",
+        "狼蛛"
+      ],
+      "category": "防弧圈",
+      "thickness": [
+        1.2,
+        1.5,
+        1.8
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dominance-spin",
+      "name": "Dominance Spin",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.3,
+        1.5,
+        1.8,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dominance-speed",
+      "name": "Dominance Speed",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.3,
+        1.5,
+        1.8,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "matador",
+      "name": "Matador (斗牛士)",
+      "aliases": [
+        "matador",
+        "斗牛士"
+      ],
+      "category": "纯木"
+    },
+    {
+      "id": "matador-texa-carbon",
+      "name": "Matador Texa Carbon",
+      "aliases": [
+        "matador carbon"
+      ],
+      "plies": "7+2"
+    },
+    {
+      "id": "matador-titan",
+      "name": "Matador Titan",
+      "aliases": [],
+      "plies": "7+2"
+    },
+    {
+      "id": "gladiator",
+      "name": "Gladiator (角斗士)",
+      "aliases": [
+        "gladiator",
+        "角斗士"
+      ],
+      "category": "外置其他纤维"
+    },
+    {
+      "id": "bloodhound",
+      "name": "Bloodhound",
+      "aliases": []
+    },
+    {
+      "id": "barricade",
+      "name": "Barricade",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "firewall-plus",
+      "name": "Firewall Plus (防火墙)",
+      "aliases": [
+        "firewall plus",
+        "firewall",
+        "防火墙"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    }
+  ]
+}

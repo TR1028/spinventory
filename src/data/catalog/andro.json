@@ -1,0 +1,1071 @@
+{
+  "id": "andro",
+  "name": "岸度",
+  "en": "andro",
+  "label": "andro",
+  "aliases": [
+    "安度"
+  ],
+  "rubbers": [
+    {
+      "id": "rasanter-r47",
+      "name": "Rasanter R47",
+      "aliases": [
+        "r47",
+        "新锐煞r47",
+        "锐煞r47",
+        "新锐煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        2,
+        2.3
+      ],
+      "hardness": [
+        "47"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rasanter-r50",
+      "name": "Rasanter R50",
+      "aliases": [
+        "r50",
+        "新锐煞r50",
+        "锐煞r50",
+        "新锐煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        2,
+        2.3
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rasanter-r48",
+      "name": "Rasanter R48",
+      "aliases": [
+        "r48",
+        "新锐煞r48",
+        "锐煞r48",
+        "新锐煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        2,
+        2.3
+      ],
+      "hardness": [
+        "48"
+      ],
+      "colors": [
+        "red",
+        "black",
+        "green",
+        "blue"
+      ]
+    },
+    {
+      "id": "rasanter-r53",
+      "name": "Rasanter R53",
+      "aliases": [
+        "r53",
+        "新锐煞r53",
+        "锐煞r53",
+        "新锐煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        2,
+        2.3
+      ],
+      "hardness": [
+        "53"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rasanter-r42",
+      "name": "Rasanter R42",
+      "aliases": [
+        "r42",
+        "新锐煞r42",
+        "锐煞r42",
+        "新锐煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        2,
+        2.3
+      ],
+      "hardness": [
+        "42"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rasanter-r45",
+      "name": "Rasanter R45",
+      "aliases": [
+        "r45",
+        "新锐煞r45",
+        "锐煞r45",
+        "新锐煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        2,
+        2.3
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rasanter-r37",
+      "name": "Rasanter R37",
+      "aliases": [
+        "r37",
+        "新锐煞r37",
+        "锐煞r37",
+        "新锐煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        2,
+        2.3
+      ],
+      "hardness": [
+        "37"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rasanter-c53",
+      "name": "Rasanter C53",
+      "aliases": [
+        "c53",
+        "新锐煞c53",
+        "锐煞c53",
+        "新锐煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        2.3
+      ],
+      "hardness": [
+        "53"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rasanter-c48",
+      "name": "Rasanter C48",
+      "aliases": [
+        "c48",
+        "新锐煞c48",
+        "锐煞c48",
+        "新锐煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        2.3
+      ],
+      "hardness": [
+        "48"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rasanter-c45",
+      "name": "Rasanter C45",
+      "aliases": [
+        "c45",
+        "新锐煞c45",
+        "锐煞c45",
+        "新锐煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        2.3
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rasanter-v47",
+      "name": "Rasanter V47",
+      "aliases": [
+        "v47",
+        "新锐煞v47",
+        "锐煞v47",
+        "新锐煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        2,
+        2.3
+      ],
+      "hardness": [
+        "47"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rasanter-v42",
+      "name": "Rasanter V42",
+      "aliases": [
+        "v42",
+        "新锐煞v42",
+        "锐煞v42",
+        "新锐煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        2,
+        2.3
+      ],
+      "hardness": [
+        "42"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "chintac-57s",
+      "name": "CHINTAC 57S",
+      "aliases": [
+        "chintac 57"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "57"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "chintac-52s",
+      "name": "CHINTAC 52S",
+      "aliases": [
+        "chintac 52"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "52"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nuzn-55",
+      "name": "NUZN 55",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nuzn-50",
+      "name": "NUZN 50",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nuzn-48",
+      "name": "NUZN 48",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "48"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nuzn-45",
+      "name": "NUZN 45",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hy-q-48",
+      "name": "HY-Q 48",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "48"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hy-q-42",
+      "name": "HY-Q 42",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "42"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hexer-powergrip",
+      "name": "Hexer Powergrip",
+      "aliases": [
+        "powergrip",
+        "黑煞",
+        "强力黑煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hexer-powergrip-sfx",
+      "name": "Hexer Powergrip SFX",
+      "aliases": [
+        "powergrip sfx",
+        "黑煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hexer-grip",
+      "name": "Hexer Grip",
+      "aliases": [
+        "黑煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hexer-grip-sfx",
+      "name": "Hexer Grip SFX",
+      "aliases": [
+        "黑煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hexer-powersponge",
+      "name": "Hexer Powersponge",
+      "aliases": [
+        "黑煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hexer-hd",
+      "name": "Hexer HD",
+      "aliases": [
+        "黑煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hexer-duro",
+      "name": "Hexer Duro",
+      "aliases": [
+        "黑煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hexer",
+      "name": "Hexer",
+      "aliases": [
+        "黑煞"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hexer-plus",
+      "name": "Hexer+",
+      "aliases": [
+        "hexer plus",
+        "黑煞"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "gtt-45",
+      "name": "GTT 45",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.6,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "gtt-40",
+      "name": "GTT 40",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.6,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hexer-pips-force",
+      "name": "Hexer Pips Force",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hexer-pips",
+      "name": "Hexer Pips",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "blowfish-plus",
+      "name": "Blowfish+",
+      "aliases": [
+        "blowfish plus"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "blowfish",
+      "name": "Blowfish",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rasant-chaos",
+      "name": "Rasant Chaos",
+      "aliases": [
+        "chaos"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5,
+        1.2
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "plaxon-525",
+      "name": "Plaxon 525",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "plaxon-450",
+      "name": "Plaxon 450",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "plaxon-400",
+      "name": "Plaxon 400",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "plaxon-350",
+      "name": "Plaxon 350",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    }
+  ],
+  "blades": [
+    {
+      "id": "synteliac-vco-off",
+      "name": "Synteliac VCO OFF",
+      "aliases": [
+        "vco"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "synteliac-vci-off",
+      "name": "Synteliac VCI OFF",
+      "aliases": [
+        "vci"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "synteliac-vci-off-gauzy-original",
+      "name": "Synteliac VCI OFF Gauzy Original",
+      "aliases": [
+        "vci gauzy",
+        "gauzy original"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "synteliac-zco-off-s",
+      "name": "Synteliac ZCO OFF/S",
+      "aliases": [
+        "zco"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "synteliac-zci-off",
+      "name": "Synteliac ZCI OFF",
+      "aliases": [
+        "zci"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "achanta-ci-off",
+      "name": "Achanta CI OFF",
+      "aliases": [
+        "achanta ci"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "achanta-legacy-off",
+      "name": "Achanta Legacy OFF",
+      "aliases": [
+        "achanta legacy"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "wosik-legacy-off",
+      "name": "Wosik Legacy OFF",
+      "aliases": [
+        "wosik legacy"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "heister-legacy-off",
+      "name": "Heister Legacy OFF",
+      "aliases": [
+        "heister legacy"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "eloi-legacy-off-s",
+      "name": "Eloi Legacy OFF/S",
+      "aliases": [
+        "eloi legacy"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "gauzy-sl-off",
+      "name": "Gauzy SL OFF",
+      "aliases": [
+        "gauzy sl"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "gauzy-hl-co-off",
+      "name": "Gauzy HL CO OFF",
+      "aliases": [
+        "gauzy hl"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "gauzy-bl7-off",
+      "name": "Gauzy BL7 OFF",
+      "aliases": [
+        "bl7"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "gauzy-bl5-all",
+      "name": "Gauzy BL5 ALL",
+      "aliases": [
+        "bl5"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "treiber-co-off-s",
+      "name": "Treiber CO OFF/S",
+      "aliases": [
+        "treiber co"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "treiber-co-all-s",
+      "name": "Treiber CO ALL/S",
+      "aliases": [],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "treiber-ci-off",
+      "name": "Treiber CI OFF",
+      "aliases": [
+        "treiber ci"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "treiber-fo-off-s",
+      "name": "Treiber FO OFF/S",
+      "aliases": [
+        "treiber fo"
+      ],
+      "category": "外置其他纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "treiber-fi-off",
+      "name": "Treiber FI OFF",
+      "aliases": [
+        "treiber fi"
+      ],
+      "category": "内置其他纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "treiber-k-off",
+      "name": "Treiber K OFF",
+      "aliases": [
+        "treiber k"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "treiber-z-off",
+      "name": "Treiber Z OFF",
+      "aliases": [
+        "treiber z"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "treiber-g-off",
+      "name": "Treiber G OFF",
+      "aliases": [
+        "treiber g"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "treiber-h-off",
+      "name": "Treiber H OFF",
+      "aliases": [
+        "treiber h"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "tp-ligna-co-off",
+      "name": "TP_Ligna CO OFF",
+      "aliases": [
+        "ligna co"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "tp-ligna-ci-off",
+      "name": "TP_Ligna CI OFF",
+      "aliases": [
+        "ligna ci"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "tp-ligna-off",
+      "name": "TP_Ligna OFF",
+      "aliases": [
+        "ligna off"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "timber-7-off-s",
+      "name": "Timber 7 OFF/S",
+      "aliases": [
+        "timber 7"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "timber-7-off",
+      "name": "Timber 7 OFF",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "timber-5-off",
+      "name": "Timber 5 OFF",
+      "aliases": [
+        "timber 5"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "timber-5-all-s",
+      "name": "Timber 5 ALL/S",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "timber-5-def",
+      "name": "Timber 5 DEF",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "novacell-off",
+      "name": "Novacell OFF",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "novacell-off-s",
+      "name": "Novacell OFF/S",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "novacell-all-s",
+      "name": "Novacell ALL/S",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    }
+  ]
+}

@@ -1,0 +1,1170 @@
+{
+  "id": "butterfly",
+  "name": "蝴蝶",
+  "en": "Butterfly",
+  "label": "Butterfly",
+  "aliases": [
+    "bty",
+    "tamasu",
+    "tamca"
+  ],
+  "rubbers": [
+    {
+      "id": "dignics-09c",
+      "name": "Dignics 09C (D09C)",
+      "aliases": [
+        "d09c",
+        "dignics09c",
+        "dignics 09c",
+        "09c"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "44"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dignics-05",
+      "name": "Dignics 05 (D05)",
+      "aliases": [
+        "d05",
+        "dignics05",
+        "dignics 05"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dignics-80",
+      "name": "Dignics 80 (D80)",
+      "aliases": [
+        "d80",
+        "dignics80",
+        "dignics 80"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "dignics-64",
+      "name": "Dignics 64 (D64)",
+      "aliases": [
+        "d64",
+        "dignics64",
+        "dignics 64"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tenergy-05",
+      "name": "Tenergy 05 (T05)",
+      "aliases": [
+        "t05",
+        "tenergy05",
+        "tenergy 05"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "36"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tenergy-05-fx",
+      "name": "Tenergy 05 FX (T05 FX)",
+      "aliases": [
+        "t05fx",
+        "t05 fx",
+        "tenergy 05 fx"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "32"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tenergy-05-hard",
+      "name": "Tenergy 05 Hard (T05 Hard)",
+      "aliases": [
+        "t05h",
+        "t05 hard",
+        "t05硬",
+        "tenergy 05 hard"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "43"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tenergy-64",
+      "name": "Tenergy 64 (T64)",
+      "aliases": [
+        "t64",
+        "tenergy64",
+        "tenergy 64"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "36"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tenergy-64-fx",
+      "name": "Tenergy 64 FX (T64 FX)",
+      "aliases": [
+        "t64fx",
+        "t64 fx",
+        "tenergy 64 fx"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "32"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tenergy-80",
+      "name": "Tenergy 80 (T80)",
+      "aliases": [
+        "t80",
+        "tenergy80",
+        "tenergy 80"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "36"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tenergy-80-fx",
+      "name": "Tenergy 80 FX (T80 FX)",
+      "aliases": [
+        "t80fx",
+        "t80 fx",
+        "tenergy 80 fx"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "32"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tenergy-25",
+      "name": "Tenergy 25 (T25)",
+      "aliases": [
+        "t25",
+        "tenergy25",
+        "tenergy 25"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "36"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tenergy-25-fx",
+      "name": "Tenergy 25 FX (T25 FX)",
+      "aliases": [
+        "t25fx",
+        "t25 fx",
+        "tenergy 25 fx"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "32"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tenergy-19",
+      "name": "Tenergy 19 (T19)",
+      "aliases": [
+        "t19",
+        "tenergy19",
+        "tenergy 19"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "36"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "zyre-03",
+      "name": "Zyre 03 (Z03)",
+      "aliases": [
+        "z03",
+        "zyre03",
+        "zyre-03",
+        "zyre 03"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.5,
+        2.7
+      ],
+      "hardness": [
+        "44"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "glayzer",
+      "name": "Glayzer",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "38"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "glayzer-09c",
+      "name": "Glayzer 09C",
+      "aliases": [
+        "g09c"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "42"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rozena",
+      "name": "Rozena",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tackiness-chop",
+      "name": "Tackiness Chop (Tackiness C)",
+      "aliases": [
+        "tackiness c",
+        "tackiness chop",
+        "tackinessc"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.1,
+        1.3,
+        1.5,
+        1.7,
+        1.9
+      ],
+      "hardness": [
+        "32"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tackiness-chop-2",
+      "name": "Tackiness Chop II (Tackiness C II)",
+      "aliases": [
+        "tackiness c ii",
+        "tackiness chop ii",
+        "tackiness chop 2",
+        "tackiness c2"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.1,
+        1.3,
+        1.5,
+        1.7,
+        1.9
+      ],
+      "hardness": [
+        "41"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tackiness-drive",
+      "name": "Tackiness Drive (Tackiness D)",
+      "aliases": [
+        "tackiness d",
+        "tackiness drive",
+        "tackinessd"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.3,
+        1.5,
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "38"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "sriver",
+      "name": "Sriver",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.3,
+        1.5,
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "38"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "sriver-fx",
+      "name": "Sriver FX",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "33"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "sriver-el",
+      "name": "Sriver EL",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "flextra",
+      "name": "Flextra",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "32"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bryce-speed",
+      "name": "Bryce Speed",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "38"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bryce-speed-fx",
+      "name": "Bryce Speed FX",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "32"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "impartial-xs",
+      "name": "Impartial XS",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "30"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "impartial-xb",
+      "name": "Impartial XB",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "30"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "speedy-po",
+      "name": "Speedy P.O.",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1.3,
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "challenger-attack",
+      "name": "Challenger Attack",
+      "aliases": [
+        "challenger"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "feint-long-2",
+      "name": "Feint Long II",
+      "aliases": [
+        "feint long 2",
+        "feint 2",
+        "fl2"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5,
+        1.1,
+        1.3
+      ],
+      "hardness": [
+        "38"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "feint-long-3",
+      "name": "Feint Long III",
+      "aliases": [
+        "feint long 3",
+        "feint 3",
+        "fl3"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5,
+        1.1,
+        1.3
+      ],
+      "hardness": [
+        "25"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "ilius-b",
+      "name": "Ilius B",
+      "aliases": [],
+      "category": "长胶",
+      "thickness": [
+        0.5,
+        1.1,
+        1.3
+      ],
+      "hardness": [
+        "48"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "ilius-s",
+      "name": "Ilius S",
+      "aliases": [],
+      "category": "长胶",
+      "thickness": [
+        0.5,
+        1.1,
+        1.3
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "super-anti",
+      "name": "Super Anti",
+      "aliases": [],
+      "category": "防弧圈",
+      "thickness": [
+        1.3,
+        1.9
+      ],
+      "hardness": [
+        "25"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "viscaria",
+      "name": "Viscaria (维斯卡利亚)",
+      "aliases": [
+        "vis",
+        "维斯",
+        "viscaria alc",
+        "vis alc"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "viscaria-super-alc",
+      "name": "Viscaria Super ALC (维斯卡利亚 SALC)",
+      "aliases": [
+        "vis salc",
+        "vis super alc",
+        "维斯salc",
+        "viscaria salc"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "fan-zhendong-alc",
+      "name": "Fan Zhendong ALC (樊振东ALC)",
+      "aliases": [
+        "fzd alc",
+        "fzd",
+        "樊振东alc",
+        "樊振东"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "fan-zhendong-super-alc",
+      "name": "Fan Zhendong Super ALC (樊振东SALC)",
+      "aliases": [
+        "fzd salc",
+        "fzd super alc",
+        "樊振东salc",
+        "樊振东super alc"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "fan-zhendong-zlc",
+      "name": "Fan Zhendong ZLC (樊振东ZLC)",
+      "aliases": [
+        "fzd zlc",
+        "樊振东zlc"
+      ],
+      "category": "外置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "fan-zhendong-super-zlc",
+      "name": "Fan Zhendong Super ZLC (樊振东SZLC)",
+      "aliases": [
+        "fzd szlc",
+        "fzd super zlc",
+        "樊振东szlc"
+      ],
+      "category": "外置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "fan-zhendong-cnf",
+      "name": "Fan Zhendong CNF (樊振东CNF)",
+      "aliases": [
+        "fzd cnf",
+        "樊振东cnf"
+      ],
+      "category": "外置其他纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "harimoto-innerforce-alc",
+      "name": "Harimoto Tomokazu Innerforce ALC (张本智和内置ALC)",
+      "aliases": [
+        "harimoto alc",
+        "张本alc",
+        "张本",
+        "张本智和",
+        "harimoto innerforce alc"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "harimoto-innerforce-zlc",
+      "name": "Harimoto Tomokazu Innerforce ZLC (张本智和内置ZLC)",
+      "aliases": [
+        "harimoto zlc",
+        "张本zlc"
+      ],
+      "category": "内置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "harimoto-innerforce-super-zlc",
+      "name": "Harimoto Tomokazu Innerforce Super ZLC (张本智和内置SZLC)",
+      "aliases": [
+        "harimoto szlc",
+        "张本szlc",
+        "harimoto super zlc"
+      ],
+      "category": "内置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "harimoto-innerforce-super-alc",
+      "name": "Harimoto Tomokazu Innerforce Super ALC (张本智和内置SALC)",
+      "aliases": [
+        "harimoto salc",
+        "张本salc",
+        "harimoto super alc"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "timo-boll-alc",
+      "name": "Timo Boll ALC (波尔ALC)",
+      "aliases": [
+        "tb alc",
+        "tbalc",
+        "波尔alc",
+        "波尔"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "timo-boll-zlc",
+      "name": "Timo Boll ZLC (波尔ZLC)",
+      "aliases": [
+        "tb zlc",
+        "tbzlc",
+        "波尔zlc"
+      ],
+      "category": "外置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "timo-boll-zlf",
+      "name": "Timo Boll ZLF (波尔ZLF)",
+      "aliases": [
+        "tb zlf",
+        "tbzlf",
+        "波尔zlf"
+      ],
+      "category": "外置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "timo-boll-caf",
+      "name": "Timo Boll CAF (波尔CAF)",
+      "aliases": [
+        "tb caf",
+        "tbcaf",
+        "波尔caf"
+      ],
+      "category": "外置其他纤维",
+      "plies": "3+2"
+    },
+    {
+      "id": "innerforce-layer-alc",
+      "name": "Innerforce Layer ALC (内能ALC)",
+      "aliases": [
+        "innerforce alc",
+        "ifalc",
+        "if alc",
+        "内能alc"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "innerforce-layer-alc-s",
+      "name": "Innerforce Layer ALC.S (内能ALC.S)",
+      "aliases": [
+        "innerforce alc.s",
+        "ifalcs",
+        "if alc.s",
+        "内能alc.s"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "innerforce-layer-zlc",
+      "name": "Innerforce Layer ZLC (内能ZLC)",
+      "aliases": [
+        "innerforce zlc",
+        "ifzlc",
+        "if zlc",
+        "内能zlc"
+      ],
+      "category": "内置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "innerforce-layer-zlf",
+      "name": "Innerforce Layer ZLF (内能ZLF)",
+      "aliases": [
+        "innerforce zlf",
+        "ifzlf",
+        "if zlf",
+        "内能zlf"
+      ],
+      "category": "内置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "ovtcharov-innerforce-alc",
+      "name": "Ovtcharov Innerforce ALC (奥恰洛夫内置ALC)",
+      "aliases": [
+        "ovtcharov alc",
+        "ovtcharov",
+        "奥恰",
+        "奥恰洛夫"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "franziska-innerforce-zlc",
+      "name": "Franziska Innerforce ZLC (弗朗西斯卡内置ZLC)",
+      "aliases": [
+        "franziska zlc",
+        "franziska",
+        "弗朗西斯卡"
+      ],
+      "category": "内置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "lin-yun-ju-super-zlc",
+      "name": "Lin Yun-Ju Super ZLC (林昀儒SZLC)",
+      "aliases": [
+        "lyj szlc",
+        "lin yun ju",
+        "林昀儒",
+        "林昀儒szlc"
+      ],
+      "category": "外置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "mizutani-jun-zlc",
+      "name": "Mizutani Jun ZLC (水谷隼ZLC)",
+      "aliases": [
+        "mizutani zlc",
+        "mizutani",
+        "水谷隼",
+        "水谷隼zlc"
+      ],
+      "category": "外置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "mizutani-jun-super-zlc",
+      "name": "Mizutani Jun Super ZLC (水谷隼SZLC)",
+      "aliases": [
+        "mizutani szlc",
+        "水谷隼szlc",
+        "mizutani super zlc"
+      ],
+      "category": "外置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "revoldia-cnf",
+      "name": "Revoldia CNF",
+      "aliases": [
+        "revoldia",
+        "cnf"
+      ],
+      "category": "外置其他纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "garaydia-alc",
+      "name": "Garaydia ALC",
+      "aliases": [
+        "garaydia"
+      ],
+      "category": "外置芳碳",
+      "plies": "3+2"
+    },
+    {
+      "id": "garaydia-zlc",
+      "name": "Garaydia ZLC",
+      "aliases": [],
+      "category": "外置超级纤维",
+      "plies": "3+2"
+    },
+    {
+      "id": "primorac-carbon",
+      "name": "Primorac Carbon (普碳)",
+      "aliases": [
+        "primorac carbon",
+        "primorac",
+        "普碳",
+        "pc"
+      ],
+      "category": "外置碳素"
+    },
+    {
+      "id": "korbel",
+      "name": "Korbel (科贝尔)",
+      "aliases": [
+        "korbel",
+        "petr korbel",
+        "科贝尔"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "sk7-classic",
+      "name": "SK7 Classic",
+      "aliases": [
+        "sk7"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "hadraw-vk",
+      "name": "Hadraw VK",
+      "aliases": [
+        "hadraw"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "hadraw-sr",
+      "name": "Hadraw SR",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "zhang-jike-alc",
+      "name": "Zhang Jike ALC (张继科ALC)",
+      "aliases": [
+        "zjk alc",
+        "zjk",
+        "张继科alc",
+        "张继科"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2",
+      "discontinued": true
+    },
+    {
+      "id": "zhang-jike-zlc",
+      "name": "Zhang Jike ZLC (张继科ZLC)",
+      "aliases": [
+        "zjk zlc",
+        "张继科zlc"
+      ],
+      "category": "外置超级纤维",
+      "plies": "5+2",
+      "discontinued": true
+    },
+    {
+      "id": "zhang-jike-super-zlc",
+      "name": "Zhang Jike Super ZLC (张继科SZLC)",
+      "aliases": [
+        "zjk szlc",
+        "zjk super zlc",
+        "张继科szlc"
+      ],
+      "category": "外置超级纤维",
+      "plies": "5+2",
+      "discontinued": true
+    },
+    {
+      "id": "lin-gaoyuan-alc",
+      "name": "Lin Gaoyuan ALC (林高远ALC)",
+      "aliases": [
+        "lgy alc",
+        "lgy",
+        "林高远alc",
+        "林高远"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2",
+      "discontinued": true
+    },
+    {
+      "id": "timo-boll-spirit",
+      "name": "Timo Boll Spirit (波尔精神)",
+      "aliases": [
+        "tb spirit",
+        "tbs",
+        "波尔精神"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2",
+      "discontinued": true
+    },
+    {
+      "id": "joo-se-hyuk",
+      "name": "Joo Se Hyuk (朱世赫)",
+      "aliases": [
+        "joo se hyuk",
+        "joo saehyuk",
+        "朱世赫"
+      ],
+      "category": "纯木",
+      "plies": "5",
+      "discontinued": true
+    }
+  ]
+}

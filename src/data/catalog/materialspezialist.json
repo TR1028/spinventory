@@ -1,0 +1,192 @@
+{
+  "id": "materialspezialist",
+  "name": "材料专家",
+  "en": "Der Materialspezialist",
+  "label": "Der Materialspezialist",
+  "aliases": [
+    "dms",
+    "der materialspezialist",
+    "materialspezialist",
+    "der-materialspezialist"
+  ],
+  "rubbers": [
+    {
+      "id": "elimination",
+      "name": "Elimination",
+      "aliases": [
+        "elimination extra long"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.5,
+        1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "kamikaze",
+      "name": "Kamikaze",
+      "aliases": [],
+      "category": "长胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black",
+        "green"
+      ]
+    },
+    {
+      "id": "hallucination",
+      "name": "Hallucination",
+      "aliases": [],
+      "category": "长胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "wildfire",
+      "name": "Wildfire",
+      "aliases": [],
+      "category": "中颗粒",
+      "thickness": [
+        "OX",
+        1.3,
+        1.7,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black",
+        "green"
+      ]
+    },
+    {
+      "id": "firestorm",
+      "name": "Firestorm",
+      "aliases": [],
+      "category": "生胶",
+      "thickness": [
+        1.8,
+        2.1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "spinparasite",
+      "name": "Spinparasite",
+      "aliases": [
+        "spinparasit"
+      ],
+      "category": "防弧圈",
+      "thickness": [
+        1,
+        1.5
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "diabolic",
+      "name": "Diabolic",
+      "aliases": [],
+      "category": "防弧圈",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "transformer",
+      "name": "Transformer",
+      "aliases": [],
+      "category": "防弧圈",
+      "thickness": [
+        0.6,
+        1,
+        1.5
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "stoerkraft",
+      "name": "Störkraft",
+      "aliases": [
+        "stoerkraft",
+        "storkraft"
+      ],
+      "category": "防弧圈",
+      "thickness": [
+        0.8,
+        1.2,
+        1.6
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "mega-block",
+      "name": "Mega Block",
+      "aliases": [],
+      "category": "防弧圈",
+      "thickness": [
+        0.6,
+        1,
+        1.5,
+        2
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "magic-defence",
+      "name": "Magic Defence",
+      "aliases": [
+        "magic defense"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "defensor",
+      "name": "Defensor",
+      "aliases": []
+    },
+    {
+      "id": "revolution",
+      "name": "Revolution",
+      "aliases": []
+    }
+  ]
+}

@@ -20,6 +20,15 @@ export type RacketStatus = "active" | "inventory" | "retired";
  */
 export type RubberState = "inventory" | "mounted" | "retired";
 
+/**
+ * Topsheet colours allowed by the ITTF: one side of a racket black, the other a bright colour
+ * (red, blue, green, pink or violet).
+ */
+export type RubberColor = "black" | "red" | "blue" | "green" | "pink" | "purple";
+
+/** Named sponge sizes sold without a mm figure: the maker's thickest (`MAX`) or no sponge (`OX`). */
+export type ThicknessCode = "MAX" | "OX";
+
 /** Handle shape: shakehand flared / straight / anatomic, Chinese penhold, Japanese penhold. */
 export type GripType = "FL" | "ST" | "AN" | "CS" | "JP";
 
@@ -71,7 +80,12 @@ export type Rubber = {
    */
   quantity?: number;
   hardness?: string;
+  /** Sponge thickness in mm (empty when `thicknessCode` names the size instead). */
   thicknessMm?: number;
+  /** Named sponge size without a mm figure (v5): `MAX` (the maker's thickest) or `OX` (no sponge). */
+  thicknessCode?: ThicknessCode;
+  /** Topsheet colour (v5). */
+  color?: RubberColor;
   /** Sheet weight in grams (v3). */
   weightGrams?: number;
   /**
@@ -174,6 +188,55 @@ export const gripTypeLabel: Record<GripType, string> = {
 
 export function isGripType(value: unknown): value is GripType {
   return GRIP_TYPES.includes(value as GripType);
+}
+
+export const RUBBER_COLORS: readonly RubberColor[] = ["black", "red", "blue", "green", "pink", "purple"];
+
+export const rubberColorName: Record<RubberColor, string> = {
+  black: "黑",
+  red: "红",
+  blue: "蓝",
+  green: "绿",
+  pink: "粉",
+  purple: "紫",
+};
+
+/** Swatch colours for the UI. */
+export const rubberColorSwatch: Record<RubberColor, string> = {
+  black: "#1f2328",
+  red: "#d7263d",
+  blue: "#1f6feb",
+  green: "#2da44e",
+  pink: "#f472b6",
+  purple: "#8250df",
+};
+
+export function isRubberColor(value: unknown): value is RubberColor {
+  return RUBBER_COLORS.includes(value as RubberColor);
+}
+
+export const THICKNESS_CODES: readonly ThicknessCode[] = ["MAX", "OX"];
+
+export function isThicknessCode(value: unknown): value is ThicknessCode {
+  return THICKNESS_CODES.includes(value as ThicknessCode);
+}
+
+/** `2.1 mm`, `MAX`, `OX` — or `undefined` when no thickness was recorded. */
+export function formatRubberThickness(rubber: Pick<Rubber, "thicknessMm" | "thicknessCode">) {
+  if (rubber.thicknessCode) return rubber.thicknessCode;
+  return rubber.thicknessMm ? `${rubber.thicknessMm} mm` : undefined;
+}
+
+/**
+ * ITTF colour rule for the two sides of one racket: one black, the other a bright colour. Returns
+ * a problem description, or `undefined` when the colours are fine or not both recorded.
+ */
+export function checkRacketColors(forehand?: RubberColor, backhand?: RubberColor) {
+  if (!forehand || !backhand) return undefined;
+  const blackSides = [forehand, backhand].filter((color) => color === "black").length;
+  if (blackSides === 2) return "两面都是黑色";
+  if (blackSides === 0) return "两面都不是黑色";
+  return undefined;
 }
 
 export function getRacketStatus(racket: Pick<Racket, "status">): RacketStatus {

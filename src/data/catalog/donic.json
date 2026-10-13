@@ -1,0 +1,1127 @@
+{
+  "id": "donic",
+  "name": "多尼克",
+  "en": "DONIC",
+  "label": "Donic",
+  "aliases": [
+    "donic",
+    "duonike"
+  ],
+  "rubbers": [
+    {
+      "id": "bluefire-m1",
+      "name": "Bluefire M1 (蓝火 M1)",
+      "aliases": [
+        "蓝火m1",
+        "bluefire m1",
+        "bf m1"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluefire-m2",
+      "name": "Bluefire M2 (蓝火 M2)",
+      "aliases": [
+        "蓝火m2",
+        "bluefire m2",
+        "bf m2"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluefire-m3",
+      "name": "Bluefire M3 (蓝火 M3)",
+      "aliases": [
+        "蓝火m3",
+        "bluefire m3",
+        "bf m3"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluefire-m1-turbo",
+      "name": "Bluefire M1 Turbo (蓝火 M1 Turbo)",
+      "aliases": [
+        "蓝火m1 turbo",
+        "m1 turbo",
+        "bluefire m1 turbo"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluefire-jp-01",
+      "name": "Bluefire JP 01 (蓝火 JP01)",
+      "aliases": [
+        "蓝火jp01",
+        "jp01",
+        "bluefire jp01"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluefire-jp-02",
+      "name": "Bluefire JP 02 (蓝火 JP02)",
+      "aliases": [
+        "蓝火jp02",
+        "jp02",
+        "bluefire jp02"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluefire-jp-03",
+      "name": "Bluefire JP 03 (蓝火 JP03)",
+      "aliases": [
+        "蓝火jp03",
+        "jp03",
+        "bluefire jp03"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluefire-jp-01-turbo",
+      "name": "Bluefire JP 01 Turbo (蓝火 JP01 Turbo)",
+      "aliases": [
+        "蓝火jp01 turbo",
+        "jp01 turbo"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluefire-big-slam",
+      "name": "Bluefire Big Slam (蓝火 Big Slam)",
+      "aliases": [
+        "蓝火big slam",
+        "bluefire big slam"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.6,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluegrip-j1",
+      "name": "Bluegrip J1",
+      "aliases": [
+        "bgj1"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluegrip-j2",
+      "name": "Bluegrip J2",
+      "aliases": [
+        "bgj2"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluegrip-j3",
+      "name": "Bluegrip J3",
+      "aliases": [
+        "bgj3"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluegrip-c1",
+      "name": "Bluegrip C1",
+      "aliases": [
+        "bgc1"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "60"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluegrip-c2",
+      "name": "Bluegrip C2",
+      "aliases": [
+        "bgc2"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluestar-a1",
+      "name": "Bluestar A1 (蓝星 A1)",
+      "aliases": [
+        "蓝星a1",
+        "bluestar a1"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluestar-a2",
+      "name": "Bluestar A2 (蓝星 A2)",
+      "aliases": [
+        "蓝星a2",
+        "bluestar a2"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluestar-a3",
+      "name": "Bluestar A3 (蓝星 A3)",
+      "aliases": [
+        "蓝星a3",
+        "bluestar a3"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluestorm-z1",
+      "name": "Bluestorm Z1 (蓝风暴 Z1)",
+      "aliases": [
+        "蓝风暴z1",
+        "bluestorm z1",
+        "bs z1"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluestorm-z1-turbo",
+      "name": "Bluestorm Z1 Turbo (蓝风暴 Z1 Turbo)",
+      "aliases": [
+        "蓝风暴z1 turbo",
+        "z1 turbo"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluestorm-z2",
+      "name": "Bluestorm Z2 (蓝风暴 Z2)",
+      "aliases": [
+        "蓝风暴z2",
+        "bluestorm z2"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluestorm-z3",
+      "name": "Bluestorm Z3 (蓝风暴 Z3)",
+      "aliases": [
+        "蓝风暴z3",
+        "bluestorm z3"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluestorm-pro",
+      "name": "Bluestorm Pro (蓝风暴 Pro)",
+      "aliases": [
+        "蓝风暴pro",
+        "bluestorm pro"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluestorm-pro-am",
+      "name": "Bluestorm Pro AM (蓝风暴 Pro AM)",
+      "aliases": [
+        "蓝风暴pro am",
+        "bluestorm pro am"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "bluestorm-big-slam",
+      "name": "Bluestorm Big Slam (蓝风暴 Big Slam)",
+      "aliases": [
+        "蓝风暴big slam",
+        "bluestorm big slam"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "acuda-s1",
+      "name": "Acuda S1",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "acuda-s2",
+      "name": "Acuda S2",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "acuda-s3",
+      "name": "Acuda S3",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "37.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "acuda-s1-turbo",
+      "name": "Acuda S1 Turbo",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "acuda-blue-p1",
+      "name": "Acuda Blue P1",
+      "aliases": [
+        "acuda p1"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "acuda-blue-p1-turbo",
+      "name": "Acuda Blue P1 Turbo",
+      "aliases": [
+        "acuda p1 turbo"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "acuda-blue-p2",
+      "name": "Acuda Blue P2",
+      "aliases": [
+        "acuda p2"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "acuda-blue-p3",
+      "name": "Acuda Blue P3",
+      "aliases": [
+        "acuda p3"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "baracuda",
+      "name": "Baracuda",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "baracuda-big-slam",
+      "name": "Baracuda Big Slam",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "38"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "coppa-e1",
+      "name": "Coppa E1",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "coppa-e2",
+      "name": "Coppa E2",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "coppa-e3",
+      "name": "Coppa E3",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "desto-f1",
+      "name": "Desto F1",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "desto-f3",
+      "name": "Desto F3",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "desto-f3-big-slam",
+      "name": "Desto F3 Big Slam",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "desto-next",
+      "name": "Desto Next",
+      "aliases": [
+        "n2xt"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vario",
+      "name": "Vario",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.2,
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vario-big-slam",
+      "name": "Vario Big Slam",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "35"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "slice-40-cd",
+      "name": "Slice 40 CD",
+      "aliases": [
+        "slice 40",
+        "slice cd"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.2,
+        1.5,
+        1.8
+      ],
+      "hardness": [],
+      "colors": []
+    },
+    {
+      "id": "piranja-formula-tec",
+      "name": "Piranja Formula Tec",
+      "aliases": [
+        "piranja",
+        "piranja ft"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        1.2
+      ],
+      "hardness": [],
+      "colors": []
+    },
+    {
+      "id": "baxster-f1-a",
+      "name": "Baxster F1-A",
+      "aliases": [
+        "baxster"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.8,
+        2
+      ],
+      "hardness": [],
+      "colors": []
+    }
+  ],
+  "blades": [
+    {
+      "id": "original-true-carbon",
+      "name": "Original True Carbon (原 Ovtcharov True Carbon)",
+      "aliases": [
+        "ovtcharov true carbon",
+        "奥恰 true carbon",
+        "true carbon"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "original-true-carbon-inner",
+      "name": "Original True Carbon Inner",
+      "aliases": [
+        "true carbon inner",
+        "ovtcharov true carbon inner"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "original-carbospeed",
+      "name": "Original Carbospeed (原 Ovtcharov Carbospeed)",
+      "aliases": [
+        "ovtcharov carbospeed",
+        "carbospeed"
+      ],
+      "category": "外置碳素",
+      "plies": "3+2"
+    },
+    {
+      "id": "original-senso-v1",
+      "name": "Original Senso V1 (原 Ovtcharov Senso V1)",
+      "aliases": [
+        "ovtcharov senso v1"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "original-no1-senso-carbon",
+      "name": "Original No.1 Senso Carbon (原 Ovtcharov No.1 Senso Carbon)",
+      "aliases": [
+        "ovtcharov no.1 senso carbon",
+        "no.1 senso carbon"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "original-senso-carbon",
+      "name": "Original Senso Carbon (原 Ovtcharov Senso Carbon)",
+      "aliases": [
+        "ovtcharov senso carbon"
+      ],
+      "category": "外置碳素"
+    },
+    {
+      "id": "zhang-jike-original-carbon",
+      "name": "Zhang Jike Original Carbon (张继科 Original Carbon)",
+      "aliases": [
+        "张继科 original carbon",
+        "zjk original carbon"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "zhang-jike-new-era",
+      "name": "Zhang Jike New Era (张继科 New Era)",
+      "aliases": [
+        "张继科 new era",
+        "zjk new era"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "zhang-jike-true-carbon",
+      "name": "Zhang Jike True Carbon (张继科 True Carbon)",
+      "aliases": [
+        "张继科 true carbon",
+        "zjk true carbon"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "whiper-outer-carbon",
+      "name": "Whiper Outer Carbon",
+      "aliases": [
+        "whiper outer"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "whiper-inner-carbon",
+      "name": "Whiper Inner Carbon",
+      "aliases": [
+        "whiper inner"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "persson-jubilee-40",
+      "name": "Persson Jubilee 40",
+      "aliases": [
+        "persson jubilee",
+        "jubilee 40"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "relevant",
+      "name": "Relevant (Coton)",
+      "aliases": [
+        "coton relevant",
+        "donic relevant"
+      ],
+      "category": "外置其他纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "anders-lind-exceptional",
+      "name": "Anders Lind Exceptional",
+      "aliases": [
+        "lind exceptional",
+        "anders lind"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "waldner-senso-carbon",
+      "name": "Waldner Senso Carbon (老瓦 Senso Carbon)",
+      "aliases": [
+        "waldner senso carbon",
+        "瓦尔德内尔 senso carbon"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "waldner-senso-v1",
+      "name": "Waldner Senso V1 (老瓦 Senso V1)",
+      "aliases": [
+        "waldner senso v1"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "waldner-black-devil",
+      "name": "Waldner Black Devil",
+      "aliases": [
+        "black devil",
+        "黑魔鬼"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "waldner-dotec-carbon",
+      "name": "Waldner Dotec Carbon",
+      "aliases": [
+        "dotec carbon"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "waldner-legend-carbon",
+      "name": "Waldner Legend Carbon",
+      "aliases": [
+        "legend carbon"
+      ],
+      "category": "外置碳素",
+      "plies": "3+2"
+    },
+    {
+      "id": "waldner-exclusive-ar-plus",
+      "name": "Waldner Exclusive AR+",
+      "aliases": [
+        "waldner exclusive"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "waldner-allplay",
+      "name": "Waldner Allplay",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "persson-powerplay",
+      "name": "Persson Powerplay",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "persson-powerplay-senso-v1",
+      "name": "Persson Powerplay Senso V1",
+      "aliases": [
+        "powerplay senso v1"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "appelgren-allplay-senso-v1",
+      "name": "Appelgren Allplay Senso V1",
+      "aliases": [
+        "appelgren allplay senso",
+        "appelgren"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "defplay-senso",
+      "name": "Defplay Senso",
+      "aliases": [
+        "defplay"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    }
+  ]
+}

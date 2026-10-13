@@ -1,0 +1,118 @@
+{
+  "id": "darker",
+  "name": "达克",
+  "en": "Darker",
+  "label": "Darker",
+  "aliases": [
+    "darker",
+    "ダーカー"
+  ],
+  "rubbers": [
+    {
+      "id": "crea",
+      "name": "CREA (クレア)",
+      "aliases": [
+        "crea",
+        "クレア"
+      ],
+      "category": "生胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "giro",
+      "name": "GIRO (ジャイロ)",
+      "aliases": [
+        "giro",
+        "ジャイロ"
+      ],
+      "category": "长胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "speed-90",
+      "name": "Speed 90 (达克90)",
+      "aliases": [
+        "speed 90",
+        "speed90",
+        "达克90",
+        "达克 90"
+      ],
+      "category": "纯木",
+      "plies": "1"
+    },
+    {
+      "id": "speed-70",
+      "name": "Speed 70 (达克70)",
+      "aliases": [
+        "speed 70",
+        "speed70",
+        "达克70"
+      ],
+      "category": "纯木",
+      "plies": "1"
+    },
+    {
+      "id": "7p-2a",
+      "name": "7P-2A (达克7P)",
+      "aliases": [
+        "7p-2a",
+        "7p2a",
+        "7p",
+        "达克7p"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "7p-2a-7",
+      "name": "7P-2A.7",
+      "aliases": [
+        "7p-2a 7.0"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "7p-2a-carbon",
+      "name": "7P-2A Carbon",
+      "aliases": [],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "7p-2a-ri",
+      "name": "7P-2A.Ri",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "7p-2a-df",
+      "name": "7P-2A DF",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "5p-2a",
+      "name": "5P-2A",
+      "aliases": [
+        "达克5p"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    }
+  ]
+}

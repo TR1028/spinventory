@@ -21,9 +21,9 @@ Local-first PWA + Cloudflare (Workers + D1) cloud-synced app for tracking table 
      - **全新未拆**：同款新胶皮可以 **一次登记多张**（数量 ±），卡片上显示 `×3`；「贴 1 张到球拍」时自动拆出 1 张，其余继续囤着。
      - **拆下待用**：暂时撕下或「用过的」胶皮，显示剩余寿命、首次贴拍和拆下日期、已打时长和灌油次数。囤着不打球，日历寿命会 **放慢继续**（默认按 50% 的速度，即两天算一天；每张胶皮可在「寿命参数 → 囤货老化 %」里调整）；重新贴上后恢复正常速度，打球时长接着累计。
      - **打球时长按胶皮算**：每张胶皮记得自己在哪块拍子上贴过哪段时间，打球记录按日期算到当时贴着的胶皮上——撕下以后再补录之前的打球也会算对；删除球拍时，已经挪到别处的胶皮会保留在那块拍子上打的时长。
-     - 每张胶皮都可以填 **自定义名称**（如 `1号`、`比赛用`），用来区分同款胶皮。
+     - 每张胶皮都可以填 **自定义名称**（如 `1号`、`比赛用`），用来区分同款胶皮；也可以选 **颜色**（黑 / 红 / 蓝 / 绿 / 粉 / 紫），名称前会显示色点。同一块拍子两面都是黑色、或都不是黑色时，详情页会提示不符合比赛规则（一面黑色，另一面红 / 蓝 / 绿 / 粉 / 紫）。
      - 「添加胶皮」时选 **「用过的」** 可以直接补录一张之前用过、现在拆下来的胶皮（首次贴拍日期、已打时长、灌油历史）。
-   - **器材目录 & 规格速选**：底板和胶皮名称都是可搜索的下拉框，内置蝴蝶、红双喜、斯帝卡、挺拔、骄猛、尼塔库、亚萨卡、维克塔斯、银河等品牌的常见型号，支持中英文和缩写搜索（如 `vis`、`w968`、`hl5`、`fzd`、`zjk`、`省狂`、`T05`、`D09c`），也可以按品牌筛选；目录里没有的型号直接输入名称即可保存。选中或输入能识别的胶皮后，会按该型号实际在售的规格显示 **厚度 / 硬度速选按钮**（如 `2.15 mm`、`41°`），点一下即可填入。
+   - **器材目录 & 规格速选**：底板和胶皮名称都是可搜索的下拉框，内置 27 个品牌约 550 款胶皮、350 款底板（蝴蝶、红双喜、斯帝卡、挺拔、骄猛、尼塔库、亚萨卡、维克塔斯、多尼克、岸度、优拉、格沃、729、银河、三维、雷神、拍里奥、世奥得、双鱼、达克、纽鲍尔等，含长胶 / 生胶 / 防弧圈专门品牌），中文名排在前面（如 `蝴蝶 维斯卡利亚 (Viscaria)`），支持中英文和缩写搜索（如 `vis`、`w968`、`hl5`、`fzd`、`省狂`、`锐龙5`、`T05`、`D09c`、`v22`），也可以按品牌筛选；停产型号排在后面并标注「停产」。目录里没有的型号直接输入名称即可保存。选中或输入能识别的胶皮后，会按该型号实际在售的规格显示 **厚度 / 硬度速选按钮**（如 `2.15 mm`、`41°`、`MAX`、长胶的 `OX 无海绵`），点一下即可填入；规格经厂商官网或多家零售商核对，查不到可靠来源的宁可留空。
    - **底板规格与服役**：新增或编辑球拍时可记录握拍柄型（横板 FL / ST / AN、直板 CS、日直 JP）、底板裸重、整拍重量、底板启用日期和录入前已打小时数；首页卡片和详情页会显示 `横板 FL`、`整拍 188g · 裸板 89g`、`底板已服役 X 天` 等标签，累计时长包含录入前的小时数。
    - **补录正在用的老胶皮**：贴新胶皮时选择 **「已在用老胶皮」**，填写已投入使用日期、此前已打时长；需要灌油的胶皮再填历史灌油次数、上次灌油日期和层数，保存时自动补记灌油记录，寿命和复灌提醒立即反映真实情况。
 3. **开启多端云同步（Cloudflare Worker + D1 后台服务）**：
@@ -67,7 +67,7 @@ The repository contains application code and optional demo seed data only; a use
 - **Racket detail** (`#/rackets/:id`)
   - edit name, blade, status (在用 / 闲置 / 退役) and notes; delete the racket
   - blade specs: grip (横板 FL / ST / AN, 直板 CS, 日直 JP), blade and total weight, 底板启用日期 and play hours before recording, shown as badges in the header
-  - per-side life bars; each rubber can have a custom name (自定义名称), override its calendar limit, play-time limit and (boosting rubbers) re-boost cycle, and record its weight and play hours not covered by sessions
+  - per-side life bars; each rubber can have a custom name (自定义名称) and a topsheet colour (shown as a dot; a racket whose sides are both black, or both non-black, gets an ITTF colour notice), override its calendar limit, play-time limit and (boosting rubbers) re-boost cycle, and record its weight and play hours not covered by sessions
   - 更换胶皮: mount a new rubber (全新胶皮 or 已在用老胶皮) or one from the inventory; the old rubber is retired (退役归档) or put back into the inventory (放回囤货) on the replacement date
   - 撕下: take a rubber off and leave the side empty — 放回囤货 (temporary, to be used again; the default) or 退役归档
   - boosting is opt-in: rubbers that are not boosted show a single 开启灌油记录 row; boosting rubbers show their logs with inline edit and delete; play sessions are listed the same way
@@ -79,10 +79,12 @@ The repository contains application code and optional demo seed data only; a use
   - 闲置底板: add, edit and delete spare blades (with the same blade specs), or 配胶启用 with new or inventory rubbers
   - 已退役球拍: 恢复为闲置 or delete
 - **Add racket** (`#/rackets/new`): blade (racket name defaults to it) and optional blade specs; each side takes a new rubber, an inventory rubber, or 暂不贴. A blade with no rubbers is saved as a spare.
-- **Equipment catalog** (`src/data/catalog.ts`, `src/components/CatalogPicker.tsx`)
-  - every blade and rubber name field is a searchable combobox over ~90 blades and ~60 rubbers, grouped by brand, with brand pills (全部 / 蝴蝶 / 红双喜 / 斯帝卡 / 挺拔 / 骄猛 / 尼塔库 / 亚萨卡 / 维克塔斯 / …), Chinese / English names and abbreviations (`vis`, `w968`, `hl5`, `fzd`, `zjk`, `cybershape`, `省狂`, `T05`, `D09c`), and ↑ / ↓ / Enter / Esc
+- **Equipment catalog** (`src/data/catalog.ts` over the per-brand data in `src/data/catalog/<brand>.json`, `src/components/CatalogPicker.tsx`)
+  - every blade and rubber name field is a searchable combobox over 27 brands (~550 rubbers, ~350 blades: the major makers, Chinese brands such as 729 / 银河 / 雷神 LOKI, and pips / anti specialists), grouped by brand, with brand pills, Chinese-first names (`蝴蝶 维斯卡利亚 (Viscaria)`), English names and abbreviations (`vis`, `w968`, `hl5`, `fzd`, `cybershape`, `省狂`, `锐龙5`, `T05`, `D09c`), and ↑ / ↓ / Enter / Esc; discontinued products are listed last and marked 停产
+  - with hundreds of entries the dropdown stays small: a blank search over all brands previews 4 products per brand (查看全部 N 款 opens the brand), and a search shows at most 150 matches
   - suggestions only: any typed name is kept, so gear missing from the catalog can always be entered
-  - 规格速选: thickness and hardness chips with the sizes the recognized rubber is sold in (e.g. 省狂蓝 `2.1 / 2.15 / 2.2 mm` · `39° / 40° / 41°`; free text such as `T05 2.1` is recognized too), or common values for unknown names
+  - 规格速选: thickness and hardness chips with the sizes the recognized rubber is sold in (e.g. 省狂蓝 `2.1 / 2.15 / 2.2 mm` · `39° / 40° / 41°`, V>22 `2.0 mm / MAX`, long pips `OX 无海绵`; free text such as `T05 2.1` is recognized too), or common values for unknown names. Thickness is stored as mm (`thicknessMm`) or as a named size (`thicknessCode`: `MAX` / `OX`)
+  - specs were checked against the makers' sites or several retailers; unconfirmed values are left blank rather than guessed. Provenance (source links and notes) is kept in `src/data/catalog/sources.json`, which the app does not bundle
   - picking a commonly boosted rubber (狂飚 普狂 / 省狂 / 国狂) ticks 需要灌油; every other pick leaves it off
 - **已在用老胶皮** (used-rubber backfill): a rubber being mounted (or added to the inventory as 用过的) can be a brand-new sheet or one already in use. A used sheet records its 已投入使用日期 / 首次贴拍日期 and 此前已打时长; a boosting one also records 历史已灌油次数, 上次灌油日期 and 上次灌油层数, and the past boosts are logged automatically (the last on 上次灌油日期, earlier ones spread evenly from the installation date and marked 日期估算).
 - **Record session** (`#/add-session`): racket, date, duration and optional notes
@@ -203,7 +205,7 @@ Then point the app at the Worker in either of two ways:
 
 ### Upgrade an existing database (grip, weights, used-rubber history, rubber names, stock quantity)
 
-Databases created from an older `worker/schema.sql` lack the columns added later: blade specs and used-rubber history (`rackets.grip_type`, `blade_weight_grams`, `total_weight_grams`, `started_at`, `initial_play_minutes`; `rubbers.weight_grams`, `initial_play_minutes`, `mounted_at`), the rubber custom name and inventory stock count (`rubbers.label`, `rubbers.quantity`), and the rubber timeline (`rubbers.history`, `stashed_at`, `storage_aging_percent`). Add them in place, without touching existing rows:
+Databases created from an older `worker/schema.sql` lack the columns added later: blade specs and used-rubber history (`rackets.grip_type`, `blade_weight_grams`, `total_weight_grams`, `started_at`, `initial_play_minutes`; `rubbers.weight_grams`, `initial_play_minutes`, `mounted_at`), the rubber custom name and inventory stock count (`rubbers.label`, `rubbers.quantity`), the rubber timeline (`rubbers.history`, `stashed_at`, `storage_aging_percent`), and the named sponge size and topsheet colour (`rubbers.thickness_code`, `color`). Add them in place, without touching existing rows:
 
 ```bash
 pnpm db:migrate:v2:remote   # live spinventory-db (pnpm db:migrate:v2:local for wrangler dev)

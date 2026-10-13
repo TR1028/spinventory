@@ -1,0 +1,254 @@
+{
+  "id": "juic",
+  "name": "JUIC",
+  "en": "JUIC",
+  "label": "Juic",
+  "aliases": [
+    "ジュウイック",
+    "juic"
+  ],
+  "rubbers": [
+    {
+      "id": "999-elite",
+      "name": "999 Elite",
+      "aliases": [
+        "999",
+        "999エリート",
+        "juic 999"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "M"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "999-elite-charisma",
+      "name": "999 Elite Charisma",
+      "aliases": [
+        "999エリートカリスマ",
+        "999 charisma"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "M"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "neo-galaxia",
+      "name": "Neo Galaxia",
+      "aliases": [
+        "ネオギャラクシア",
+        "juic neo galaxia"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "MH"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "pro-galaxia",
+      "name": "Pro Galaxia",
+      "aliases": [
+        "プロギャラクシア",
+        "juic pro galaxia"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "H"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nano-spin-2-charisma",
+      "name": "Nano Spin II Charisma",
+      "aliases": [
+        "ナノスピンⅱカリスマ",
+        "nano spin 2 charisma",
+        "nanospin"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "M"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "driva-smash-ultima",
+      "name": "Driva Smash Ultima",
+      "aliases": [
+        "ドライバスマッシュアルティマ",
+        "drive smash ultima"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "MS"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "offense-ultima",
+      "name": "Offense Ultima",
+      "aliases": [
+        "オフェンスアルティマ"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "MS"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "patisuma-v",
+      "name": "Patisuma V (パチスマV)",
+      "aliases": [
+        "パチスマv",
+        "pachisuma v",
+        "patisuma"
+      ],
+      "category": "生胶",
+      "thickness": [
+        "OX",
+        1.5,
+        1.8,
+        2
+      ],
+      "hardness": [
+        "M"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "leggy-defense",
+      "name": "Leggy Defense (レギー守備用)",
+      "aliases": [
+        "leggy",
+        "レギー",
+        "レギー守備用"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        1.5
+      ],
+      "hardness": [
+        "S"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "hinoki-carbon-3",
+      "name": "Hinoki Carbon III",
+      "aliases": [
+        "ヒノキカーボンⅲ",
+        "hinoki carbon 3"
+      ],
+      "category": "外置碳素",
+      "plies": "3+2"
+    },
+    {
+      "id": "titanium-turbo",
+      "name": "Titanium Turbo",
+      "aliases": [
+        "チタニウムターボ"
+      ],
+      "category": "外置其他纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "titanium-turbo-fgp",
+      "name": "Titanium Turbo FGP",
+      "aliases": [
+        "チタニウムターボfgp"
+      ],
+      "category": "内置其他纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "perseus-v",
+      "name": "Perseus V",
+      "aliases": [
+        "ペルセウスv",
+        "perseus"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "knock-down",
+      "name": "Knock Down",
+      "aliases": [
+        "ノックダウン"
+      ],
+      "category": "内置其他纤维",
+      "plies": "5+2"
+    }
+  ]
+}

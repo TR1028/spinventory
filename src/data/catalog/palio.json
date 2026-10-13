@@ -1,0 +1,174 @@
+{
+  "id": "palio",
+  "name": "拍里奥",
+  "en": "Palio",
+  "label": "拍里奥",
+  "aliases": [
+    "palio",
+    "pailiao"
+  ],
+  "rubbers": [
+    {
+      "id": "ak47-red",
+      "name": "AK47 红 (AK47 Red)",
+      "aliases": [
+        "ak47 red",
+        "ak47红",
+        "红ak47",
+        "ak47"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "45-47"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "ak47-yellow",
+      "name": "AK47 黄 (AK47 Yellow)",
+      "aliases": [
+        "ak47 yellow",
+        "ak47黄",
+        "黄ak47"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "42-44"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "ak47-blue",
+      "name": "AK47 蓝 (AK47 Blue)",
+      "aliases": [
+        "ak47 blue",
+        "ak47蓝",
+        "蓝ak47"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "38-40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hadou",
+      "name": "Hadou",
+      "aliases": [
+        "palio hadou"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "40-42",
+        "42-44"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "cj8000",
+      "name": "CJ8000",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "36-38",
+        "42-44"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "ck531a",
+      "name": "CK531A",
+      "aliases": [
+        "531a",
+        "ck531"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX",
+        0.8,
+        1
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "macro-era",
+      "name": "Macro Era",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "42.5",
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "conqueror",
+      "name": "Conqueror",
+      "aliases": [],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "energy-03",
+      "name": "Energy 03",
+      "aliases": [
+        "能量03"
+      ],
+      "category": "外置碳素",
+      "plies": "5+4"
+    },
+    {
+      "id": "tct",
+      "name": "TCT",
+      "aliases": [
+        "palio tct"
+      ],
+      "plies": "5+2+2"
+    }
+  ]
+}

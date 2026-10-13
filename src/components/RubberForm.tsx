@@ -1,15 +1,26 @@
 /** Rubber form state, its conversions to store inputs, and the shared rubber editor fields. */
-import { ChevronDown, History, Minus, Plus } from "lucide-react";
+import { Check, ChevronDown, History, Minus, Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
   DEFAULT_HARDNESS_OPTIONS,
   DEFAULT_THICKNESS_OPTIONS,
-  formatThickness,
   getCatalogBrand,
   matchRubberCatalog,
+  thicknessOptionValue,
   type RubberEntry,
+  type ThicknessOption,
 } from "../data/catalog";
-import { getRubberQuantity, type Rubber } from "../db/schema";
+import {
+  formatRubberThickness,
+  getRubberQuantity,
+  isThicknessCode,
+  RUBBER_COLORS,
+  rubberColorName,
+  rubberColorSwatch,
+  type Rubber,
+  type RubberColor,
+  type ThicknessCode,
+} from "../db/schema";
 import type { CreateRubberInput, RubberFields, RubberSource, UpdateRubberInput, UsedRubberHistory } from "../db/store";
 import { formatFullDate, formatHours, hoursInputValue, parseHoursInput, todayISO } from "../utils/date";
 import { DEFAULT_LIFE_PARAMETERS } from "../utils/life";
@@ -37,7 +48,10 @@ export type RubberFormState = {
   /** Brand-new inventory stock: identical sheets. */
   quantity: string;
   hardness: string;
-  thicknessMm: string;
+  /** Sponge thickness in mm, or a named size (`MAX` / `OX`). */
+  thickness: string;
+  /** Topsheet colour, `""` when not recorded. */
+  color: RubberColor | "";
   /** Sheet weight in grams. */
   weightGrams: string;
   /** 需要灌油: a boosting rubber (most rubbers are not). */
@@ -70,7 +84,8 @@ export function createRubberForm(overrides: Partial<RubberFormState> = {}): Rubb
     label: "",
     quantity: "1",
     hardness: "",
-    thicknessMm: "",
+    thickness: "",
+    color: "",
     weightGrams: "",
     boosted: false,
     boostLayers: "2",
@@ -97,7 +112,8 @@ export function rubberToForm(rubber: Rubber): RubberFormState {
     label: rubber.label ?? "",
     quantity: String(getRubberQuantity(rubber)),
     hardness: rubber.hardness ?? "",
-    thicknessMm: numberText(rubber.thicknessMm),
+    thickness: rubber.thicknessCode ?? numberText(rubber.thicknessMm),
+    color: rubber.color ?? "",
     weightGrams: numberText(rubber.weightGrams),
     boosted: rubber.boosted,
     calendarDays: numberText(rubber.customCalendarDays),
@@ -128,6 +144,13 @@ function parseStoragePercent(value: string) {
   return percent;
 }
 
+/** `2.1` -> mm; `max` / `OX` -> the named size. */
+function parseThickness(value: string): { thicknessMm?: number; thicknessCode?: ThicknessCode } {
+  const code = value.trim().toUpperCase();
+  if (isThicknessCode(code)) return { thicknessCode: code };
+  return { thicknessMm: parsePositive(value, "厚度") };
+}
+
 /** Validates the form (throws with a Chinese message); `label` names the rubber in messages. */
 export function formToRubberFields(form: RubberFormState, label = "胶皮"): RubberFields {
   const name = form.name.trim();
@@ -137,7 +160,8 @@ export function formToRubberFields(form: RubberFormState, label = "胶皮"): Rub
     name,
     label: form.label.trim() || undefined,
     hardness: form.hardness.trim() || undefined,
-    thicknessMm: parsePositive(form.thicknessMm, "厚度"),
+    ...parseThickness(form.thickness),
+    color: form.color || undefined,
     weightGrams: parsePositive(form.weightGrams, "胶皮重量"),
     boosted: form.boosted,
     customCalendarDays: parsePositive(form.calendarDays, "日历寿命", true),
@@ -157,6 +181,8 @@ export function formToRubberUpdate(form: RubberFormState): UpdateRubberInput {
     label: fields.label ?? null,
     hardness: fields.hardness ?? null,
     thicknessMm: fields.thicknessMm ?? null,
+    thicknessCode: fields.thicknessCode ?? null,
+    color: fields.color ?? null,
     weightGrams: fields.weightGrams ?? null,
     boosted: fields.boosted,
     customCalendarDays: fields.customCalendarDays ?? null,
@@ -224,11 +250,12 @@ export function formToStockUpdate(form: RubberFormState, rubber: Rubber): Update
   return { ...update, quantity: parsePositive(form.quantity, "数量", true) ?? 1 };
 }
 
-/** "硬度 47 · 2.1 mm · 48 g · 需灌油" (or a placeholder when nothing was filled in). */
-export function describeRubberSpecs(rubber: Pick<Rubber, "hardness" | "thicknessMm" | "weightGrams" | "boosted">) {
+/** "红色 · 硬度 47 · 2.1 mm · 48 g · 需灌油" (or a placeholder when nothing was filled in). */
+export function describeRubberSpecs(rubber: Pick<Rubber, "hardness" | "thicknessMm" | "thicknessCode" | "color" | "weightGrams" | "boosted">) {
   const parts = [
+    rubber.color ? `${rubberColorName[rubber.color]}色` : null,
     rubber.hardness ? `硬度 ${rubber.hardness}` : null,
-    rubber.thicknessMm ? `${rubber.thicknessMm} mm` : null,
+    formatRubberThickness(rubber) ?? null,
     rubber.weightGrams ? `${rubber.weightGrams} g` : null,
     rubber.boosted ? "需灌油" : null,
   ].filter(Boolean);
@@ -258,6 +285,21 @@ export function RubberLabelPill({ label, className = "" }: { label?: string; cla
     >
       {label}
     </span>
+  );
+}
+
+/** Small swatch of a topsheet colour (nothing when the colour was not recorded). */
+export function RubberColorDot({ color, className = "" }: { color?: RubberColor; className?: string }) {
+  if (!color) return null;
+  const name = `${rubberColorName[color]}色`;
+  return (
+    <span
+      role="img"
+      aria-label={name}
+      title={name}
+      className={`inline-block h-3 w-3 shrink-0 rounded-full align-middle ring-1 ring-inset ring-black/20 ${className}`}
+      style={{ backgroundColor: rubberColorSwatch[color] }}
+    />
   );
 }
 
@@ -341,6 +383,8 @@ function QuantityField({ value, onChange, testIdPrefix }: { value: string; onCha
 /** `41°` / `41度` -> `41`. */
 const normalizeHardness = (value: string) => value.trim().replace(/\s*(°|度)$/, "");
 
+const thicknessChipLabel = (option: ThicknessOption) => (option === "OX" ? "OX 无海绵" : option === "MAX" ? "MAX" : `${thicknessOptionValue(option)} mm`);
+
 /**
  * One-tap thickness / hardness presets: the options the matched catalog rubber is sold in, or
  * common values for names the catalog does not know.
@@ -356,10 +400,13 @@ function SpecChips({
   match: RubberEntry | undefined;
   testIdPrefix: string;
 }) {
-  const thicknessOptions = match ? match.thicknessOptions : DEFAULT_THICKNESS_OPTIONS;
+  // A catalog rubber whose sizes are not confirmed still gets the common ones.
+  const thicknessOptions = match?.thicknessOptions.length ? match.thicknessOptions : DEFAULT_THICKNESS_OPTIONS;
   const hardnessOptions = match ? (match.hardnessOptions ?? []) : DEFAULT_HARDNESS_OPTIONS;
-  const thickness = value.thicknessMm.trim() ? Number(value.thicknessMm) : Number.NaN;
-  const selectedThickness = thicknessOptions.find((option) => Math.abs(option - thickness) < 0.001);
+  const thickness = value.thickness.trim().toUpperCase();
+  const selectedThickness = thicknessOptions.find((option) =>
+    typeof option === "number" ? thickness !== "" && Math.abs(option - Number(thickness)) < 0.001 : option === thickness,
+  );
   const hardness = normalizeHardness(value.hardness);
   const selectedHardness = hardnessOptions.find((option) => option === hardness);
 
@@ -376,11 +423,11 @@ function SpecChips({
         <ChoiceChips
           ariaLabel="厚度速选"
           className="min-w-0 flex-1"
-          value={selectedThickness === undefined ? "" : formatThickness(selectedThickness)}
-          onChange={(next) => onChange({ ...value, thicknessMm: next })}
+          value={selectedThickness === undefined ? "" : thicknessOptionValue(selectedThickness)}
+          onChange={(next) => onChange({ ...value, thickness: next })}
           options={thicknessOptions.map((option) => {
-            const text = formatThickness(option);
-            return { value: text, label: `${text} mm`, testId: `${testIdPrefix}-rubber-thickness-chip-${text}` };
+            const text = thicknessOptionValue(option);
+            return { value: text, label: thicknessChipLabel(option), testId: `${testIdPrefix}-rubber-thickness-chip-${text}` };
           })}
         />
       </div>
@@ -394,12 +441,58 @@ function SpecChips({
             onChange={(next) => onChange({ ...value, hardness: next })}
             options={hardnessOptions.map((option) => ({
               value: option,
-              label: `${option}°`,
+              label: /^\d+(\.\d+)?$/.test(option) ? `${option}°` : option,
               testId: `${testIdPrefix}-rubber-hardness-chip-${option}`,
             }))}
           />
         </div>
       ) : null}
+    </div>
+  );
+}
+
+/** Topsheet colour swatches; tapping the selected one clears it. */
+function ColorField({
+  value,
+  onChange,
+  match,
+  testIdPrefix,
+}: {
+  value: RubberFormState;
+  onChange: (value: RubberFormState) => void;
+  match: RubberEntry | undefined;
+  testIdPrefix: string;
+}) {
+  const known = match?.colors;
+  const colorText = (colors: readonly RubberColor[]) => `${colors.map((color) => rubberColorName[color]).join("/")}色`;
+  return (
+    <div className="grid gap-2">
+      <FieldLabel hint={known ? `该型号有${colorText(known)}` : "选填"}>颜色</FieldLabel>
+      <div role="group" aria-label="胶皮颜色" className="flex flex-wrap items-center gap-2">
+        {RUBBER_COLORS.map((color) => {
+          const selected = value.color === color;
+          return (
+            <button
+              key={color}
+              type="button"
+              aria-pressed={selected}
+              aria-label={`${rubberColorName[color]}色`}
+              title={`${rubberColorName[color]}色`}
+              onClick={() => onChange({ ...value, color: selected ? "" : color })}
+              data-testid={`${testIdPrefix}-rubber-color-${color}`}
+              className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition active:scale-95 ${
+                selected ? "ring-2 ring-court ring-offset-2" : "ring-1 ring-inset ring-black/15"
+              }`}
+              style={{ backgroundColor: rubberColorSwatch[color] }}
+            >
+              {selected ? <Check size={18} strokeWidth={3} className="text-white" aria-hidden="true" /> : null}
+            </button>
+          );
+        })}
+        <span className="text-xs font-semibold text-ink/55" data-testid={`${testIdPrefix}-rubber-color-name`}>
+          {value.color ? colorText([value.color]) : "未选"}
+        </span>
+      </div>
     </div>
   );
 }
@@ -472,7 +565,8 @@ export function RubberFormFields({ value, onChange, testIdPrefix, variant = "edi
     // New rubbers follow the catalog: only rubbers it marks as commonly boosted start with 需要灌油.
     if (isNew) next.boosted = entry.defaultBoosted ?? false;
     if (!value.hardness.trim() && entry.hardnessOptions?.length === 1) next.hardness = entry.hardnessOptions[0];
-    if (!value.thicknessMm.trim() && entry.thicknessOptions.length === 1) next.thicknessMm = formatThickness(entry.thicknessOptions[0]);
+    if (!value.thickness.trim() && entry.thicknessOptions.length === 1) next.thickness = thicknessOptionValue(entry.thicknessOptions[0]);
+    if (!value.color && entry.colors?.length === 1) next.color = entry.colors[0];
     onChange(next);
   }
 
@@ -514,6 +608,7 @@ export function RubberFormFields({ value, onChange, testIdPrefix, variant = "edi
         />
         {showQuantity ? <QuantityField value={value.quantity} onChange={(quantity) => update("quantity", quantity)} testIdPrefix={testIdPrefix} /> : null}
       </div>
+      <ColorField value={value} onChange={onChange} match={match} testIdPrefix={testIdPrefix} />
       <SpecChips value={value} onChange={onChange} match={match} testIdPrefix={testIdPrefix} />
       <div className="grid grid-cols-3 gap-3">
         <TextField
@@ -525,12 +620,12 @@ export function RubberFormFields({ value, onChange, testIdPrefix, variant = "edi
         />
         <TextField
           label="厚度 mm"
-          type="number"
+          // Text, not number: MAX / OX (set by the chips) are valid too.
+          type="text"
           inputMode="decimal"
-          min="0"
-          step="any"
-          value={value.thicknessMm}
-          onChange={(thicknessMm) => update("thicknessMm", thicknessMm)}
+          autoComplete="off"
+          value={value.thickness}
+          onChange={(thickness) => update("thickness", thickness)}
           testId={`${testIdPrefix}-rubber-thickness`}
         />
         <TextField

@@ -7,6 +7,7 @@ import { calculateRubberLife, getBoostingSummary } from "../utils/life";
 import { getRacketPlayMinutes } from "../utils/rackets";
 import { LifeBar } from "./LifeBar";
 import { RacketSpecBadges } from "./RacketSpecs";
+import { RubberColorDot } from "./RubberForm";
 import { ReboostBadge } from "./ui";
 
 type RacketCardProps = {
@@ -53,6 +54,7 @@ function RubberRow({
             ) : null}
           </div>
           <div className="truncate text-sm font-semibold text-ink">
+            <RubberColorDot color={rubber.color} className="-mt-0.5 mr-1.5" />
             {rubber.name}
             {rubber.label ? <span className="font-bold text-court"> · {rubber.label}</span> : null}
           </div>

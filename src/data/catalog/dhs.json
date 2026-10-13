@@ -1,0 +1,805 @@
+{
+  "id": "dhs",
+  "name": "红双喜",
+  "en": "DHS",
+  "label": "红双喜",
+  "aliases": [
+    "double happiness",
+    "dhs",
+    "红双喜"
+  ],
+  "rubbers": [
+    {
+      "id": "h3",
+      "name": "狂飚3 普狂 (H3 Commercial)",
+      "aliases": [
+        "h3",
+        "狂飚3",
+        "狂飙3",
+        "普狂",
+        "狂3",
+        "hurricane 3",
+        "hurricane3"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        2.15,
+        2.2
+      ],
+      "hardness": [
+        "37",
+        "38",
+        "39",
+        "40",
+        "41"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "boosted": true
+    },
+    {
+      "id": "h3-provincial-blue",
+      "name": "狂飚3 省狂蓝海绵 (H3 Provincial Blue)",
+      "aliases": [
+        "省狂",
+        "省狂蓝",
+        "蓝省",
+        "h3 provincial",
+        "provincial blue"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        2.15,
+        2.2
+      ],
+      "hardness": [
+        "39",
+        "40",
+        "41"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "boosted": true
+    },
+    {
+      "id": "h3-provincial-orange",
+      "name": "狂飚3 省狂橙海绵 (H3 Provincial Orange)",
+      "aliases": [
+        "省狂橙",
+        "橙省",
+        "provincial orange",
+        "h3 provincial orange"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        2.15,
+        2.2
+      ],
+      "hardness": [
+        "37",
+        "38",
+        "39",
+        "40",
+        "41"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "boosted": true
+    },
+    {
+      "id": "h3-national-blue",
+      "name": "狂飚3 国狂蓝海绵 (H3 National Blue)",
+      "aliases": [
+        "国狂",
+        "国狂蓝",
+        "蓝国",
+        "h3 national",
+        "national blue"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        2.15,
+        2.2
+      ],
+      "hardness": [
+        "39",
+        "40",
+        "41",
+        "42"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "boosted": true
+    },
+    {
+      "id": "h3-national-orange",
+      "name": "狂飚3 国狂橙海绵 (H3 National Orange)",
+      "aliases": [
+        "国狂橙",
+        "橙国",
+        "national orange",
+        "h3 national orange"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.2
+      ],
+      "hardness": [
+        "39",
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "boosted": true
+    },
+    {
+      "id": "h3-neo",
+      "name": "NEO狂飚3 (H3 Neo)",
+      "aliases": [
+        "neo h3",
+        "h3 neo",
+        "h3neo",
+        "neo狂飚3",
+        "neo狂3",
+        "neo普狂",
+        "尼奥狂飚3"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        2.15,
+        2.2
+      ],
+      "hardness": [
+        "37",
+        "38",
+        "39",
+        "40",
+        "41"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "h3-neo-provincial-blue",
+      "name": "NEO狂飚3 省狂蓝海绵 (H3 Neo Provincial Blue)",
+      "aliases": [
+        "neo省狂",
+        "neo省狂蓝",
+        "neo蓝省",
+        "neo provincial",
+        "neo provincial blue"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        2.15
+      ],
+      "hardness": [
+        "38",
+        "39",
+        "40",
+        "41"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "h3-neo-provincial-orange",
+      "name": "NEO狂飚3 省狂橙海绵 (H3 Neo Provincial Orange)",
+      "aliases": [
+        "neo省狂橙",
+        "neo橙省",
+        "neo provincial orange"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        2.15
+      ],
+      "hardness": [
+        "37",
+        "38",
+        "39",
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "h3-neo-national-blue",
+      "name": "NEO狂飚3 国狂蓝海绵 (H3 Neo National Blue)",
+      "aliases": [
+        "neo国狂",
+        "neo国狂蓝",
+        "neo蓝国",
+        "neo national",
+        "neo h3 national"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        2.15
+      ],
+      "hardness": [
+        "39",
+        "40",
+        "41",
+        "42"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "h3-50",
+      "name": "狂飚3-50 (H3-50)",
+      "aliases": [
+        "h3-50",
+        "h350",
+        "狂3-50",
+        "狂飚3-50",
+        "狂飙3-50"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "35",
+        "37"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "h8",
+      "name": "狂飚8 (Hurricane 8)",
+      "aliases": [
+        "h8",
+        "狂飚8",
+        "狂飙8",
+        "狂8",
+        "hurricane 8",
+        "hurricane8"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.15,
+        2.2
+      ],
+      "hardness": [
+        "39",
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "h8-80",
+      "name": "狂飚8-80 (Hurricane 8-80)",
+      "aliases": [
+        "h8-80",
+        "h880",
+        "狂8-80",
+        "狂飚8-80",
+        "8-80"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "37",
+        "38"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "skyline-2",
+      "name": "天极2 (Skyline 2 / TG2)",
+      "aliases": [
+        "天极2",
+        "skyline 2",
+        "skyline2",
+        "tg2"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.15,
+        2.2
+      ],
+      "hardness": [
+        "39",
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "boosted": true
+    },
+    {
+      "id": "skyline-2-neo",
+      "name": "NEO天极2 (Skyline 2 Neo)",
+      "aliases": [
+        "neo天极2",
+        "skyline 2 neo",
+        "neo skyline 2",
+        "tg2 neo"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.15,
+        2.2
+      ],
+      "hardness": [
+        "39",
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "skyline-3",
+      "name": "天极3 (Skyline 3 / TG3)",
+      "aliases": [
+        "天极3",
+        "skyline 3",
+        "skyline3",
+        "tg3"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.15,
+        2.2
+      ],
+      "hardness": [
+        "39",
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "boosted": true
+    },
+    {
+      "id": "skyline-3-neo",
+      "name": "NEO天极3 (Skyline 3 Neo)",
+      "aliases": [
+        "neo天极3",
+        "skyline 3 neo",
+        "neo skyline 3",
+        "tg3 neo"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.15,
+        2.2
+      ],
+      "hardness": [
+        "39",
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "skyline-3-60",
+      "name": "天极3-60 (Skyline 3-60)",
+      "aliases": [
+        "天极3-60",
+        "天极360",
+        "skyline 3-60",
+        "tg3-60"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "35",
+        "37"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "gold-arc-8",
+      "name": "金弓8 (Gold Arc 8)",
+      "aliases": [
+        "金弓8",
+        "金弓",
+        "ga8",
+        "gold arc 8",
+        "goldarc 8",
+        "goldarc8"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5",
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "gold-arc-5",
+      "name": "金弓5 (Gold Arc 5)",
+      "aliases": [
+        "金弓5",
+        "ga5",
+        "gold arc 5",
+        "goldarc 5"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5",
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tin-arc-3",
+      "name": "天弓3 (Tin-Arc 3)",
+      "aliases": [
+        "天弓3",
+        "tin-arc 3",
+        "tinarc 3",
+        "tin arc 3",
+        "tinarc3"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        2.1
+      ],
+      "hardness": [
+        "35",
+        "37"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tin-arc-5",
+      "name": "天弓5 (Tin-Arc 5)",
+      "aliases": [
+        "天弓5",
+        "tin-arc 5",
+        "tinarc 5",
+        "tin arc 5",
+        "tinarc5"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        2.1
+      ],
+      "hardness": [
+        "33",
+        "35",
+        "37"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "hurricane-long-5",
+      "name": "狂飚龙5 (Hurricane Long 5)",
+      "aliases": [
+        "hl5",
+        "h-l5",
+        "龙5",
+        "狂飚龙5",
+        "hurricane long 5"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "hurricane-long-5x",
+      "name": "狂飚龙5X (Hurricane Long 5X)",
+      "aliases": [
+        "hl5x",
+        "h-l5x",
+        "龙5x",
+        "狂飚龙5x",
+        "hurricane long 5x"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "w968",
+      "name": "狂飚龙 W968 (马龙特制 Ma Long)",
+      "aliases": [
+        "w968",
+        "马龙",
+        "特制龙5",
+        "数字龙5",
+        "字母龙5",
+        "龙5 w968"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "q968",
+      "name": "狂飚 Q968 (王楚钦 Wang Chuqin)",
+      "aliases": [
+        "q968",
+        "王楚钦",
+        "wcq",
+        "wang chuqin"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "hurricane-sa",
+      "name": "狂飚飒 (Hurricane Sa, 孙颖莎)",
+      "aliases": [
+        "狂飚飒",
+        "孙颖莎",
+        "hurricane sa",
+        "hurricane sun"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "hurricane-king",
+      "name": "狂飚王 (Hurricane King)",
+      "aliases": [
+        "hurricane king",
+        "狂飚王",
+        "狂王",
+        "hk"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "hurricane-king-2",
+      "name": "狂飚王2 (Hurricane King II)",
+      "aliases": [
+        "hurricane king 2",
+        "hurricane king ii",
+        "狂飚王2",
+        "狂王2",
+        "hk2"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "hurricane-king-3",
+      "name": "狂飚王3 (Hurricane King III)",
+      "aliases": [
+        "hurricane king 3",
+        "hurricane king iii",
+        "狂飚王3",
+        "狂王3",
+        "hk3"
+      ],
+      "category": "内置其他纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "hurricane-hao",
+      "name": "狂飚皓 (Hurricane Hao)",
+      "aliases": [
+        "hurricane hao",
+        "狂飚皓",
+        "狂皓"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "hurricane-hao-3",
+      "name": "狂飚皓3 (Hurricane Hao III)",
+      "aliases": [
+        "hurricane hao 3",
+        "hurricane hao iii",
+        "狂飚皓3",
+        "皓3"
+      ],
+      "category": "内置其他纤维",
+      "plies": "4+1"
+    },
+    {
+      "id": "hurricane-ning",
+      "name": "狂飚宁 (Hurricane Ning, 丁宁)",
+      "aliases": [
+        "hurricane ning",
+        "狂飚宁",
+        "丁宁"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "b2x",
+      "name": "狂飚博 B2X (方博 Fang Bo)",
+      "aliases": [
+        "b2x",
+        "狂飚博",
+        "博芳碳",
+        "方博",
+        "hurricane bo",
+        "fang bo"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "hurricane-301",
+      "name": "狂飚301 (Hurricane 301)",
+      "aliases": [
+        "h301",
+        "301",
+        "狂飚301",
+        "hurricane 301"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "hurricane-301x",
+      "name": "狂飚301X (Hurricane 301X)",
+      "aliases": [
+        "h301x",
+        "301x",
+        "狂飚301x",
+        "hurricane 301x"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "hurricane-301z",
+      "name": "狂飚301Z (Hurricane 301Z)",
+      "aliases": [
+        "h301z",
+        "301z",
+        "狂飚301z",
+        "hurricane 301z"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "pg2",
+      "name": "劲极2 (Power G2 / PG2)",
+      "aliases": [
+        "pg2",
+        "劲极2",
+        "power g2"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "pg5",
+      "name": "劲极5 (Power G5 / PG5)",
+      "aliases": [
+        "pg5",
+        "劲极5",
+        "power g5"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "pg7",
+      "name": "劲极7 (Power G7 / PG7)",
+      "aliases": [
+        "pg7",
+        "劲极7",
+        "power g7"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "pg9",
+      "name": "劲极9 (Power G9 / PG9)",
+      "aliases": [
+        "pg9",
+        "劲极9",
+        "power g9"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "pg12",
+      "name": "劲极12 (Power G12 / PG12)",
+      "aliases": [
+        "pg12",
+        "劲极12",
+        "power g12"
+      ],
+      "category": "内置其他纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "pg13",
+      "name": "劲极13 (Power G13 / PG13)",
+      "aliases": [
+        "pg13",
+        "劲极13",
+        "power g13"
+      ],
+      "category": "内置其他纤维",
+      "plies": "4+1"
+    },
+    {
+      "id": "tg7",
+      "name": "天极7 (TG7)",
+      "aliases": [
+        "tg7",
+        "天极7",
+        "tg7-b",
+        "tg7-sp"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    }
+  ]
+}

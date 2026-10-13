@@ -21,7 +21,7 @@ import { LifeBar } from "../components/LifeBar";
 import { OutgoingRubberField } from "../components/OutgoingRubberField";
 import { RacketSpecBadges, RacketSpecFields, createRacketSpecForm, specFormToUpdate, type RacketSpecForm } from "../components/RacketSpecs";
 import { ReplaceRubberModal } from "../components/ReplaceRubberModal";
-import { describeRubberSpecs, formToRubberUpdate, rubberToForm, RubberFormFields, RubberLabelPill } from "../components/RubberForm";
+import { describeRubberSpecs, formToRubberUpdate, rubberToForm, RubberColorDot, RubberFormFields, RubberLabelPill } from "../components/RubberForm";
 import {
   BackButton,
   ConfirmButton,
@@ -49,6 +49,7 @@ import {
   MOUNT_BOOST_NOTE,
 } from "../db/domain";
 import {
+  checkRacketColors,
   getRacketRubberId,
   getRacketStatus,
   getRubberDisplayName,
@@ -506,6 +507,7 @@ function MountedRubberCard({
             ) : null}
           </div>
           <div className="mt-1 flex min-w-0 items-center gap-1.5">
+            <RubberColorDot color={rubber.color} />
             <h2 className="truncate text-lg font-black text-ink">{rubber.name}</h2>
             <RubberLabelPill label={rubber.label} />
           </div>
@@ -796,6 +798,7 @@ function RetiredRubberRow({
         <div className="min-w-0 flex-1">
           <div className="flex min-w-0 items-center gap-2">
             <span className="shrink-0 text-xs font-bold text-court">{rubber.side ? rubberSideLabel[rubber.side] : "—"}</span>
+            <RubberColorDot color={rubber.color} />
             <span className="truncate text-sm font-bold text-ink">{rubber.name}</span>
             <RubberLabelPill label={rubber.label} />
           </div>
@@ -955,6 +958,7 @@ export function RacketDetail({ racketId, onBack, onAddSession, onDeleted, onOpen
   const status = getRacketStatus(racket);
   const totalMinutes = getRacketPlayMinutes(racket, sessions);
   const dialogRubber = dialog ? getMountedRubber(data, racket, dialog.side) : undefined;
+  const colorProblem = checkRacketColors(getMountedRubber(data, racket, "forehand")?.color, getMountedRubber(data, racket, "backhand")?.color);
   const closeDialog = () => setDialog(null);
 
   return (
@@ -991,6 +995,12 @@ export function RacketDetail({ racketId, onBack, onAddSession, onDeleted, onOpen
       </header>
 
       <RacketInfoForm racket={racket} />
+
+      {colorProblem ? (
+        <Notice tone="warn" testId="racket-color-warning">
+          正反手胶皮{colorProblem}。正式比赛要求一面黑色，另一面为红、蓝、绿、粉或紫色。
+        </Notice>
+      ) : null}
 
       <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
         {RUBBER_SIDES.map((side) => {

@@ -1,0 +1,319 @@
+{
+  "id": "friendship",
+  "name": "729",
+  "en": "729 Friendship",
+  "label": "729",
+  "aliases": [
+    "友谊",
+    "友谊729",
+    "天津729",
+    "friendship",
+    "friendship 729",
+    "ritc"
+  ],
+  "rubbers": [
+    {
+      "id": "battle-2",
+      "name": "奔腾2 (Battle II)",
+      "aliases": [
+        "奔腾2",
+        "奔腾ii",
+        "battle 2",
+        "battle ii",
+        "battle2"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "38",
+        "39",
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "battle-2-provincial",
+      "name": "奔腾2 省套 (Battle II Provincial)",
+      "aliases": [
+        "奔腾2省套",
+        "省套奔腾2",
+        "battle 2 provincial",
+        "battle ii provincial",
+        "蓝海绵奔腾"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "38",
+        "39",
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "boosted": true
+    },
+    {
+      "id": "battle-2-national",
+      "name": "奔腾2 国套 (Battle II National)",
+      "aliases": [
+        "奔腾2国套",
+        "国套奔腾2",
+        "battle 2 national",
+        "battle ii national"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "boosted": true
+    },
+    {
+      "id": "battle-3",
+      "name": "奔腾3 (Battle III)",
+      "aliases": [
+        "奔腾3",
+        "奔腾iii",
+        "battle 3",
+        "battle iii",
+        "奔腾3紫电"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "focus-3",
+      "name": "焦点3 (Focus III Snipe)",
+      "aliases": [
+        "焦点3",
+        "焦点三",
+        "焦点iii",
+        "focus 3",
+        "focus iii",
+        "focus 3 snipe",
+        "snipe"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "729-08-es",
+      "name": "729-08 ES",
+      "aliases": [
+        "729-08",
+        "72908",
+        "08es"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "super-fx",
+      "name": "超级FX (Super FX)",
+      "aliases": [
+        "超级fx",
+        "super fx",
+        "super 729 fx"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "729-2",
+      "name": "729-2",
+      "aliases": [
+        "普及729"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "tianyi",
+      "name": "天翼",
+      "aliases": [
+        "729天翼"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "802",
+      "name": "802 (正胶)",
+      "aliases": [
+        "802",
+        "729 802"
+      ],
+      "category": "生胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "802-40",
+      "name": "802-40 (正胶)",
+      "aliases": [
+        "802-40",
+        "80240",
+        "802 40"
+      ],
+      "category": "生胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "799",
+      "name": "799 (生胶)",
+      "aliases": [
+        "799",
+        "729 799"
+      ],
+      "category": "生胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "563",
+      "name": "563 (生胶)",
+      "aliases": [
+        "563",
+        "729 563",
+        "563 mystery"
+      ],
+      "category": "中颗粒",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "755",
+      "name": "755 (长胶)",
+      "aliases": [
+        "755",
+        "729 755"
+      ],
+      "category": "长胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "837",
+      "name": "837 (长胶)",
+      "aliases": [
+        "837",
+        "729 837"
+      ],
+      "category": "长胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "blue-alc",
+      "name": "蓝芳碳 (Blue ALC)",
+      "aliases": [
+        "蓝芳碳",
+        "729蓝芳碳",
+        "blue alc",
+        "blue alc advance"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "yellow-klc",
+      "name": "黄芳碳 (Yellow KLC)",
+      "aliases": [
+        "黄芳碳",
+        "729黄芳碳",
+        "yellow klc",
+        "yellow alc",
+        "yellow klc advance"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "v-6",
+      "name": "芳碳 V-6 (Aramid Carbon V-6)",
+      "aliases": [
+        "v-6",
+        "v6",
+        "aramid carbon v-6"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "c-5",
+      "name": "C-5",
+      "aliases": [
+        "729 c5"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    }
+  ]
+}

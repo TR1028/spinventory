@@ -1,0 +1,536 @@
+{
+  "id": "gewo",
+  "name": "格沃",
+  "en": "GEWO",
+  "label": "GEWO",
+  "aliases": [
+    "gewo",
+    "捷沃",
+    "gewo tt"
+  ],
+  "rubbers": [
+    {
+      "id": "nexxus-el-pro-38",
+      "name": "Nexxus EL Pro 38",
+      "aliases": [
+        "nexxus 38",
+        "el pro 38"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "38"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nexxus-el-pro-43",
+      "name": "Nexxus EL Pro 43",
+      "aliases": [
+        "nexxus 43",
+        "el pro 43"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "43"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nexxus-el-pro-48",
+      "name": "Nexxus EL Pro 48",
+      "aliases": [
+        "nexxus 48",
+        "el pro 48",
+        "nexxus"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "48"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nexxus-el-pro-50-hard",
+      "name": "Nexxus EL Pro 50 Hard",
+      "aliases": [
+        "nexxus 50",
+        "el pro 50"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nexxus-el-pro-53-hard",
+      "name": "Nexxus EL Pro 53 Hard",
+      "aliases": [
+        "nexxus 53",
+        "el pro 53"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "53"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nexxus-xt-pro-48",
+      "name": "Nexxus XT Pro 48",
+      "aliases": [
+        "nexxus xt 48",
+        "xt pro 48"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "48"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nexxus-xt-pro-50-hard",
+      "name": "Nexxus XT Pro 50 Hard",
+      "aliases": [
+        "nexxus xt 50",
+        "xt pro 50"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nexxus-el-pro-45-superselect",
+      "name": "Nexxus EL Pro 45 SuperSelect",
+      "aliases": [
+        "nexxus 45 ss",
+        "superselect 45"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nexxus-el-pro-48-superselect",
+      "name": "Nexxus EL Pro 48 SuperSelect",
+      "aliases": [
+        "nexxus 48 ss",
+        "superselect 48"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "48"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nexxus-el-pro-50-superselect",
+      "name": "Nexxus EL Pro 50 SuperSelect",
+      "aliases": [
+        "nexxus 50 ss",
+        "superselect 50"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "nexxus-el-pro-53-superselect",
+      "name": "Nexxus EL Pro 53 SuperSelect",
+      "aliases": [
+        "nexxus 53 ss",
+        "superselect 53"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "53"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "codexx-el-pro-52",
+      "name": "Codexx EL Pro 52",
+      "aliases": [
+        "codexx 52",
+        "codexx"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "52"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "codexx-ef-pro-54",
+      "name": "Codexx EF Pro 54",
+      "aliases": [
+        "codexx 54",
+        "codexx"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        2.2
+      ],
+      "hardness": [
+        "54"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "codexx-pro-53-superselect",
+      "name": "Codexx Pro 53 SuperSelect",
+      "aliases": [
+        "codexx 53",
+        "codexx ss"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "53"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "codexx-pro-55-superselect",
+      "name": "Codexx Pro 55 SuperSelect",
+      "aliases": [
+        "codexx 55",
+        "codexx ss"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hype-el-pro-40",
+      "name": "Hype EL Pro 40",
+      "aliases": [
+        "hype 40",
+        "hype el 40"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hype-el-pro-42-5",
+      "name": "Hype EL Pro 42.5",
+      "aliases": [
+        "hype 42.5",
+        "hype el 42.5"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hype-el-pro-47-5",
+      "name": "Hype EL Pro 47.5",
+      "aliases": [
+        "hype 47.5",
+        "hype el 47.5",
+        "hype"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hype-xt-pro-40",
+      "name": "Hype XT Pro 40",
+      "aliases": [
+        "hype xt 40"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hype-xt-pro-50",
+      "name": "Hype XT Pro 50",
+      "aliases": [
+        "hype xt 50"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hype-kr-pro-47-5",
+      "name": "Hype KR Pro 47.5",
+      "aliases": [
+        "hype kr",
+        "hype kr 47.5"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "neoflexx-eft-40",
+      "name": "Neoflexx eFT 40",
+      "aliases": [
+        "neoflexx 40"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "neoflexx-eft-45",
+      "name": "Neoflexx eFT 45",
+      "aliases": [
+        "neoflexx 45",
+        "neoflexx"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "neoflexx-eft-48",
+      "name": "Neoflexx eFT 48",
+      "aliases": [
+        "neoflexx 48"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.7,
+        1.9,
+        2.1
+      ],
+      "hardness": [
+        "48"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "celexxis-hinoki-ex-carbon",
+      "name": "Celexxis Hinoki Ex-Carbon",
+      "aliases": [
+        "celexxis",
+        "hinoki ex-carbon"
+      ],
+      "category": "外置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "matrixx-hybrid-arc-inner",
+      "name": "Matrixx Hybrid ARC Inner",
+      "aliases": [
+        "matrixx",
+        "hybrid arc inner"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "hybrid-carbon-x-speed",
+      "name": "Hybrid Carbon X-Speed",
+      "aliases": [
+        "hybrid carbon",
+        "x-speed"
+      ]
+    },
+    {
+      "id": "sensus-carbo-speed",
+      "name": "Sensus Carbo Speed",
+      "aliases": [
+        "sensus",
+        "carbo speed"
+      ]
+    },
+    {
+      "id": "aruna-offensive",
+      "name": "Aruna Offensive (阿鲁纳)",
+      "aliases": [
+        "aruna",
+        "阿鲁纳",
+        "aruna off"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "aruna-energy-arc",
+      "name": "Aruna Energy ARC (阿鲁纳)",
+      "aliases": [
+        "aruna arc",
+        "阿鲁纳"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "aruna-hinoki-carbon",
+      "name": "Aruna Hinoki Carbon (阿鲁纳)",
+      "aliases": [
+        "aruna hinoki",
+        "阿鲁纳"
+      ]
+    }
+  ]
+}

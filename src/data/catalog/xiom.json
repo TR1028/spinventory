@@ -1,0 +1,987 @@
+{
+  "id": "xiom",
+  "name": "骄猛",
+  "en": "XIOM",
+  "label": "XIOM",
+  "aliases": [
+    "jiaomeng"
+  ],
+  "rubbers": [
+    {
+      "id": "vega-pro",
+      "name": "Vega Pro (银V)",
+      "aliases": [
+        "vega pro",
+        "唯佳pro",
+        "银v"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vega-europe",
+      "name": "Vega Europe",
+      "aliases": [
+        "vega euro",
+        "唯佳欧洲",
+        "蓝v"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vega-asia",
+      "name": "Vega Asia (红V)",
+      "aliases": [
+        "vega asia",
+        "唯佳亚洲",
+        "红v"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vega-x",
+      "name": "Vega X",
+      "aliases": [
+        "唯佳x"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vega-china",
+      "name": "Vega China (唯佳中国)",
+      "aliases": [
+        "vega china",
+        "唯佳中国",
+        "蓝v"
+      ],
+      "category": "反胶",
+      "thickness": [
+        "MAX"
+      ],
+      "hardness": [
+        "54"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vega-japan",
+      "name": "Vega Japan",
+      "aliases": [
+        "唯佳日本"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vega-elite",
+      "name": "Vega Elite",
+      "aliases": [
+        "唯佳精英"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vega-tour",
+      "name": "Vega Tour (金V)",
+      "aliases": [
+        "vega tour",
+        "唯佳tour",
+        "金v"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vega-intro",
+      "name": "Vega Intro",
+      "aliases": [
+        "唯佳intro"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vega-asia-df",
+      "name": "Vega Asia DF",
+      "aliases": [
+        "唯佳亚洲df"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vega-europe-df",
+      "name": "Vega Europe DF",
+      "aliases": [
+        "vega euro df",
+        "唯佳欧洲df"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "37.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vega-def",
+      "name": "Vega Def",
+      "aliases": [
+        "唯佳防守"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "57.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vega-spo",
+      "name": "Vega SPO",
+      "aliases": [
+        "唯佳生胶"
+      ],
+      "category": "生胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "vega-lpo",
+      "name": "Vega LPO",
+      "aliases": [
+        "唯佳长胶"
+      ],
+      "category": "长胶",
+      "thickness": [
+        1
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-7-pro",
+      "name": "Omega VII Pro (欧米茄7 Pro)",
+      "aliases": [
+        "omega 7 pro",
+        "omega vii pro",
+        "o7 pro",
+        "欧米茄7pro"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-7-tour",
+      "name": "Omega VII Tour (欧米茄7 Tour)",
+      "aliases": [
+        "omega 7 tour",
+        "omega vii tour",
+        "o7 tour",
+        "欧米茄7tour"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-7-asia",
+      "name": "Omega VII Asia (欧米茄7 亚洲版)",
+      "aliases": [
+        "omega 7 asia",
+        "omega vii asia",
+        "o7 asia",
+        "欧米茄7亚洲"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-7-euro",
+      "name": "Omega VII Euro (欧米茄7 欧洲版)",
+      "aliases": [
+        "omega 7 euro",
+        "omega vii euro",
+        "omega 7 europe",
+        "o7 euro",
+        "欧米茄7欧洲"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "42.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-7-hyper",
+      "name": "Omega VII Hyper (欧米茄7 Hyper)",
+      "aliases": [
+        "omega 7 hyper",
+        "omega vii hyper",
+        "o7 hyper",
+        "欧米茄7hyper"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-7-china-guang",
+      "name": "Omega VII China Guang (欧米茄7 中国光)",
+      "aliases": [
+        "omega 7 china guang",
+        "omega vii china guang",
+        "中国光",
+        "欧米茄7中国光"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-7-china-ying",
+      "name": "Omega VII China Ying (欧米茄7 中国影)",
+      "aliases": [
+        "omega 7 china ying",
+        "omega vii china ying",
+        "中国影",
+        "欧米茄7中国影"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1
+      ],
+      "hardness": [
+        "60"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-8-pro",
+      "name": "Omega VIII Pro (欧米茄8 Pro)",
+      "aliases": [
+        "omega 8 pro",
+        "omega viii pro",
+        "o8 pro",
+        "欧米茄8pro"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-8-china",
+      "name": "Omega VIII China (欧米茄8 中国版)",
+      "aliases": [
+        "omega 8 china",
+        "omega viii china",
+        "o8 china",
+        "欧米茄8中国"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-8-hybrid",
+      "name": "Omega VIII Hybrid (欧米茄8 Hybrid)",
+      "aliases": [
+        "omega 8 hybrid",
+        "omega viii hybrid",
+        "o8 hybrid",
+        "欧米茄8hybrid"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-8-euro",
+      "name": "Omega VIII Euro (欧米茄8 欧洲版)",
+      "aliases": [
+        "omega 8 euro",
+        "omega viii euro",
+        "o8 euro",
+        "欧米茄8欧洲"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.9,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-5-pro",
+      "name": "Omega V Pro (欧米茄5 Pro)",
+      "aliases": [
+        "omega 5 pro",
+        "omega v pro",
+        "o5 pro",
+        "欧米茄5pro"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-5-tour",
+      "name": "Omega V Tour (欧米茄5 Tour)",
+      "aliases": [
+        "omega 5 tour",
+        "omega v tour",
+        "o5 tour",
+        "欧米茄5tour"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-5-asia",
+      "name": "Omega V Asia (欧米茄5 亚洲版)",
+      "aliases": [
+        "omega 5 asia",
+        "omega v asia",
+        "o5 asia",
+        "欧米茄5亚洲"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "omega-5-euro",
+      "name": "Omega V Euro (欧米茄5 欧洲版)",
+      "aliases": [
+        "omega 5 euro",
+        "omega v euro",
+        "o5 euro",
+        "欧米茄5欧洲"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "jekyll-hyde-v47-5",
+      "name": "Jekyll & Hyde V47.5 (化身博士 V47.5)",
+      "aliases": [
+        "jekyll hyde v47.5",
+        "j&h v47.5",
+        "jh v47.5",
+        "化身博士v47.5"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "jekyll-hyde-v52-5",
+      "name": "Jekyll & Hyde V52.5 (化身博士 V52.5)",
+      "aliases": [
+        "jekyll hyde v52.5",
+        "j&h v52.5",
+        "jh v52.5",
+        "化身博士v52.5"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "jekyll-hyde-x47-5",
+      "name": "Jekyll & Hyde X47.5 (化身博士 X47.5)",
+      "aliases": [
+        "jekyll hyde x47.5",
+        "j&h x47.5",
+        "jh x47.5",
+        "化身博士x47.5"
+      ],
+      "category": "反胶",
+      "thickness": [
+        "MAX"
+      ],
+      "hardness": [
+        "47.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "jekyll-hyde-x50-0",
+      "name": "Jekyll & Hyde X50.0 (化身博士 X50)",
+      "aliases": [
+        "jekyll hyde x50",
+        "j&h x50",
+        "jh x50",
+        "化身博士x50"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [
+        "50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "jekyll-hyde-z52-5",
+      "name": "Jekyll & Hyde Z52.5 (化身博士 Z52.5)",
+      "aliases": [
+        "jekyll hyde z52.5",
+        "j&h z52.5",
+        "jh z52.5",
+        "化身博士z52.5"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "jekyll-hyde-h52-5",
+      "name": "Jekyll & Hyde H52.5 (化身博士 H52.5)",
+      "aliases": [
+        "jekyll hyde h52.5",
+        "j&h h52.5",
+        "jh h52.5",
+        "化身博士h52.5"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "jekyll-hyde-c52-5",
+      "name": "Jekyll & Hyde C52.5 (化身博士 C52.5)",
+      "aliases": [
+        "jekyll hyde c52.5",
+        "j&h c52.5",
+        "jh c52.5",
+        "化身博士c52.5"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "52.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "jekyll-hyde-c55-0",
+      "name": "Jekyll & Hyde C55.0 (化身博士 C55)",
+      "aliases": [
+        "jekyll hyde c55",
+        "j&h c55",
+        "jh c55",
+        "化身博士c55"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "55"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "jekyll-hyde-c57-5",
+      "name": "Jekyll & Hyde C57.5 (化身博士 C57.5)",
+      "aliases": [
+        "jekyll hyde c57.5",
+        "j&h c57.5",
+        "jh c57.5",
+        "化身博士c57.5"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2.1,
+        "MAX"
+      ],
+      "hardness": [
+        "57.5"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "hugo-hal",
+      "name": "Hugo HAL (雨果 HAL)",
+      "aliases": [
+        "hugo hal",
+        "雨果hal",
+        "calderano",
+        "卡尔德拉诺"
+      ],
+      "category": "外置其他纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "hugo-alx-pro",
+      "name": "Hugo ALX Pro (雨果 ALX Pro)",
+      "aliases": [
+        "hugo alx",
+        "hugo alx pro",
+        "雨果alx"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "hugo-tmxi",
+      "name": "Hugo TMXi (雨果 TMXi)",
+      "aliases": [
+        "hugo tmxi",
+        "hugo tmxi pro",
+        "雨果tmxi"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "an-jaehyun-tmxi",
+      "name": "An Jaehyun TMXi (安宰贤 TMXi)",
+      "aliases": [
+        "an jaehyun tmxi",
+        "ajh tmxi",
+        "安宰贤"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "an-jaehyun-tmxi-pro",
+      "name": "An Jaehyun TMXi Pro (安宰贤 TMXi Pro)",
+      "aliases": [
+        "an jaehyun tmxi pro",
+        "ajh tmxi pro",
+        "安宰贤pro"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "ice-cream-azx",
+      "name": "Ice Cream AZX (冰淇淋 AZX)",
+      "aliases": [
+        "ice cream azx",
+        "冰淇淋",
+        "冰激凌",
+        "azx"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "ice-cream-azxi",
+      "name": "Ice Cream AZXi (冰淇淋 AZXi)",
+      "aliases": [
+        "ice cream azxi",
+        "冰淇淋azxi",
+        "冰激凌azxi",
+        "azxi"
+      ],
+      "plies": "5+2"
+    },
+    {
+      "id": "stradivarius",
+      "name": "Stradivarius",
+      "aliases": [
+        "斯特拉迪瓦里"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "36-5-alx",
+      "name": "36.5 ALX",
+      "aliases": [],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "36-5-alxi",
+      "name": "36.5 ALXi",
+      "aliases": [],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "feel-zx2",
+      "name": "Feel ZX2",
+      "aliases": [
+        "zx2"
+      ],
+      "category": "内置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "feel-zx3",
+      "name": "Feel ZX3",
+      "aliases": [
+        "zx3"
+      ],
+      "category": "外置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "hayabusa-zlx",
+      "name": "Hayabusa ZLX",
+      "aliases": [
+        "hayabusa"
+      ],
+      "category": "外置超级纤维",
+      "plies": "5+2"
+    },
+    {
+      "id": "strato",
+      "name": "Strato",
+      "aliases": [],
+      "category": "外置碳素",
+      "plies": "3+2"
+    },
+    {
+      "id": "axelo",
+      "name": "Axelo",
+      "aliases": [],
+      "category": "外置碳素",
+      "plies": "3+2"
+    },
+    {
+      "id": "offensive-s",
+      "name": "Offensive S",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "allround-s",
+      "name": "Allround S",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "extreme-s",
+      "name": "Extreme S",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "aria",
+      "name": "Aria",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "7"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "id": "armstrong",
+  "name": "阿姆斯壮",
+  "en": "Armstrong",
+  "label": "Armstrong",
+  "aliases": [
+    "armstrong",
+    "アームストロング",
+    "阿姆斯特朗"
+  ],
+  "rubbers": [
+    {
+      "id": "attack-8",
+      "name": "Attack 8 (攻击8)",
+      "aliases": [
+        "attack8",
+        "attack 8",
+        "攻击8",
+        "a8"
+      ],
+      "category": "中颗粒",
+      "thickness": [
+        "OX",
+        0.5,
+        1,
+        1.2,
+        1.5,
+        1.8,
+        2.1
+      ],
+      "hardness": [
+        "40",
+        "48",
+        "53"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "attack-8-exx",
+      "name": "Attack 8 EXX (攻击8 EXX)",
+      "aliases": [
+        "attack 8 exx",
+        "attack8 exx",
+        "a8 exx",
+        "攻击8exx"
+      ],
+      "category": "中颗粒",
+      "thickness": [
+        0.5,
+        1,
+        1.2,
+        1.5,
+        1.8,
+        2.1
+      ],
+      "hardness": [
+        "40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "attack-8-nt",
+      "name": "Attack 8 NT (攻击8 NT)",
+      "aliases": [
+        "attack 8 nt",
+        "attack8 nt",
+        "a8 nt",
+        "攻击8nt"
+      ],
+      "category": "中颗粒",
+      "thickness": [
+        0.5,
+        1,
+        1.2,
+        1.5,
+        1.8,
+        2.1
+      ],
+      "hardness": [
+        "42"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "hikari-sr7",
+      "name": "Hikari SR7 (光SR7)",
+      "aliases": [
+        "hikari sr7",
+        "hikari",
+        "光sr7"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "ahc7",
+      "name": "AHC7",
+      "aliases": [],
+      "plies": "5+2"
+    },
+    {
+      "id": "houou",
+      "name": "Houou (鳳凰)",
+      "aliases": [
+        "houou",
+        "phoenix",
+        "凤凰",
+        "鳳凰"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "houou-cb",
+      "name": "Houou CB (鳳凰CB)",
+      "aliases": [
+        "houou cb",
+        "凤凰cb",
+        "鳳凰cb"
+      ]
+    },
+    {
+      "id": "val-attack",
+      "name": "VAL-ATTACK",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "takusho",
+      "name": "Takusho (卓将)",
+      "aliases": [
+        "takusho",
+        "卓将"
+      ]
+    },
+    {
+      "id": "apex21",
+      "name": "APEX21 (超特選 日式单板)",
+      "aliases": [
+        "apex21",
+        "apex 21"
+      ],
+      "category": "纯木",
+      "plies": "1"
+    }
+  ]
+}

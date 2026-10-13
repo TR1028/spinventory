@@ -1,0 +1,575 @@
+{
+  "id": "yasaka",
+  "name": "亚萨卡",
+  "en": "YASAKA",
+  "label": "Yasaka",
+  "aliases": [
+    "ヤサカ",
+    "雅萨卡"
+  ],
+  "rubbers": [
+    {
+      "id": "rakza-7",
+      "name": "Rakza 7 (R7 雷克萨7)",
+      "aliases": [
+        "r7",
+        "rakza7",
+        "雷克萨7",
+        "拉克萨7"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45-50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rakza-7-soft",
+      "name": "Rakza 7 Soft (R7 Soft)",
+      "aliases": [
+        "r7s",
+        "r7 soft",
+        "rakza7 soft",
+        "雷克萨7软"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "37-42"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rakza-7-hard",
+      "name": "Rakza 7 Hard (R7 Hard)",
+      "aliases": [
+        "r7h",
+        "r7 hard",
+        "rakza7 hard",
+        "雷克萨7硬"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47-52"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rakza-9",
+      "name": "Rakza 9 (R9)",
+      "aliases": [
+        "r9",
+        "rakza9",
+        "雷克萨9"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40-45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rakza-x",
+      "name": "Rakza X (RX)",
+      "aliases": [
+        "rx",
+        "rakzax",
+        "雷克萨x"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45-50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rakza-x-soft",
+      "name": "Rakza X Soft (RX Soft)",
+      "aliases": [
+        "rxs",
+        "rx soft",
+        "rakzax soft",
+        "雷克萨x软"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40-45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rakza-xx",
+      "name": "Rakza XX (RXX)",
+      "aliases": [
+        "rxx",
+        "rakzaxx",
+        "雷克萨xx",
+        "double x"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47-52"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rakza-z",
+      "name": "Rakza Z (RZ)",
+      "aliases": [
+        "rz",
+        "rakzaz",
+        "雷克萨z"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47-52"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rakza-z-extra-hard",
+      "name": "Rakza Z Extra Hard (RZ Extra Hard)",
+      "aliases": [
+        "rzeh",
+        "rz extra hard",
+        "rakzaz extra hard",
+        "雷克萨z硬"
+      ],
+      "category": "反胶",
+      "thickness": [
+        "MAX"
+      ],
+      "hardness": [
+        "52-57"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rakza-po",
+      "name": "Rakza PO",
+      "aliases": [
+        "rakza pips out",
+        "雷克萨po",
+        "雷克萨生胶"
+      ],
+      "category": "生胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40-45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rising-dragon-2",
+      "name": "Rising Dragon II (翔龙2)",
+      "aliases": [
+        "翔龙2",
+        "翔龍2",
+        "翔龍ii",
+        "rising dragon 2",
+        "shoryu 2"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47-52"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "shining-dragon-2",
+      "name": "Shining Dragon II (辉龙2)",
+      "aliases": [
+        "辉龙2",
+        "輝龍2",
+        "輝龍ii",
+        "shining dragon 2",
+        "kiryu 2"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "45-50"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rising-dragon",
+      "name": "Rising Dragon (翔龙)",
+      "aliases": [
+        "翔龙",
+        "翔龍",
+        "rising dragon",
+        "shoryu"
+      ],
+      "category": "反胶",
+      "thickness": [
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "47-52"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "shining-dragon",
+      "name": "Shining Dragon (辉龙)",
+      "aliases": [
+        "辉龙",
+        "輝龍",
+        "shining dragon",
+        "kiryu"
+      ],
+      "category": "反胶",
+      "thickness": [],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ],
+      "discontinued": true
+    },
+    {
+      "id": "mark-v",
+      "name": "Mark V (马克V)",
+      "aliases": [
+        "mark5",
+        "markv",
+        "mark 5",
+        "马克v",
+        "马克5",
+        "马克五"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.5,
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40-45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "mark-v-hps",
+      "name": "Mark V HPS",
+      "aliases": [
+        "mark5 hps",
+        "马克v hps"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40-45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "mark-v-hps-soft",
+      "name": "Mark V HPS Soft",
+      "aliases": [
+        "mark5 hps soft",
+        "马克v hps软"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "35-40"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rigan",
+      "name": "Rigan",
+      "aliases": [
+        "ライガン"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40-45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "rigan-spin",
+      "name": "Rigan Spin",
+      "aliases": [
+        "ライガンスピン"
+      ],
+      "category": "反胶",
+      "thickness": [
+        1.8,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "40-45"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "anti-power",
+      "name": "Anti Power",
+      "aliases": [
+        "アンチパワー"
+      ],
+      "category": "防弧圈",
+      "thickness": [
+        1.3,
+        1.5,
+        2,
+        "MAX"
+      ],
+      "hardness": [
+        "25-30"
+      ],
+      "colors": [
+        "red",
+        "black"
+      ]
+    },
+    {
+      "id": "phantom-0012-infinity",
+      "name": "Phantom 0012 Infinity (幻影0012)",
+      "aliases": [
+        "phantom 0012",
+        "phantom0012",
+        "0012",
+        "幻影0012",
+        "ファントム0012"
+      ],
+      "category": "长胶",
+      "thickness": [
+        "OX"
+      ],
+      "hardness": [],
+      "colors": [
+        "red",
+        "black"
+      ]
+    }
+  ],
+  "blades": [
+    {
+      "id": "ma-lin-extra-offensive",
+      "name": "Ma Lin Extra Offensive (YEO 马琳)",
+      "aliases": [
+        "yeo",
+        "马琳纯木",
+        "马琳进攻",
+        "ma lin eo",
+        "myth extra offensive"
+      ],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "ma-lin-carbon",
+      "name": "Ma Lin Carbon (YMC 马琳碳素)",
+      "aliases": [
+        "ymc",
+        "马碳",
+        "马琳碳素",
+        "马琳碳",
+        "myth carbon"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "ma-lin-soft-carbon",
+      "name": "Ma Lin Soft Carbon (YSC 马琳软碳)",
+      "aliases": [
+        "ysc",
+        "马软",
+        "马琳软碳",
+        "myth soft carbon"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "ma-lin-hard-carbon",
+      "name": "Ma Lin Hard Carbon",
+      "aliases": [
+        "馬林ハードカーボン"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "ma-lin-extra-special",
+      "name": "Ma Lin Extra Special",
+      "aliases": [
+        "extra special",
+        "myth extra special"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "sweden-extra",
+      "name": "Sweden Extra",
+      "aliases": [],
+      "category": "纯木",
+      "plies": "5"
+    },
+    {
+      "id": "galaxya",
+      "name": "Galaxya",
+      "aliases": [
+        "ギャラクシア"
+      ],
+      "category": "纯木",
+      "plies": "7"
+    },
+    {
+      "id": "falck-carbon",
+      "name": "Falck Carbon (法尔克碳素)",
+      "aliases": [
+        "falck",
+        "法尔克",
+        "mattias falck"
+      ],
+      "category": "内置碳素",
+      "plies": "5+2"
+    },
+    {
+      "id": "atletico-power",
+      "name": "Atletico Power",
+      "aliases": [
+        "atletico"
+      ],
+      "category": "内置芳碳",
+      "plies": "5+2"
+    },
+    {
+      "id": "alnade",
+      "name": "Alnade",
+      "aliases": [
+        "アルネイド"
+      ],
+      "category": "外置芳碳",
+      "plies": "5+2"
+    }
+  ]
+}

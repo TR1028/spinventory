@@ -9,6 +9,8 @@ import { compact, createEmptySnapshot, isISODate, LIMITS, sanitizeRubberHistory 
 import {
   ENTITY_KEYS,
   isGripType,
+  isRubberColor,
+  isThicknessCode,
   RACKET_STATUSES,
   RUBBER_SIDES,
   type AppDataDelta,
@@ -64,6 +66,8 @@ const TABLES: Record<EntityKey, TableSpec> = {
       { name: "quantity", key: "quantity" },
       { name: "hardness", key: "hardness" },
       { name: "thickness_mm", key: "thicknessMm" },
+      { name: "thickness_code", key: "thicknessCode" },
+      { name: "color", key: "color" },
       { name: "weight_grams", key: "weightGrams" },
       { name: "installed_at", key: "installedAt" },
       { name: "mounted_at", key: "mountedAt" },
@@ -188,6 +192,8 @@ const ADDED_COLUMNS: { table: string; column: string; type: "TEXT" | "REAL" | "I
   { table: "rubbers", column: "history", type: "TEXT" },
   { table: "rubbers", column: "stashed_at", type: "TEXT" },
   { table: "rubbers", column: "storage_aging_percent", type: "INTEGER" },
+  { table: "rubbers", column: "thickness_code", type: "TEXT" },
+  { table: "rubbers", column: "color", type: "TEXT" },
 ];
 
 let schemaCheck: Promise<void> | undefined;
@@ -256,6 +262,8 @@ type RubberRow = {
   quantity: number | null;
   hardness: string | null;
   thickness_mm: number | null;
+  thickness_code: string | null;
+  color: string | null;
   weight_grams: number | null;
   installed_at: string | null;
   mounted_at: string | null;
@@ -334,6 +342,8 @@ const toRubber = (row: RubberRow): Rubber =>
     quantity: typeof row.quantity === "number" && row.quantity > 1 ? row.quantity : undefined,
     hardness: row.hardness,
     thicknessMm: row.thickness_mm,
+    thicknessCode: isThicknessCode(row.thickness_code) ? row.thickness_code : undefined,
+    color: isRubberColor(row.color) ? row.color : undefined,
     weightGrams: row.weight_grams,
     installedAt: row.installed_at,
     mountedAt: row.mounted_at,
@@ -572,7 +582,9 @@ function sanitizeRubber(value: unknown, now: string): Rubber | undefined {
     label: cleanText(raw.label, LIMITS.labelLength),
     quantity: quantity && quantity > 1 ? quantity : undefined,
     hardness: cleanText(raw.hardness, LIMITS.hardnessLength),
-    thicknessMm: cleanPositive(raw.thicknessMm, LIMITS.maxThicknessMm, false),
+    thicknessMm: isThicknessCode(raw.thicknessCode) ? undefined : cleanPositive(raw.thicknessMm, LIMITS.maxThicknessMm, false),
+    thicknessCode: isThicknessCode(raw.thicknessCode) ? raw.thicknessCode : undefined,
+    color: isRubberColor(raw.color) ? raw.color : undefined,
     weightGrams: cleanPositive(raw.weightGrams, LIMITS.maxWeightGrams, false),
     installedAt: cleanDate(raw.installedAt),
     mountedAt: cleanDate(raw.mountedAt),

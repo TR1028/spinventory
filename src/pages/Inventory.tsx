@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { ActivateBladeModal, BladeFormModal, MountRubberModal, RubberFormModal } from "../components/InventoryDialogs";
 import { LifeBar } from "../components/LifeBar";
 import { RacketSpecBadges } from "../components/RacketSpecs";
-import { describeCustomLife, describeRubberSpecs, RubberLabelPill } from "../components/RubberForm";
+import { describeCustomLife, describeRubberSpecs, RubberColorDot, RubberLabelPill } from "../components/RubberForm";
 import {
   BackButton,
   ConfirmButton,
@@ -55,6 +55,7 @@ function RubberCardTitle({ rubber }: { rubber: Rubber }) {
   const count = getRubberQuantity(rubber);
   return (
     <div className="flex min-w-0 items-center gap-1.5">
+      <RubberColorDot color={rubber.color} />
       <h3 className="truncate text-base font-black text-ink">{rubber.name}</h3>
       <RubberLabelPill label={rubber.label} />
       {count > 1 ? (
